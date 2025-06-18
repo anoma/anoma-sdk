@@ -3540,13 +3540,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "test_executable"
-version = "0.1.0"
-dependencies = [
- "k256",
-]
-
-[[package]]
 name = "thiserror"
 version = "1.0.69"
 source = "registry+https://github.com/rust-lang/crates.io-index"
