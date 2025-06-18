@@ -1,0 +1,22 @@
+[package]
+name = "counter_nif"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "counter_nif"
+crate-type = ["cdylib"]
+
+[dependencies]
+arm = { git = "https://github.com/anoma/arm-risc0", branch = "xuyang/simplify_features", default-features = true, features = ["transaction", "groth16_prover", "bonsai"]}
+counter_logic_circuit = { path = "../counter_logic_circuit" }
+counter_library = { path = "../counter_library", features=["nif"]}
+counter_witness = { path = "../counter_witness", features=["nif"]}
+rand = "0.9.2"
+evm_protocol_adapter_bindings = { git = "https://github.com/anoma/evm-protocol-adapter", branch =  "m1dnight/counter-example"}
+tokio = "1.47.1"
+alloy = { version = "1.0.23", features = ["full"] }
+
+# nif specific
+rustler = "0.36.2"
+serde = "1.0"
