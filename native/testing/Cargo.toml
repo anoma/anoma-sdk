@@ -1,0 +1,8 @@
+[package]
+name = "testing"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+aarm_core = { path = "../aarm-risc0/aarm_core" , features = ["nif"]}
+aarm = { path = "../aarm-risc0/aarm" , features = ["nif"]}
