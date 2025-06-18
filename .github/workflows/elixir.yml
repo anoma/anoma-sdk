@@ -1,0 +1,91 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Elixir CI
+
+on:
+  push:
+    # branches: ["main"]
+  pull_request:
+    # branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: build and test
+    runs-on: ubuntu-latest
+    # set environment variables for all the steps below
+    env:
+      MIX_ENV: "test"
+      RISC0_DEV_MODE: true # use risc0 debug proving
+
+    steps:
+      # checkout the repo
+      - uses: actions/checkout@v4
+        with:
+          submodules: "true"
+      # installl the rust toolchain (this was not necessary,
+      # but some sporadic issues happened where the installation failed)
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          version-type: "strict"
+          version-file: ".tool-versions"
+
+      #----------------------------------------------------------------------------
+      # Restore the cache.
+      #
+      # Note that this includes the Rust output because otherwise the action
+      # takes +- 60 minutes.
+
+      - name: restore dependencies cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            bindings/target
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}-${{ hashFiles('**/Cargo.lock') }}
+
+      #----------------------------------------------------------------------------
+      # Fetch and compile dependencies
+
+      - name: install dependencies
+        run: mix deps.get
+
+      - name: compile deps
+        run: mix deps.compile
+
+      - name: compile deps (dev)
+        env:
+          MIX_ENV: "dev"
+        run: mix deps.compile
+
+      #----------------------------------------------------------------------------
+      # Lint
+
+      - name: compile sdk
+        run: mix compile --warnings-as-errors
+
+      - name: check formatting
+        run: mix format --check-formatted
+
+      - name: check formatting
+        run: mix dialyzer
+
+      - name: check dependencies
+        run: mix deps.unlock --check-unused
+
+      - name: credo
+        run: mix credo --strict
+
+      #----------------------------------------------------------------------------
+      # Run the tests
+
+      - name: run tests
+        run: mix test

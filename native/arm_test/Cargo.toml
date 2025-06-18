@@ -1,0 +1,33 @@
+[package]
+name = "arm_test"
+version = "0.1.0"
+authors = []
+edition = "2021"
+
+[lib]
+name = "arm_test"
+crate-type = ["cdylib"]
+
+[dependencies]
+arm = { git = "https://github.com/anoma/arm-risc0", branch = "m1dnight/encoding-decoding-keypair", default-features = true, features = ["nif"] }
+# arm = { path = "/Users/christophe/RustroverProjects/arm-risc0/arm", default-features = true, features = ["nif"] }
+
+risc0-zkvm = { version = "3.0.3", features = [
+    "std",
+    "unstable",
+], default-features = false }
+
+rustler = "0.36.2"
+serde = { version = "1.0.197", default-features = false }
+serde_json = "1.0"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+k256 = { version = "=0.13.3", features = [
+    "arithmetic",
+    "serde",
+    "expose-field",
+    "std",
+    "ecdsa",
+    "hash2curve",
+], default-features = false }
+rand = "0.8"
+hex = "0.4.3"
