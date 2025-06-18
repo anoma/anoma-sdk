@@ -1,0 +1,114 @@
+name: Rustler CI
+
+on:
+  push:
+    # branches: ["main"]
+  pull_request:
+    # branches: ["main"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: NIF ${{ matrix.nif }} - ${{ matrix.job.target }} (${{ matrix.job.os }})
+    runs-on: ${{ matrix.job.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        nif: ["2.15"]
+        job:
+          # - { target: aarch64-unknown-linux-gnu, os: ubuntu-22.04, use-cross: true }
+          # - { target: aarch64-unknown-linux-musl, os: ubuntu-22.04, use-cross: true }
+          # - { target: arm-unknown-linux-gnueabihf, os: ubuntu-22.04, use-cross: true }
+          # - { target: riscv64gc-unknown-linux-gnu, os: ubuntu-22.04, use-cross: true }
+          # - { target: x86_64-pc-windows-msvc, os: windows-2022 }
+          # - { target: x86_64-pc-windows-gnu, os: windows-2022 }
+          # - { target: x86_64-unknown-linux-musl, os: ubuntu-22.04, use-cross: true }
+          - { target: aarch64-apple-darwin, os: macos-13 }
+          - { target: x86_64-apple-darwin, os: macos-13 }
+          - { target: x86_64-unknown-linux-gnu, os: ubuntu-22.04 }
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: restore dependencies cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            target
+          key: ${{ matrix.job.target }}-${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ matrix.job.target }}-${{ runner.os }}-
+
+      - name: Extract package version number
+        shell: bash
+        run: |
+          # Get the project version from mix.exs
+          echo "PROJECT_VERSION=$(sed -n 's/^  @version "\(.*\)"/\1/p' mix.exs | head -n1)" >> $GITHUB_ENV
+
+      - name: Sleep for arbitrary amount of seconds to avoid rate limiting the rust installer
+        shell: bash
+        run: |
+          sleep $((RANDOM % 11))
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          target: ${{ matrix.job.target }}
+
+      #----------------------------------------------------------------------------
+      # Build the arm_bindings crate
+
+      - name: Build `arm_bindings` repo
+        id: build-arm-bindings
+        uses: philss/rustler-precompiled-action@v1.1.4
+        with:
+          nif-version: ${{ matrix.nif }}
+          project-dir: "."
+          project-name: arm_bindings
+          project-version: ${{ env.PROJECT_VERSION }}
+          target: ${{ matrix.job.target }}
+          use-cross: ${{ matrix.job.use-cross }}
+
+      - name: Artifact upload `arm_bindings`
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.build-arm-bindings.outputs.file-name }}
+          path: ${{ steps.build-arm-bindings.outputs.file-path }}
+          overwrite: true
+
+      - name: Publish archives and packages `arm_bindings`
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ${{ steps.build-arm-bindings.outputs.file-path }}
+        if: startsWith(github.ref, 'refs/tags/')
+
+      #----------------------------------------------------------------------------
+      # Build the arm_bindings_test crate
+
+      - name: Build `arm_bindings_test` repo
+        id: build-arm-bindings-test
+        uses: philss/rustler-precompiled-action@v1.1.4
+        with:
+          nif-version: ${{ matrix.nif }}
+          project-dir: "."
+          project-name: arm_bindings_test
+          project-version: ${{ env.PROJECT_VERSION }}
+          target: ${{ matrix.job.target }}
+          use-cross: ${{ matrix.job.use-cross }}
+
+      - name: Artifact upload `arm_bindings_test`
+        uses: actions/upload-artifact@v4
+
+        with:
+          name: ${{ steps.build-arm-bindings-test.outputs.file-name }}
+          path: ${{ steps.build-arm-bindings-test.outputs.file-path }}
+          overwrite: true
+
+      - name: Publish archives and packages `arm_bindings_test`
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ${{ steps.build-arm-bindings-test.outputs.file-path }}
+        if: startsWith(github.ref, 'refs/tags/')
