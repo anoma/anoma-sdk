@@ -1,16 +1,18 @@
-defmodule Anoma.Zkvm do
+defmodule Anoma.Arm do
+  @moduledoc """
+  I define functions to deal with Anoma Resource Machine structs.
+  """
   use Rustler,
     otp_app: :anoma_sdk,
     crate: :zkvm
 
-
-  def testfunc(), do: :erlang.nif_error(:nif_not_loaded)
+  def testfunc, do: :erlang.nif_error(:nif_not_loaded)
   def echofunc(_resource), do: :erlang.nif_error(:nif_not_loaded)
   def prove(_a, _b), do: :erlang.nif_error(:nif_not_loaded)
   def verify(_proof_str), do: :erlang.nif_error(:nif_not_loaded)
 
   def test do
-    res = Anoma.Zkvm.testfunc()
-    Anoma.Zkvm.echofunc(res)
+    res = Anoma.Arm.testfunc()
+    Anoma.Arm.echofunc(res)
   end
 end
