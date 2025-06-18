@@ -1,0 +1,3 @@
+[submodule "native/aarm-risc0"]
+	path = native/aarm-risc0
+	url = git@github.com:anoma/aarm-risc0.git
