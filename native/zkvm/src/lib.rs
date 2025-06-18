@@ -1,55 +1,25 @@
-use crate::prover::generate_proof;
-use crate::prover::verify_proof;
-use std::io::Write;
-
-use risc0_zkvm::{Digest, Receipt};
-
-use rustler;
-
-use aarm::action::ForwarderCalldata;
-use aarm_core::resource::Resource;
-use rustler::{
-    nif, Atom, Binary, Decoder, Encoder, Env, Error, NifResult, NifStruct, OwnedBinary, Term,
-};
-
-use risc0_zkvm::sha::{Digestible, DIGEST_BYTES, DIGEST_WORDS};
-use std::ops::Deref;
-
-mod prover;
-
 //----------------------------------------------------------------------------//
 //                                Functions                                   //
 //----------------------------------------------------------------------------//
 
-#[nif]
-fn testfunc() -> Resource {
-    Resource::default()
-}
+use aarm_core::delta_proof::{DeltaWitness};
+#[rustler::nif]
+fn test_delta_witness() -> DeltaWitness {
+    // create a random delta witness
+    use k256::ecdsa::SigningKey;
+    use k256::elliptic_curve::rand_core::OsRng;
 
-#[nif]
-fn echofunc(resource_p: Resource) -> Resource {
-    resource_p
-}
+    let mut rng = OsRng;
+    let signing_key = SigningKey::random(&mut rng);
 
-#[nif]
-fn prove(a: u64, b: u64) -> String {
-    println!("params: {}, {}", a, b);
-    let (receipt, _number): (Receipt, u64) = generate_proof(a, b);
-
-    let serialized: String = serde_json::to_string(&receipt).unwrap();
-    serialized
-}
-
-#[nif]
-fn verify(receipt: String) -> bool {
-    match serde_json::from_str(&receipt) {
-        Ok(r) => {
-            return verify_proof(r);
-        }
-        _ => {
-            return false;
-        }
+    DeltaWitness {
+        signing_key: signing_key,
     }
+}
+
+#[rustler::nif]
+fn test_delta_witness(delta_witness: DeltaWitness) -> DeltaWitness {
+    delta_witness
 }
 
 rustler::init!("Elixir.Anoma.Arm");

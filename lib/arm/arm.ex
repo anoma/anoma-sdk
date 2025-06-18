@@ -6,13 +6,9 @@ defmodule Anoma.Arm do
     otp_app: :anoma_sdk,
     crate: :zkvm
 
-  def testfunc, do: :erlang.nif_error(:nif_not_loaded)
-  def echofunc(_resource), do: :erlang.nif_error(:nif_not_loaded)
-  def prove(_a, _b), do: :erlang.nif_error(:nif_not_loaded)
-  def verify(_proof_str), do: :erlang.nif_error(:nif_not_loaded)
 
-  def test do
-    res = Anoma.Arm.testfunc()
-    Anoma.Arm.echofunc(res)
-  end
+  def test_delta_witness, do: :erlang.nif_error(:nif_not_loaded)
+  def test_delta_witness(_delta_witness), do: :erlang.nif_error(:nif_not_loaded)
+
+
 end

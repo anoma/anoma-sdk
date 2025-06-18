@@ -11,7 +11,7 @@ defmodule Anoma.Arm.Resource do
     field :value_ref, [byte()]
     field :is_ephemeral, bool
     field :nonce, [byte()]
-    field :nullifier_key_commitment, {[byte()]}
+    field :nk_commitment, {[byte()]}
     field :rand_seed, [byte()]
   end
 end

@@ -7,9 +7,11 @@ name = "aarm"
 version = "0.1.0"
 dependencies = [
  "aarm_core",
+ "bincode",
  "k256",
  "rand 0.8.5",
  "risc0-zkvm",
+ "rustler",
  "serde",
 ]
 
@@ -3535,6 +3537,13 @@ dependencies = [
  "once_cell",
  "rustix",
  "windows-sys 0.59.0",
+]
+
+[[package]]
+name = "test_executable"
+version = "0.1.0"
+dependencies = [
+ "k256",
 ]
 
 [[package]]
