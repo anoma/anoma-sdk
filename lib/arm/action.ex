@@ -4,9 +4,15 @@ defmodule Anoma.Arm.Action do
   """
   use TypedStruct
 
+  alias Anoma.Arm.DeltaProof
+  alias Anoma.Arm.DeltaWitness
+
   typedstruct do
     field :compliance_units, [term()]
     field :logic_proofs, [term()]
-    field :resource_forwarder_calldata_pairs, [{term(), term()}]
+
+    field :resource_forwarder_calldata_pairs, [
+      {:proof, DeltaProof.t()} | {:witness, DeltaWitness.t()}
+    ]
   end
 end

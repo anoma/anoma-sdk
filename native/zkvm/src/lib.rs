@@ -2,9 +2,10 @@
 //                                Delta Witness                               //
 //----------------------------------------------------------------------------//
 
+use aarm::action::ForwarderCalldata;
 use aarm_core::delta_proof::DeltaWitness;
 use k256::ecdsa::SigningKey;
-use aarm::action::ForwarderCalldata;
+use std::env;
 
 #[rustler::nif]
 fn test_delta_witness() -> DeltaWitness {
@@ -88,10 +89,25 @@ use aarm_core::constants::COMMITMENT_TREE_DEPTH;
 
 #[rustler::nif]
 fn test_compliance_unit() -> ComplianceUnit {
-    ComplianceUnit{
-        proof: vec![42, 127, 203, 15, 89, 254, 33, 178, 91, 6],
-        instance: vec![42, 127, 203, 15, 89, 254, 33, 178, 91, 12]
-    }
+    let nonce = 1;
+    let nf_key = NullifierKey::default();
+    let nf_key_cm = nf_key.commit();
+    let mut consumed_resource = Resource {
+        logic_ref: TrivialLogicWitness::verifying_key(),
+        nk_commitment: nf_key_cm,
+        ..Default::default()
+    };
+    consumed_resource.nonce[0] = nonce;
+    let mut created_resource = consumed_resource.clone();
+    created_resource.nonce[10] = nonce;
+
+    let compliance_witness = ComplianceWitness::<COMMITMENT_TREE_DEPTH>::with_fixed_rcv(
+        consumed_resource.clone(),
+        nf_key.clone(),
+        created_resource.clone(),
+    );
+    let compliance_receipt = ComplianceUnit::prove(&compliance_witness);
+    compliance_receipt
 }
 #[rustler::nif]
 fn test_compliance_unit(compliance_unit: ComplianceUnit) -> ComplianceUnit {
@@ -104,11 +120,46 @@ fn test_compliance_unit(compliance_unit: ComplianceUnit) -> ComplianceUnit {
 
 #[rustler::nif]
 fn test_logic_proof() -> LogicProof {
-    LogicProof{
-        instance: vec![42, 127, 203, 15, 89, 254, 33, 178, 91, 6],
-        proof: vec![42, 127, 203, 15, 89, 254, 33, 178, 91, 7],
-        verifying_key: vec![42, 127, 203, 15, 89, 254, 33, 178, 91, 8],
+    let key = "RISC0_DEV_MODE";
+    match env::var(key) {
+        Ok(val) => println!("{key}: {val:?}"),
+        Err(e) => println!("couldn't interpret {key}: {e}"),
     }
+
+    let nonce = 1;
+
+    // LogicProof{
+    //     instance: vec![42, 127, 203, 15, 89, 254, 33, 178, 91, 6],
+    //     proof: vec![42, 127, 203, 15, 89, 254, 33, 178, 91, 7],
+    //     verifying_key: vec![42, 127, 203, 15, 89, 254, 33, 178, 91, 8],
+    // }
+    let nf_key = NullifierKey::default();
+    let nf_key_cm = nf_key.commit();
+    let mut consumed_resource = Resource {
+        logic_ref: TrivialLogicWitness::verifying_key(),
+        nk_commitment: nf_key_cm,
+        ..Default::default()
+    };
+    consumed_resource.nonce[0] = nonce;
+    let mut created_resource = consumed_resource.clone();
+    created_resource.nonce[10] = nonce;
+
+    let consumed_resource_nf = consumed_resource.nullifier(&nf_key).unwrap();
+    let created_resource_cm = created_resource.commitment();
+    let action_tree = MerkleTree::new(vec![
+        consumed_resource_nf.clone().into(),
+        created_resource_cm.clone().into(),
+    ]);
+    let consumed_resource_path = action_tree.generate_path(&consumed_resource_nf).unwrap();
+
+    let consumed_logic_witness = TrivialLogicWitness::new(
+        consumed_resource,
+        consumed_resource_path,
+        nf_key.clone(),
+        true,
+    );
+    let consumed_logic_proof = consumed_logic_witness.prove();
+    consumed_logic_proof
 }
 
 #[rustler::nif]
@@ -146,7 +197,7 @@ fn test_forwarder_calldata() -> ForwarderCalldata {
     ForwarderCalldata {
         untrusted_forwarder: [0u8; 20],
         input: vec![],
-        output: vec![]
+        output: vec![],
     }
 }
 
@@ -158,7 +209,7 @@ fn test_forwarder_calldata(forwarder_calldata: ForwarderCalldata) -> ForwarderCa
 //----------------------------------------------------------------------------//
 //                                Action                                      //
 //----------------------------------------------------------------------------//
-use aarm::action::{Action};
+use aarm::action::Action;
 use aarm::compliance_unit::ComplianceUnit;
 use aarm::logic_proof::{LogicProof, LogicProver};
 use aarm_core::action_tree::MerkleTree;
