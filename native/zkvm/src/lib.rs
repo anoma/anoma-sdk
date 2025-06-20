@@ -214,7 +214,7 @@ use aarm::compliance_unit::ComplianceUnit;
 use aarm::logic_proof::{LogicProof, LogicProver};
 use aarm_core::action_tree::MerkleTree;
 use aarm_core::compliance::ComplianceWitness;
-use aarm_core::nullifier_key::NullifierKey;
+use aarm_core::nullifier_key::{NullifierKey, NullifierKeyCommitment};
 use aarm_core::resource::Resource;
 use aarm_core::resource_logic::TrivialLogicWitness;
 
@@ -242,6 +242,24 @@ fn test_nullifier_key() -> NullifierKey {
 fn test_nullifier_key(nullifier_key: NullifierKey) -> NullifierKey {
     nullifier_key
 }
+
+//----------------------------------------------------------------------------//
+//                                Mullifier Key Commitment                    //
+//----------------------------------------------------------------------------//
+
+#[rustler::nif]
+fn test_nullifier_key_commitment() -> NullifierKeyCommitment {
+    let (_, test_nullifier_key_commitment) = NullifierKey::random_pair();
+    test_nullifier_key_commitment
+}
+
+#[rustler::nif]
+fn test_nullifier_key_commitment(
+    nullifier_key_commitment: NullifierKeyCommitment,
+) -> NullifierKeyCommitment {
+    nullifier_key_commitment
+}
+
 //----------------------------------------------------------------------------//
 //                                Transaction                                 //
 //----------------------------------------------------------------------------//

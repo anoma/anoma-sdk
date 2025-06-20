@@ -61,8 +61,13 @@ defmodule Anoma.Arm do
   def test_transaction, do: :erlang.nif_error(:nif_not_loaded)
   def test_transaction(_), do: :erlang.nif_error(:nif_not_loaded)
 
-  @spec test_nullifier_key :: [byte()]
-  @spec test_nullifier_key(term()) :: [byte()]
+  @spec test_nullifier_key :: {[byte()]}
+  @spec test_nullifier_key({[byte()]}) :: {[byte()]}
   def test_nullifier_key, do: :erlang.nif_error(:nif_not_loaded)
   def test_nullifier_key(_), do: :erlang.nif_error(:nif_not_loaded)
+
+  @spec test_nullifier_key_commitment :: {[byte()]}
+  @spec test_nullifier_key_commitment({[byte()]}) :: [byte()]
+  def test_nullifier_key_commitment, do: :erlang.nif_error(:nif_not_loaded)
+  def test_nullifier_key_commitment(_), do: :erlang.nif_error(:nif_not_loaded)
 end
