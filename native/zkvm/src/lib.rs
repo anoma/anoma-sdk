@@ -229,6 +229,20 @@ fn test_action(action: Action) -> Action {
 }
 
 //----------------------------------------------------------------------------//
+//                                Mullifier Key                               //
+//----------------------------------------------------------------------------//
+
+#[rustler::nif]
+fn test_nullifier_key() -> NullifierKey {
+    let (nullifier_key, _) = NullifierKey::random_pair();
+    nullifier_key
+}
+
+#[rustler::nif]
+fn test_nullifier_key(nullifier_key: NullifierKey) -> NullifierKey {
+    nullifier_key
+}
+//----------------------------------------------------------------------------//
 //                                Transaction                                 //
 //----------------------------------------------------------------------------//
 
