@@ -214,6 +214,7 @@ use aarm::compliance_unit::ComplianceUnit;
 use aarm::logic_proof::{LogicProof, LogicProver};
 use aarm_core::action_tree::MerkleTree;
 use aarm_core::compliance::ComplianceWitness;
+use aarm_core::merkle_path::{Leaf, MerklePath};
 use aarm_core::nullifier_key::{NullifierKey, NullifierKeyCommitment};
 use aarm_core::resource::Resource;
 use aarm_core::resource_logic::TrivialLogicWitness;
@@ -258,6 +259,61 @@ fn test_nullifier_key_commitment(
     nullifier_key_commitment: NullifierKeyCommitment,
 ) -> NullifierKeyCommitment {
     nullifier_key_commitment
+}
+
+//----------------------------------------------------------------------------//
+//                                Merkle Tree                                 //
+//----------------------------------------------------------------------------//
+
+#[rustler::nif]
+fn test_leaf() -> Leaf {
+    Leaf::from(vec![0u8; 32])
+}
+
+#[rustler::nif]
+fn test_leaf(leaf: Leaf) -> Leaf {
+    leaf
+}
+
+#[rustler::nif]
+fn test_merkle_path() -> MerklePath<223> {
+    MerklePath::default()
+}
+
+#[rustler::nif]
+fn test_merkle_path(merkle_path: MerklePath<123>) -> MerklePath<123> {
+    merkle_path
+}
+
+//----------------------------------------------------------------------------//
+//                                Compliance Witness                          //
+//----------------------------------------------------------------------------//
+
+#[rustler::nif]
+fn test_compliance_witness() -> ComplianceWitness<32> {
+    let nonce = 1;
+    let nf_key = NullifierKey::default();
+    let nf_key_cm = nf_key.commit();
+    let mut consumed_resource = Resource {
+        logic_ref: TrivialLogicWitness::verifying_key(),
+        nk_commitment: nf_key_cm,
+        ..Default::default()
+    };
+    consumed_resource.nonce[0] = nonce;
+    let mut created_resource = consumed_resource.clone();
+    created_resource.nonce[10] = nonce;
+
+    let compliance_witness = ComplianceWitness::<COMMITMENT_TREE_DEPTH>::with_fixed_rcv(
+        consumed_resource.clone(),
+        nf_key.clone(),
+        created_resource.clone(),
+    );
+    compliance_witness
+}
+
+#[rustler::nif]
+fn test_compliance_witness(compliance_witness: ComplianceWitness<32>) -> ComplianceWitness<32> {
+    compliance_witness
 }
 
 //----------------------------------------------------------------------------//

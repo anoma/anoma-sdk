@@ -1,4 +1,4 @@
-defmodule AnomaSdk.MixProject do
+defmodule Anoma.MixProject do
   use Mix.Project
 
   def project do

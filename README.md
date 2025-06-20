@@ -1,4 +1,4 @@
-# AnomaSdk
+# Anoma
 
 
 ## ZKVM Directory Structure

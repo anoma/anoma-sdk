@@ -4,12 +4,20 @@ defmodule Anoma.Arm.NullifierKey do
   """
   use TypedStruct
 
-  use AnomaSdk
+  alias Anoma.Arm.NullifierKey
+  alias Anoma.Arm.NullifierKeyCommitment
+
+  @typedoc """
+  The type of a nullifierkey.  32 bytes.
+
+  This is a tuple to map properly on the NIF struct.
+  """
+  @type t :: {[byte()]}
 
   @doc """
   Generate a new nullifier key based on 32 bytes.
   """
-  @spec new(<<_::256>>) :: nullifier_key()
+  @spec new(<<_::256>>) :: NullifierKey.t()
   def new(bytes) do
     bin_list = :binary.bin_to_list(bytes)
     {bin_list}
@@ -18,7 +26,7 @@ defmodule Anoma.Arm.NullifierKey do
   @doc """
   Create a commitment for the given nullifier key.
   """
-  @spec commit(nullifier_key()) :: nullifier_key_commitment()
+  @spec commit(NullifierKey.t()) :: NullifierKeyCommitment.t()
   def commit({bin_list}) do
     hash = :crypto.hash(:sha256, bin_list)
     hash_bin_list = :binary.bin_to_list(hash)
@@ -28,7 +36,7 @@ defmodule Anoma.Arm.NullifierKey do
   @doc """
   Generate a random nullifier key and its commitment.
   """
-  @spec random_pair :: {nullifier_key(), nullifier_key_commitment()}
+  @spec random_pair :: {NullifierKey.t(), NullifierKeyCommitment.t()}
   def random_pair do
     bytes = :crypto.strong_rand_bytes(32)
     key = new(bytes)

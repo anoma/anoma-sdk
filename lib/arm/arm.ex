@@ -8,10 +8,13 @@ defmodule Anoma.Arm do
 
   alias Anoma.Arm.Action
   alias Anoma.Arm.ComplianceUnit
+  alias Anoma.Arm.ComplianceWitness
   alias Anoma.Arm.DeltaProof
   alias Anoma.Arm.DeltaWitness
   alias Anoma.Arm.ForwarderCalldata
+  alias Anoma.Arm.Leaf
   alias Anoma.Arm.LogicProof
+  alias Anoma.Arm.MerklePath
   alias Anoma.Arm.Resource
   alias Anoma.Arm.Transaction
 
@@ -70,4 +73,16 @@ defmodule Anoma.Arm do
   @spec test_nullifier_key_commitment({[byte()]}) :: [byte()]
   def test_nullifier_key_commitment, do: :erlang.nif_error(:nif_not_loaded)
   def test_nullifier_key_commitment(_), do: :erlang.nif_error(:nif_not_loaded)
+
+  @spec test_leaf :: Leaf.t()
+  def test_leaf, do: :erlang.nif_error(:nif_not_loaded)
+  def test_leaf(_), do: :erlang.nif_error(:nif_not_loaded)
+
+  @spec test_merkle_path :: MerklePath.t()
+  def test_merkle_path, do: :erlang.nif_error(:nif_not_loaded)
+  def test_merkle_path(_), do: :erlang.nif_error(:nif_not_loaded)
+
+  @spec test_compliance_witness :: ComplianceWitness.t()
+  def test_compliance_witness, do: :erlang.nif_error(:nif_not_loaded)
+  def test_compliance_witness(_), do: :erlang.nif_error(:nif_not_loaded)
 end

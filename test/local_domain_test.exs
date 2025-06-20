@@ -1,8 +1,8 @@
-defmodule AnomaSdkTest do
+defmodule AnomaTest do
   use ExUnit.Case
-  doctest AnomaSdk
+  doctest Anoma
 
   test "greets the world" do
-    assert AnomaSdk.hello() == :world
+    assert Anoma.hello() == :world
   end
 end
