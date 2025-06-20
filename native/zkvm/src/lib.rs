@@ -2,7 +2,7 @@
 //                                Delta Witness                               //
 //----------------------------------------------------------------------------//
 
-use aarm::action::ForwarderCalldata;
+use aarm::action::{create_multiple_actions, ForwarderCalldata};
 use aarm_core::delta_proof::DeltaWitness;
 use k256::ecdsa::SigningKey;
 use std::env;
@@ -51,7 +51,7 @@ fn test_delta_proof(delta_proof: DeltaProof) -> DeltaProof {
 //                                Delta                                       //
 //----------------------------------------------------------------------------//
 
-use aarm::transaction::Delta;
+use aarm::transaction::{Delta, Transaction};
 
 #[rustler::nif]
 fn test_delta_with_witness() -> Delta {
@@ -227,4 +227,16 @@ fn test_action() -> Action {
 fn test_action(action: Action) -> Action {
     action
 }
+
+//----------------------------------------------------------------------------//
+//                                Transaction                                 //
+//----------------------------------------------------------------------------//
+
+#[rustler::nif]
+fn test_transaction() -> Transaction {
+    let (actions, delta_witness) = create_multiple_actions(5);
+    let tx = Transaction::new(actions, Delta::Witness(delta_witness));
+    tx
+}
+
 rustler::init!("Elixir.Anoma.Arm");
