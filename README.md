@@ -1,5 +1,13 @@
 # Anoma
 
+The Anoma SDK allows users to build their own applications that run on top of the Anoma ecosystem.
+
+## Getting Started
+
+## Contributing
+
+##
+
 
 ## ZKVM Directory Structure
 
