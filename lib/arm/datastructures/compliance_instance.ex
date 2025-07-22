@@ -6,13 +6,6 @@ defmodule Anoma.Arm.ComplianceInstance do
   use TypedStruct
   use Anoma.Arm.Inspect
 
-  alias Anoma.Arm.ComplianceWitness
-  alias Anoma.Arm.MerklePath
-  alias Anoma.Arm.NullifierKey
-  alias Anoma.Arm.Resource
-
-  import Anoma.Arm.Constants
-
   typedstruct do
     field :consumed_nullifier, [byte()]
     field :consumed_logic_ref, [byte()]

@@ -522,4 +522,9 @@ fn test_transaction() -> Transaction {
     tx
 }
 
+#[rustler::nif]
+fn test_transaction(transaction: Transaction) -> Transaction {
+    transaction
+}
+
 rustler::init!("Elixir.Anoma.Arm");
