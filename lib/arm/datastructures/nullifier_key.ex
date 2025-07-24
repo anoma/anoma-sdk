@@ -42,7 +42,7 @@ defmodule Anoma.Arm.NullifierKey do
   end
 
   @doc """
-  Generate a random nullifier key and its commitment.
+  Create a random pair of keys
   """
   @spec random_pair :: {NullifierKey.t(), NullifierKeyCommitment.t()}
   def random_pair do

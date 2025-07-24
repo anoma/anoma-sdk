@@ -21,6 +21,7 @@ defmodule Anoma.Arm.ComplianceWitness do
     field :rcv, [byte()]
   end
 
+  @doc false
   @spec with_fixed_rcv(Resource.t(), NullifierKey.t(), Resource.t()) :: t()
   def with_fixed_rcv(consumed, nullifier_key, created) do
     %ComplianceWitness{

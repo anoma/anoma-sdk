@@ -11,6 +11,7 @@ defmodule Anoma.Arm.Inspect do
       defimpl Inspect, for: __MODULE__ do
         import Inspect.Algebra
 
+        @doc false
         def inspect(resource, opts) do
           concat(["##{__MODULE__}<", I.format_fields(resource, opts), line(), ">"])
         end
@@ -59,10 +60,12 @@ defmodule Anoma.Arm.Inspect do
     size(bytes)
   end
 
+  @doc false
   def size(bin) when is_binary(bin) do
     byte_size(bin)
   end
 
+  @doc false
   def size(xs) when is_list(xs) do
     if Enum.all?(xs, &is_integer/1) do
       Enum.count(xs)
@@ -71,5 +74,6 @@ defmodule Anoma.Arm.Inspect do
     end
   end
 
+  @doc false
   def size(_), do: nil
 end
