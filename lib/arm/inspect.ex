@@ -71,5 +71,6 @@ defmodule Anoma.Arm.Inspect do
     end
   end
 
+  @doc false
   def size(_), do: nil
 end

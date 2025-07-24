@@ -16,8 +16,9 @@ defmodule Anoma.Test.Native.ArmTest do
   alias Anoma.Arm.TrivialLogicWitness
 
   test "foo" do
-    IO.puts System.get_env("RISC0_DEV_MODE")
+    IO.puts(System.get_env("RISC0_DEV_MODE"))
   end
+
   describe "delta witness" do
     # return a `DeltaWitness` struct.
     test "delta_witness/0" do
