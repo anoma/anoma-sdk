@@ -25,6 +25,7 @@ defmodule Anoma.Arm.Transaction do
     transaction
   end
 
+  @doc false
   def generate_delta_proof(%{delta_proof: {:witness, _}} = transaction) do
     {:witness, witness} = transaction.delta_proof
     message = delta_message(transaction)
