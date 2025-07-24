@@ -61,6 +61,9 @@ defmodule Anoma.Arm.Constants do
   @spec initial_root :: [byte()]
   def initial_root, do: @initial_root
 
+  @doc """
+  Returns a padding leaf.
+  """
   @spec padding_leaf :: Leaf.t()
   def padding_leaf, do: {@padding_leaf}
 

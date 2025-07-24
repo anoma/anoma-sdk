@@ -35,6 +35,7 @@ defmodule Anoma.Arm.MerkleTree do
     path_of(tree, {bin2binlist(leaf)})
   end
 
+  @doc false
   def path_of(%MerkleTree{} = tree, leaf) do
     tree = pad_tree(tree)
     position = Enum.find_index(tree.leaves, &(&1 == leaf))
@@ -47,9 +48,11 @@ defmodule Anoma.Arm.MerkleTree do
     %MerklePath{auth_path: path}
   end
 
+  @doc false
   @spec generate_path([Leaf.t()], non_neg_integer()) :: [MerklePath.path_node()]
   def generate_path([_], _), do: []
 
+  @doc false
   @spec generate_path(term(), term()) :: term()
   def generate_path(leaves, position) do
     sibling_on_my_left? = rem(position, 2) != 0
