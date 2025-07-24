@@ -1,0 +1,15 @@
+[package]
+name = "host"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "zkvm"
+crate-type = ["cdylib"]
+
+
+[dependencies]
+methods = { path = "../methods" }
+risc0-zkvm = { version = "^2.1.0" }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+serde = "1.0"
