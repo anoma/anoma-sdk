@@ -135,6 +135,7 @@ defmodule Anoma.Examples.SimpleTransaction do
     {actions, compressed_witness}
   end
 
+  @spec create_transaction(non_neg_integer()) :: Transaction.t()
   def create_transaction(action_count) do
     # create the actions
     {actions, witness} = create_actions(action_count)

@@ -5,8 +5,8 @@ defmodule Anoma.Arm.ComplianceUnit do
   use TypedStruct
   use Anoma.Arm.Inspect
 
-  alias Anoma.Arm.ComplianceInstance
   alias Anoma.Arm
+  alias Anoma.Arm.ComplianceInstance
 
   typedstruct do
     field :instance, [byte()]

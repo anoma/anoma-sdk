@@ -41,9 +41,6 @@ defmodule Anoma.Arm.NullifierKey do
     {hash_bin_list}
   end
 
-  @doc """
-  Generate a random nullifier key and its commitment.
-  """
   @spec random_pair :: {NullifierKey.t(), NullifierKeyCommitment.t()}
   def random_pair do
     bytes = :crypto.strong_rand_bytes(32)

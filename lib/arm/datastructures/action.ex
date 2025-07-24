@@ -4,10 +4,10 @@ defmodule Anoma.Arm.Action do
   """
   use TypedStruct
 
+  alias Anoma.Arm.ComplianceInstance
+  alias Anoma.Arm.ComplianceUnit
   alias Anoma.Arm.DeltaProof
   alias Anoma.Arm.DeltaWitness
-  alias Anoma.Arm.ComplianceUnit
-  alias Anoma.Arm.ComplianceInstance
   alias Anoma.Arm.LogicProof
 
   typedstruct do
