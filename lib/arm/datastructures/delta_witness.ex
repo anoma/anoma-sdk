@@ -38,8 +38,8 @@ defmodule Anoma.Arm.DeltaWitness do
   # Encoding a LogicProof means that the proof, verifying_key and the instance
   # have to be represented as hexadecimal strings of the binaries.
   defimpl Jason.Encoder, for: [DeltaWitness] do
+    @doc false
     @spec encode(DeltaWitness.t(), Jason.Encode.opts()) :: iodata()
-
     def encode(struct, opts) do
       struct
       |> Map.drop([:__struct__])

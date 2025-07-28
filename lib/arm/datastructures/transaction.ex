@@ -49,6 +49,7 @@ defmodule Anoma.Arm.Transaction do
   # Encoding a LogicProof means that the proof, verifying_key and the instance
   # have to be represented as hexadecimal strings of the binaries.
   defimpl Jason.Encoder, for: [Transaction] do
+    @doc false
     @spec encode(Transaction.t(), Jason.Encode.opts()) :: iodata()
     def encode(struct, opts) do
       struct

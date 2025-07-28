@@ -32,6 +32,7 @@ defmodule Anoma.Arm.ComplianceUnit do
   # Encoding a ComplianceUnit means that the proof and the instance have to be
   # represented as hexadecimal strings of the binaries.
   defimpl Jason.Encoder, for: [ComplianceUnit] do
+    @doc false
     @spec encode(ComplianceUnit.t(), Jason.Encode.opts()) :: iodata()
     def encode(struct, opts) do
       struct

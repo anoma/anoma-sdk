@@ -21,6 +21,7 @@ defmodule Anoma.Arm.LogicProof do
   # have to be represented as hexadecimal strings of the binaries.
   defimpl Jason.Encoder, for: [LogicProof] do
     @spec encode(LogicProof.t(), Jason.Encode.opts()) :: iodata()
+    @doc false
     def encode(struct, opts) do
       struct
       |> Map.drop([:__struct__])
