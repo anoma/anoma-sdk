@@ -26,7 +26,6 @@ defmodule Anoma.Arm do
   """
   @spec prove(ComplianceWitness.t()) :: ComplianceUnit.t()
 
-  @doc false
   def prove(_), do: :erlang.nif_error(:nif_not_loaded)
 
   @doc """
@@ -34,7 +33,6 @@ defmodule Anoma.Arm do
   """
   @spec prove_trivial_logic_witness(TrivialLogicWitness.t()) :: LogicProof.t()
 
-  @doc false
   def prove_trivial_logic_witness(_), do: :erlang.nif_error(:nif_not_loaded)
 
   @doc """
@@ -209,7 +207,7 @@ defmodule Anoma.Arm do
 
   @spec test :: term()
   @spec test(term()) :: term()
-  
+
   @doc false
   def test, do: :erlang.nif_error(:nif_not_loaded)
 
