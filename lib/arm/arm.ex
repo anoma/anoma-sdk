@@ -208,8 +208,9 @@ defmodule Anoma.Arm do
   def test_trivial_logic_witness(_), do: :erlang.nif_error(:nif_not_loaded)
 
   @spec test :: term()
-  @doc false
   @spec test(term()) :: term()
+  
+  @doc false
   def test, do: :erlang.nif_error(:nif_not_loaded)
 
   @doc false

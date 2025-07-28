@@ -11,6 +11,7 @@ defmodule Anoma.Arm.ComplianceUnit do
   alias Anoma.Arm.ComplianceUnit
 
   import Anoma.Util
+  alias Anoma.Arm.ComplianceInstance
 
   typedstruct do
     field :instance, [byte()]
