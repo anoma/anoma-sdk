@@ -209,7 +209,7 @@ defmodule Anoma.Arm do
 
   @spec test :: term()
   @spec test(term()) :: term()
-
+  
   @doc false
   def test, do: :erlang.nif_error(:nif_not_loaded)
 

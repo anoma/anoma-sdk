@@ -31,4 +31,20 @@ defmodule Anoma.Arm.DeltaWitness do
     binary = Util.to_fixed_bitstring(sum)
     %DeltaWitness{signing_key: binary}
   end
+
+  # ----------------------------------------------------------------------------
+  # JSON encoding
+
+  # Encoding a LogicProof means that the proof, verifying_key and the instance
+  # have to be represented as hexadecimal strings of the binaries.
+  defimpl Jason.Encoder, for: [DeltaWitness] do
+    @spec encode(DeltaWitness.t(), Jason.Encode.opts()) :: iodata()
+
+    def encode(struct, opts) do
+      struct
+      |> Map.drop([:__struct__])
+      |> Map.update!(:signing_key, &Base.encode16/1)
+      |> Jason.Encode.map(opts)
+    end
+  end
 end

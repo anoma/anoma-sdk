@@ -8,9 +8,10 @@ defmodule Anoma.Arm.Transaction do
   alias Anoma.Arm.Action
   alias Anoma.Arm.DeltaProof
   alias Anoma.Arm.DeltaWitness
+  alias Anoma.Arm.Transaction
 
   typedstruct do
-    field :actions, [Action.t()]
+    field :actions, [Action.t()], default: []
     field :delta_proof, {:proof, DeltaProof.t()} | {:witness, DeltaWitness.t()}
   end
 
@@ -40,5 +41,28 @@ defmodule Anoma.Arm.Transaction do
   def delta_message(transaction) do
     transaction.actions
     |> Enum.flat_map(&Action.delta_message/1)
+  end
+
+  # ----------------------------------------------------------------------------
+  # JSON encoding
+
+  # Encoding a LogicProof means that the proof, verifying_key and the instance
+  # have to be represented as hexadecimal strings of the binaries.
+  defimpl Jason.Encoder, for: [Transaction] do
+    @spec encode(Transaction.t(), Jason.Encode.opts()) :: iodata()
+    def encode(struct, opts) do
+      struct
+      |> Map.drop([:__struct__])
+      |> Map.update!(:delta_proof, &encode_delta_proof/1)
+      |> Jason.Encode.map(opts)
+    end
+
+    defp encode_delta_proof({:proof, delta_proof}) do
+      delta_proof
+    end
+
+    defp encode_delta_proof({:witness, delta_witness}) do
+      delta_witness
+    end
   end
 end

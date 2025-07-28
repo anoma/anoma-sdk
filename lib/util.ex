@@ -68,4 +68,26 @@ defmodule Anoma.Util do
   def bin2binlist(binary) do
     :binary.bin_to_list(binary)
   end
+
+  @doc """
+  Turns a binlist into a binary.
+
+  A binlist is {[0,0,0]}.
+  A binary is <<0,0,0>>.
+
+  ## Examples
+
+      iex> Anoma.Util.binlist2bin({[72, 101, 108, 108, 111]})
+      "Hello"
+
+      iex> Anoma.Util.binlist2bin({[0, 1, 2, 3]})
+      <<0, 1, 2, 3>>
+  """
+  @spec binlist2hex([byte()] | {[byte()]}) :: String.t()
+  def binlist2hex(bin_list) do
+    case bin_list do
+      {binlist} -> binlist2bin(binlist)
+      binlist -> :binary.list_to_bin(binlist)
+    end
+  end
 end

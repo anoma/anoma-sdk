@@ -6,6 +6,11 @@ defmodule Anoma.Arm.ComplianceUnit do
   use Anoma.Arm.Inspect
 
   alias Anoma.Arm
+  alias Anoma.Arm
+  alias Anoma.Arm.ComplianceInstance
+  alias Anoma.Arm.ComplianceUnit
+
+  import Anoma.Util
   alias Anoma.Arm.ComplianceInstance
 
   typedstruct do
@@ -19,5 +24,21 @@ defmodule Anoma.Arm.ComplianceUnit do
   @spec instance(t()) :: ComplianceInstance.t()
   def instance(compliance_unit) do
     Arm.unit_instance(compliance_unit)
+  end
+
+  # ----------------------------------------------------------------------------
+  # JSON encoding
+
+  # Encoding a ComplianceUnit means that the proof and the instance have to be
+  # represented as hexadecimal strings of the binaries.
+  defimpl Jason.Encoder, for: [ComplianceUnit] do
+    @spec encode(ComplianceUnit.t(), Jason.Encode.opts()) :: iodata()
+    def encode(struct, opts) do
+      struct
+      |> Map.drop([:__struct__])
+      |> Map.update(:proof, "", &Base.encode16(binlist2bin(&1)))
+      |> Map.update(:instance, "", &Base.encode16(binlist2bin(&1)))
+      |> Jason.Encode.map(opts)
+    end
   end
 end

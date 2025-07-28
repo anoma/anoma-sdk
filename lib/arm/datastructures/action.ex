@@ -11,8 +11,9 @@ defmodule Anoma.Arm.Action do
   alias Anoma.Arm.LogicProof
 
   typedstruct do
-    field :compliance_units, [ComplianceUnit.t()]
-    field :logic_proofs, [LogicProof.t()]
+    @derive Jason.Encoder
+    field :compliance_units, [ComplianceUnit.t()], default: []
+    field :logic_proofs, [LogicProof.t()], default: []
 
     field :resource_forwarder_calldata_pairs, [
       {:proof, DeltaProof.t()} | {:witness, DeltaWitness.t()}
