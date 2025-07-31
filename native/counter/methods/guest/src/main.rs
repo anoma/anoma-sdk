@@ -1,13 +1,13 @@
 use risc0_zkvm::guest::env;
+use counter::{CounterWitness, LogicCircuit};
 
 fn main() {
-    // TODO: Implement your guest code here
-
     // read the input
-    let input: u32 = env::read();
+    let witness: CounterWitness = env::read();
 
-    // TODO: do something with the input
+    // process constraints
+    let instance = witness.constrain();
 
     // write public output to the journal
-    env::commit(&input);
+    env::commit(&instance);
 }

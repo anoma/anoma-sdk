@@ -1,15 +1,17 @@
+use arm::action_tree::MerkleTree;
 use arm::compliance_unit::ComplianceUnit;
 use arm::logic_proof::{LogicProof, LogicProver};
-use arm::action_tree::MerkleTree;
 pub use arm::resource_logic::LogicCircuit;
 use arm::{
     action_tree::ACTION_TREE_DEPTH, compliance::ComplianceWitness,
-    constants::COMMITMENT_TREE_DEPTH, merkle_path::MerklePath, nullifier_key::NullifierKey,
+    merkle_path::MerklePath, merkle_path::COMMITMENT_TREE_DEPTH, nullifier_key::NullifierKey,
     resource::Resource,
 };
 use methods::{METHOD_ELF, METHOD_ID};
 use rand::Rng;
 use serde::{Deserialize, Serialize};
+use risc0_zkvm::Digest;
+
 //----------------------------------------------------------------------------//
 //                                Structs                                     //
 //----------------------------------------------------------------------------//
@@ -48,8 +50,8 @@ impl LogicProver for CounterLogic {
         METHOD_ELF
     }
 
-    fn verifying_key() -> Vec<u8> {
-        convert_image_id_to_bytes(&METHOD_ID)
+    fn verifying_key() -> Digest {
+        *METHOD_ID
     }
 
     fn witness(&self) -> &Self::Witness {
