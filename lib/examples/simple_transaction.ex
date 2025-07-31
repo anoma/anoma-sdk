@@ -39,9 +39,12 @@ defmodule Anoma.Examples.SimpleTransaction do
       rand_seed: List.duplicate(0, 32)
     }
 
+    # create the nullifiers for the consumed resources
+    consumed_resource_nf = Resource.nullifier(consumed, nullifier_key) |> tap(&IO.inspect(&1, label: "consumed_resource_nf"))
+
     # the consumed resource is the same as the created one.
-    created_nonce = Enum.take(consumed.nonce, 10) ++ Enum.take(consumed.nonce, 22)
-    created = %{consumed | nonce: created_nonce}
+    # except the nonce, which is the nullifier from the consumed resource.
+    created = %{consumed | nonce: consumed_resource_nf}
 
     # the nonce of the created resource is the first 10 bytes of the consumed
     # appended with the first 22 bytes of the nonce.
@@ -54,9 +57,6 @@ defmodule Anoma.Examples.SimpleTransaction do
     compliance_witness = ComplianceWitness.with_fixed_rcv(consumed, nullifier_key, created)
 
     compliance_receipt = Anoma.Arm.prove(compliance_witness)
-
-    # create the nullifiers for the consumed resources
-    consumed_resource_nf = Resource.nullifier(consumed, nullifier_key)
 
     # create the commitment for the created resources
     created_resource_cm = Resource.commitment(created)
