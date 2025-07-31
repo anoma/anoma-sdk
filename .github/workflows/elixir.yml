@@ -1,0 +1,82 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Elixir CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: build and test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: "true"
+
+      - name: set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          version-type: "strict"
+          version-file: ".tool-versions"
+
+      #----------------------------------------------------------------------------
+      # Restore the cache.
+      #
+      # Note that this includes the Rust output because otherwise the action
+      # takes +- 35 minutes.
+
+      - name: restore dependencies cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            deps
+            _build/test/lib/anoma_sdk/native
+            _build/dev/lib/anoma_sdk/native
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-mix-
+
+      #----------------------------------------------------------------------------
+      # Fetch and compile dependencies
+
+      - name: install dependencies
+        run: mix deps.get
+
+      - name: compile deps (test)
+        run: MIX_ENV=test mix compile --warnings-as-errors
+
+      - name: compile deps (dev)
+        run: MIX_ENV=dev mix compile --warnings-as-errors
+
+      #----------------------------------------------------------------------------
+      # Run the tests
+
+      - name: run tests
+        env:
+          RISC0_DEV_MODE: "true"
+        run: RISC0_DEV_MODE=true MIX_ENV=test mix test
+
+      #----------------------------------------------------------------------------
+      # Lint
+
+      - name: credo
+        run: mix credo --strict
+
+      - name: check formatting
+        run: mix format --check-formatted
+
+      - name: check formatting
+        run: mix dialyzer
+
+      - name: check dependencies
+        run: mix deps.unlock --check-unused
