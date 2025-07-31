@@ -664,19 +664,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "counter_lib"
+name = "counter"
 version = "0.1.0"
 dependencies = [
  "arm",
- "hex",
- "k256",
- "methods",
- "rand 0.8.5",
- "risc0-zkvm",
- "rustler",
  "serde",
- "serde_json",
- "tracing-subscriber 0.3.19",
 ]
 
 [[package]]
@@ -2079,13 +2071,6 @@ dependencies = [
  "log",
  "objc",
  "paste",
-]
-
-[[package]]
-name = "methods"
-version = "0.1.0"
-dependencies = [
- "risc0-build",
 ]
 
 [[package]]

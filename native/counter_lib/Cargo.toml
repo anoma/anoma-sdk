@@ -17,4 +17,4 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 k256 = { version = "=0.13.3", features = ["arithmetic", "serde", "expose-field", "std", "ecdsa", "hash2curve"], default-features = false }
 rand = "0.8"
 hex = "0.4.3"
-methods = { path = "../counter/methods" }
+methods = { path = "../counter_logic_circuit/methods" }
