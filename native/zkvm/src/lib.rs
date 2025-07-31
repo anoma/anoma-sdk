@@ -4,7 +4,7 @@
 
 #[rustler::nif]
 fn prove(compliance_witness: ComplianceWitness<COMMITMENT_TREE_DEPTH>) -> ComplianceUnit {
-    ComplianceUnit::prove(&compliance_witness)
+    ComplianceUnit::create(&compliance_witness)
 }
 
 #[rustler::nif]
@@ -30,8 +30,8 @@ fn unit_instance(unit: ComplianceUnit) -> ComplianceInstance {
 //                                Delta Witness                               //
 //----------------------------------------------------------------------------//
 
-use aarm::action::{create_multiple_actions, ForwarderCalldata};
-use aarm_core::delta_proof::DeltaWitness;
+use arm::action::{create_multiple_actions, ForwarderCalldata};
+use arm::delta_proof::DeltaWitness;
 use k256::ecdsa::SigningKey;
 use std::env;
 
@@ -58,7 +58,7 @@ fn test_delta_witness(delta_witness: DeltaWitness) -> DeltaWitness {
 //                                Delta Proof                                 //
 //----------------------------------------------------------------------------//
 
-use aarm_core::delta_proof::DeltaProof;
+use arm::delta_proof::DeltaProof;
 #[rustler::nif]
 fn test_delta_proof() -> DeltaProof {
     use k256::elliptic_curve::rand_core::OsRng;
@@ -79,7 +79,7 @@ fn test_delta_proof(delta_proof: DeltaProof) -> DeltaProof {
 //                                Delta                                       //
 //----------------------------------------------------------------------------//
 
-use aarm::transaction::{Delta, Transaction};
+use arm::transaction::{Delta, Transaction};
 
 #[rustler::nif]
 fn test_delta_with_witness() -> Delta {
@@ -113,7 +113,7 @@ fn test_delta_with_proof() -> Delta {
 //                                Compliance Unit                             //
 //----------------------------------------------------------------------------//
 
-use aarm_core::constants::COMMITMENT_TREE_DEPTH;
+use arm::merkle_path::COMMITMENT_TREE_DEPTH;
 
 #[rustler::nif]
 fn test_compliance_unit() -> ComplianceUnit {
@@ -121,20 +121,21 @@ fn test_compliance_unit() -> ComplianceUnit {
     let nf_key = NullifierKey::default();
     let nf_key_cm = nf_key.commit();
     let mut consumed_resource = Resource {
-        logic_ref: TrivialLogicWitness::verifying_key(),
+        logic_ref: TrivialLogicWitness::verifying_key_as_bytes(),
         nk_commitment: nf_key_cm,
         ..Default::default()
     };
     consumed_resource.nonce[0] = nonce;
     let mut created_resource = consumed_resource.clone();
-    created_resource.nonce[10] = nonce;
+    let consumed_resource_nf = consumed_resource.nullifier(&nf_key).unwrap();
+    created_resource.set_nonce(consumed_resource_nf.clone());
 
     let compliance_witness = ComplianceWitness::<COMMITMENT_TREE_DEPTH>::with_fixed_rcv(
         consumed_resource.clone(),
         nf_key.clone(),
         created_resource.clone(),
     );
-    let compliance_receipt = ComplianceUnit::prove(&compliance_witness);
+    let compliance_receipt = ComplianceUnit::create(&compliance_witness);
     compliance_receipt
 }
 #[rustler::nif]
@@ -152,20 +153,22 @@ fn test_compliance_instance() -> ComplianceInstance {
     let nf_key = NullifierKey::default();
     let nf_key_cm = nf_key.commit();
     let mut consumed_resource = Resource {
-        logic_ref: TrivialLogicWitness::verifying_key(),
+        logic_ref: TrivialLogicWitness::verifying_key_as_bytes(),
         nk_commitment: nf_key_cm,
         ..Default::default()
     };
     consumed_resource.nonce[0] = nonce;
     let mut created_resource = consumed_resource.clone();
-    created_resource.nonce[10] = nonce;
+    let consumed_resource_nf = consumed_resource.nullifier(&nf_key).unwrap();
+
+    created_resource.set_nonce(consumed_resource_nf.clone());
 
     let compliance_witness = ComplianceWitness::<COMMITMENT_TREE_DEPTH>::with_fixed_rcv(
         consumed_resource.clone(),
         nf_key.clone(),
         created_resource.clone(),
     );
-    let compliance_receipt = ComplianceUnit::prove(&compliance_witness);
+    let compliance_receipt = ComplianceUnit::create(&compliance_witness);
     compliance_receipt.get_instance()
 }
 #[rustler::nif]
@@ -195,13 +198,12 @@ fn test_logic_proof() -> LogicProof {
     let nf_key = NullifierKey::default();
     let nf_key_cm = nf_key.commit();
     let mut consumed_resource = Resource {
-        logic_ref: TrivialLogicWitness::verifying_key(),
+        logic_ref: TrivialLogicWitness::verifying_key_as_bytes(),
         nk_commitment: nf_key_cm,
         ..Default::default()
     };
     consumed_resource.nonce[0] = nonce;
-    let mut created_resource = consumed_resource.clone();
-    created_resource.nonce[10] = nonce;
+    let created_resource = consumed_resource.clone();
 
     let consumed_resource_nf = consumed_resource.nullifier(&nf_key).unwrap();
     let created_resource_cm = created_resource.commitment();
@@ -235,7 +237,7 @@ fn test_resource() -> Resource {
     let nf_key = NullifierKey::default();
     let nf_key_cm = nf_key.commit();
     let consumed_resource = Resource {
-        logic_ref: TrivialLogicWitness::verifying_key(),
+        logic_ref: TrivialLogicWitness::verifying_key_as_bytes(),
         nk_commitment: nf_key_cm,
         ..Default::default()
     };
@@ -268,15 +270,15 @@ fn test_forwarder_calldata(forwarder_calldata: ForwarderCalldata) -> ForwarderCa
 //----------------------------------------------------------------------------//
 //                                Action                                      //
 //----------------------------------------------------------------------------//
-use aarm::action::Action;
-use aarm::compliance_unit::ComplianceUnit;
-use aarm::logic_proof::{LogicProof, LogicProver};
-use aarm_core::action_tree::MerkleTree;
-use aarm_core::compliance::{ComplianceInstance, ComplianceWitness};
-use aarm_core::merkle_path::{Leaf, MerklePath};
-use aarm_core::nullifier_key::{NullifierKey, NullifierKeyCommitment};
-use aarm_core::resource::Resource;
-use aarm_core::resource_logic::TrivialLogicWitness;
+use arm::action::Action;
+use arm::action_tree::MerkleTree;
+use arm::compliance::{ComplianceInstance, ComplianceWitness};
+use arm::compliance_unit::ComplianceUnit;
+use arm::logic_proof::{LogicProof, LogicProver};
+use arm::merkle_path::{Leaf, MerklePath};
+use arm::nullifier_key::{NullifierKey, NullifierKeyCommitment};
+use arm::resource::Resource;
+use arm::resource_logic::TrivialLogicWitness;
 
 #[rustler::nif]
 fn test_action() -> Action {
@@ -364,13 +366,12 @@ fn test_trivial_logic_witness() -> TrivialLogicWitness {
     let nf_key = NullifierKey::default();
     let nf_key_cm = nf_key.commit();
     let mut consumed_resource = Resource {
-        logic_ref: TrivialLogicWitness::verifying_key(),
+        logic_ref: TrivialLogicWitness::verifying_key_as_bytes(),
         nk_commitment: nf_key_cm,
         ..Default::default()
     };
     consumed_resource.nonce[0] = nonce;
-    let mut created_resource = consumed_resource.clone();
-    created_resource.nonce[10] = nonce;
+    let created_resource = consumed_resource.clone();
 
     let consumed_resource_nf = consumed_resource.nullifier(&nf_key).unwrap();
     let created_resource_cm = created_resource.commitment();
@@ -404,14 +405,14 @@ fn test_compliance_witness() -> ComplianceWitness<32> {
     let nf_key = NullifierKey::default();
     let nf_key_cm = nf_key.commit();
     let mut consumed_resource = Resource {
-        logic_ref: TrivialLogicWitness::verifying_key(),
+        logic_ref: TrivialLogicWitness::verifying_key_as_bytes(),
         nk_commitment: nf_key_cm,
         ..Default::default()
     };
     consumed_resource.nonce[0] = nonce;
     let mut created_resource = consumed_resource.clone();
-    created_resource.nonce[10] = nonce;
-
+    let consumed_resource_nf = consumed_resource.nullifier(&nf_key).unwrap();
+    created_resource.set_nonce(consumed_resource_nf.clone());
     let compliance_witness = ComplianceWitness::<COMMITMENT_TREE_DEPTH>::with_fixed_rcv(
         consumed_resource.clone(),
         nf_key.clone(),
@@ -442,7 +443,7 @@ fn test() -> Transaction {
     // let nf_key = NullifierKey::default();
     // let nf_key_cm = nf_key.commit();
     // let mut consumed_resource = Resource {
-    //     logic_ref: TrivialLogicWitness::verifying_key(),
+    //     logic_ref: TrivialLogicWitness::verifying_key_as_bytes(),
     //     nk_commitment: nf_key_cm,
     //     ..Default::default()
     // };
@@ -460,7 +461,7 @@ fn test() -> Transaction {
     //     created_resource.clone(),
     // );
     //
-    // let compliance_receipt = ComplianceUnit::prove(&compliance_witness);
+    // let compliance_receipt = ComplianceUnit::create(&compliance_witness);
     //
     // let consumed_resource_nf = consumed_resource.nullifier(&nf_key).unwrap();
     // let created_resource_cm = created_resource.commitment();
@@ -501,7 +502,7 @@ fn test() -> Transaction {
     let (actions, delta_witness) = create_multiple_actions(10);
     let other_actions = actions.clone();
     // let dw = delta_witness.clone();
-    let mut tx = Transaction::new(actions, Delta::Witness(delta_witness));
+    let mut tx = Transaction::create(actions, Delta::Witness(delta_witness));
     tx.generate_delta_proof();
     assert!(tx.verify());
 
@@ -518,7 +519,7 @@ fn test() -> Transaction {
 #[rustler::nif]
 fn test_transaction() -> Transaction {
     let (actions, delta_witness) = create_multiple_actions(5);
-    let tx = Transaction::new(actions, Delta::Witness(delta_witness));
+    let tx = Transaction::create(actions, Delta::Witness(delta_witness));
     tx
 }
 
