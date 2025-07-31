@@ -58,8 +58,10 @@ defmodule Anoma.Test.Native.ArmTest do
       assert %ComplianceInstance{} = Anoma.Arm.test_compliance_instance()
     end
 
+    @tag :this
     test "test_compliance_instance/1" do
       compliance_instance = Anoma.Arm.test_compliance_instance()
+      |> tap(&IO.inspect(&1, label: ""))
       assert %ComplianceInstance{} = Anoma.Arm.test_compliance_instance(compliance_instance)
     end
   end
