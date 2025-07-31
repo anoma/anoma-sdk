@@ -6,7 +6,6 @@ defmodule Anoma.Arm.ComplianceUnit do
   use Anoma.Arm.Inspect
 
   alias Anoma.Arm
-  alias Anoma.Arm
   alias Anoma.Arm.ComplianceInstance
   alias Anoma.Arm.ComplianceUnit
 

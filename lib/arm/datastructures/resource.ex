@@ -5,6 +5,8 @@ defmodule Anoma.Arm.Resource do
   use TypedStruct
 
   alias Anoma.Arm.NullifierKey
+  alias Anoma.Arm.NullifierKeyCommitment
+  alias Anoma.Util
 
   import Anoma.Util
 
@@ -14,9 +16,9 @@ defmodule Anoma.Arm.Resource do
     field :quantity, number()
     field :value_ref, [byte()]
     field :is_ephemeral, bool
-    field :nonce, [byte()]
-    field :nk_commitment, {[byte()]}
-    field :rand_seed, [byte()]
+    field :nonce, [byte()], default: Util.randombinlist(32)
+    field :nk_commitment, NullifierKeyCommitment.t()
+    field :rand_seed, [byte()], default: Util.randombinlist(32)
   end
 
   @doc """

@@ -1,0 +1,16 @@
+[package]
+name = "host"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+methods = { path = "../methods" }
+rustler = "0.36.2"
+arm = { path = "../../aarm-risc0/arm" , features = ["nif"]}
+risc0-zkvm = { version = "2.0.2", features = ["prove", "std", "unstable"] }
+serde = { version = "1.0.197", default-features = false }
+serde_json = "1.0"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+k256 = { version = "=0.13.3", features = ["arithmetic", "serde", "expose-field", "std", "ecdsa", "hash2curve"], default-features = false }
+rand = "0.8"
+hex = "0.4.3"
