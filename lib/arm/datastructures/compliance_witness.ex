@@ -37,7 +37,8 @@ defmodule Anoma.Arm.ComplianceWitness do
   end
 
   @doc false
-  @spec from_resources_with_path(Resource.t(), NullifierKey.t(), MerklePath.t(), Resource.t()) :: t()
+  @spec from_resources_with_path(Resource.t(), NullifierKey.t(), MerklePath.t(), Resource.t()) ::
+          t()
   def from_resources_with_path(consumed, nullifier_key, merkle_path, created) do
     %ComplianceWitness{
       consumed_resource: consumed,

@@ -38,7 +38,7 @@ defmodule Anoma.Test.Native.CounterTest do
 
   describe "counter_logic_ref/0" do
     test "counter_logic_ref/0" do
-      Counter.counter_logic_ref() |> tap(&IO.inspect(&1, label: ""))
+      Counter.counter_logic_ref()
     end
   end
 

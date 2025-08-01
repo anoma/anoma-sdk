@@ -4,5 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-arm = { path = "../aarm-risc0/arm", features = ["logic_circuit"], default-features = false }
+arm = { path = "../aarm-risc0/arm", features = ["logic_circuit", "nif"], default-features = false }
 serde = { version = "1.0.197", default-features = false }
+rustler = "0.36.2"

@@ -10,7 +10,7 @@ defmodule Anoma.Examples.SimpleTransaction do
   alias Anoma.Arm.MerkleTree
   alias Anoma.Arm.NullifierKey
   alias Anoma.Arm.Resource
-  alias Anoma.Arm.Transaction
+  alias Anoma.Arm.Transacttion
   alias Anoma.Arm.TrivialLogicWitness
   alias Anoma.Util
 
@@ -40,7 +40,7 @@ defmodule Anoma.Examples.SimpleTransaction do
     }
 
     # create the nullifiers for the consumed resources
-    consumed_resource_nf = Resource.nullifier(consumed, nullifier_key) |> tap(&IO.inspect(&1, label: "consumed_resource_nf"))
+    consumed_resource_nf = Resource.nullifier(consumed, nullifier_key)
 
     # the consumed resource is the same as the created one.
     # except the nonce, which is the nullifier from the consumed resource.
@@ -136,12 +136,12 @@ defmodule Anoma.Examples.SimpleTransaction do
   end
 
   @doc false
-  @spec create_transaction(non_neg_integer()) :: Transaction.t()
+  @spec create_transaction(non_neg_integer()) :: Transacttion.t()
   def create_transaction(action_count) do
     # create the actions
     {actions, witness} = create_actions(action_count)
     # create an unproved transaction
-    transaction = %Transaction{
+    transaction = %Transacttion{
       actions: actions,
       delta_proof: {:witness, witness}
     }

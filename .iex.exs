@@ -12,7 +12,7 @@ alias Anoma.Arm.MerkleTree
 alias Anoma.Arm.NullifierKey
 alias Anoma.Arm.NullifierKeyCommitment
 alias Anoma.Arm.Resource
-alias Anoma.Arm.Transaction
+alias Anoma.Arm.Transacttion
 alias Anoma.Arm.TrivialLogicWitness
 
 # :dbg.tracer()

@@ -12,7 +12,7 @@ defmodule Anoma.Test.Native.ArmTest do
   alias Anoma.Arm.MerklePath
   alias Anoma.Arm.MerkleTree
   alias Anoma.Arm.Resource
-  alias Anoma.Arm.Transaction
+  alias Anoma.Arm.Transacttion
   alias Anoma.Arm.TrivialLogicWitness
 
   test "foo" do
@@ -61,7 +61,6 @@ defmodule Anoma.Test.Native.ArmTest do
     @tag :this
     test "test_compliance_instance/1" do
       compliance_instance = Anoma.Arm.test_compliance_instance()
-      |> tap(&IO.inspect(&1, label: ""))
       assert %ComplianceInstance{} = Anoma.Arm.test_compliance_instance(compliance_instance)
     end
   end
@@ -146,12 +145,12 @@ defmodule Anoma.Test.Native.ArmTest do
 
   describe "transaction" do
     test "test_transaction/0" do
-      assert %Transaction{} = Anoma.Arm.test_transaction()
+      assert %Transacttion{} = Anoma.Arm.test_transaction()
     end
 
     test "test_transaction/1" do
       transaction = Anoma.Arm.test_transaction()
-      assert transaction == Anoma.Arm.test_transaction(transaction)
+      assert transaction == Anoma.Arm.test_Transacttion.t()ransaction)
     end
   end
 
