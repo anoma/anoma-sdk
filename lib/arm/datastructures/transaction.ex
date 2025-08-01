@@ -1,4 +1,4 @@
-defmodule Anoma.Arm.Transaction do
+defmodule Anoma.Arm.Transacttion do
   @moduledoc """
   I define the datastructure `Transaction` that defines the structure of a transaction for the resource machine.
   """
@@ -8,7 +8,7 @@ defmodule Anoma.Arm.Transaction do
   alias Anoma.Arm.Action
   alias Anoma.Arm.DeltaProof
   alias Anoma.Arm.DeltaWitness
-  alias Anoma.Arm.Transaction
+  alias Anoma.Arm.Transacttion
 
   typedstruct do
     field :actions, [Action.t()], default: []
@@ -50,7 +50,7 @@ defmodule Anoma.Arm.Transaction do
   # have to be represented as hexadecimal strings of the binaries.
   defimpl Jason.Encoder, for: [Transaction] do
     @doc false
-    @spec encode(Transaction.t(), Jason.Encode.opts()) :: iodata()
+    @spec encode(Transacttion.t(), Jason.Encode.opts()) :: iodata()
     def encode(struct, opts) do
       struct
       |> Map.drop([:__struct__])

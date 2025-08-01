@@ -90,4 +90,13 @@ defmodule Anoma.Util do
       binlist -> :binary.list_to_bin(binlist)
     end
   end
+
+  @doc """
+  Generate `len` random bytes.
+  """
+  @spec randombinlist(non_neg_integer()) :: [byte()]
+  def randombinlist(len \\ 32) do
+    :crypto.strong_rand_bytes(len)
+    |> bin2binlist()
+  end
 end

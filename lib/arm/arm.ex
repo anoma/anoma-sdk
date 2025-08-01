@@ -18,7 +18,7 @@ defmodule Anoma.Arm do
   alias Anoma.Arm.MerklePath
   alias Anoma.Arm.MerkleTree
   alias Anoma.Arm.Resource
-  alias Anoma.Arm.Transaction
+  alias Anoma.Arm.Transacttion
   alias Anoma.Arm.TrivialLogicWitness
 
   @doc """
@@ -133,8 +133,8 @@ defmodule Anoma.Arm do
   @doc false
   def test_action(_), do: :erlang.nif_error(:nif_not_loaded)
 
-  @spec test_transaction() :: Transaction.t()
-  @spec test_transaction(Transaction.t()) :: Transaction.t()
+  @spec test_transaction() :: Transacttion.t()
+  @spec test_transaction(Transacttion.t()) :: Transacttion.t()
 
   @doc false
   def test_transaction, do: :erlang.nif_error(:nif_not_loaded)

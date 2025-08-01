@@ -1,7 +1,6 @@
 [workspace]
 resolver = "2"
-
-members = [ "native/zkvm", "native/counter_lib"]
+members = ["methods"]
 
 # Always optimize; building and running the guest takes much longer without optimization.
 [profile.dev]
@@ -10,5 +9,3 @@ opt-level = 3
 [profile.release]
 debug = 1
 lto = true
-
-

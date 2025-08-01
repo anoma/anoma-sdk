@@ -664,6 +664,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "counter"
+version = "0.1.0"
+dependencies = [
+ "arm",
+ "rustler",
+ "serde",
+]
+
+[[package]]
+name = "counter_lib"
+version = "0.1.0"
+dependencies = [
+ "arm",
+ "counter",
+ "hex",
+ "lazy_static",
+ "rand 0.8.5",
+ "risc0-zkvm",
+ "rustler",
+ "serde",
+]
+
+[[package]]
 name = "cpp_demangle"
 version = "0.4.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
