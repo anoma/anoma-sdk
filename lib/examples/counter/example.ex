@@ -7,6 +7,7 @@ defmodule Anoma.Examples.Counter.Example do
   alias Anoma.Arm.ComplianceUnit
   alias Anoma.Arm.ComplianceWitness
   alias Anoma.Arm.DeltaWitness
+  alias Anoma.Arm.LogicProof
   alias Anoma.Arm.MerklePath
   alias Anoma.Arm.MerkleTree
   alias Anoma.Arm.NullifierKey
@@ -66,7 +67,7 @@ defmodule Anoma.Examples.Counter.Example do
   Generate a compliance proof for two resources.
   """
   @spec generate_compliance_proof(Resource.t(), NullifierKey.t(), MerklePath.t(), Resource.t()) ::
-          ComplianceUnit.t()
+          {ComplianceUnit.t(), [byte()]}
   def generate_compliance_proof(consumed, consumed_nf, merkle_path, created) do
     compliance_witness =
       ComplianceWitness.from_resources_with_path(consumed, consumed_nf, merkle_path, created)
@@ -128,7 +129,7 @@ defmodule Anoma.Examples.Counter.Example do
     # create a new counter resource
     {ephemeral_counter, ephemeral_counter_nf} = create_counter()
 
-    {created_counter, created_counter_nf} =
+    {created_counter, _created_counter_nf} =
       create_counter(ephemeral_counter, ephemeral_counter_nf)
 
     # generate the compliance proofs for the transaction

@@ -150,7 +150,7 @@ defmodule Anoma.Test.Native.ArmTest do
 
     test "test_transaction/1" do
       transaction = Anoma.Arm.test_transaction()
-      assert transaction == Anoma.Arm.test_Transacttion.t()ransaction)
+      assert transaction == Anoma.Arm.test_transaction(transaction)
     end
   end
 

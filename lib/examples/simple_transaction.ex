@@ -147,7 +147,7 @@ defmodule Anoma.Examples.SimpleTransaction do
     }
 
     # prove the transactions' delta witness
-    transaction = Transaction.generate_delta_proof(transaction)
+    transaction = Transacttion.generate_delta_proof(transaction)
 
     transaction
   end
