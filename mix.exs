@@ -29,7 +29,8 @@ defmodule Anoma.MixProject do
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:rustler, "~> 0.36.1", runtime: false},
       {:typed_struct, "~> 0.3.0"},
-      {:jason, "~> 1.4"}
+      {:jason, "~> 1.4"},
+      {:ethereumex, "~> 0.12.1"}
     ]
   end
 end
