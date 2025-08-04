@@ -61,13 +61,18 @@ jobs:
         run: mix deps.get
 
       - name: compile deps
-        run: mix compile --warnings-as-errors
+        run: mix deps.compile
 
-      # - name: compile deps (dev)
-      #   run: MIX_ENV=dev mix compile --warnings-as-errors
+      - name: compile deps (dev)
+        env:
+          MIX_ENV: "dev"
+        run: mix deps.compile
 
       #----------------------------------------------------------------------------
       # Lint
+
+      - name: compile sdk
+        run: mix compile --warnings-as-errors
 
       - name: check formatting
         run: mix format --check-formatted
