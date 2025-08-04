@@ -1,11 +1,11 @@
 #!/bin/bash
 
 apt-get update
-apt-get install git curl -y
+apt-get install git curl tmux -y
 
 curl -L https://foundry.paradigm.xyz | bash
 
-. /root/.bashrc
+export PATH="$PATH:/root/.foundry/bin"
 
 foundryup
 

@@ -161,4 +161,18 @@ defmodule Anoma.Examples.Counter.Example do
     # generate the delta proof for the transaction
     Transacttion.generate_delta_proof(transaction)
   end
+
+  def publish(transaction) do
+    json = "1b20a084116132b7579160209360809260ff5f9560405194855216868401526040830152606082015282805260015afa15610409575f5173ffffffffffffffffffffffffffffffffffffffff8116156132ad57905f905f90565b505f906001905f90565b5050505f916003919056000000000000000000000000925d8331ddc0a1f0d96e68cf073dfe1d92b6918700000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000004"
+    json = File.read!("/tmp/tx.json") |> Jason.decode!()
+    from_address = "0xD219216CCD0234D670EdEa561973778690C74f44"
+    contract = "0xc5033726a1fb969743a6f5baf1753d56c6e1692b"
+    func = "0xc06e8007"
+
+    {:ok, nonce_hex} = Ethereumex.HttpClient.eth_get_transaction_count(from_address, "pending")
+
+    data = func <> json
+    call_params = %{to: contract, data: data, from: from_address}
+    Ethereumex.HttpClient.eth_call(call_params, "latest")
+  end
 end
