@@ -60,8 +60,3 @@ fn convert_counter_to_value_ref(value: u128) -> Vec<u8> {
     arr.to_vec()
 }
 
-fn counter_transaction() {
-    let (ephemeral_counter, ephemeral_nf_key) = ephemeral_counter();
-    let (counter_resource, counter_nf_key) =
-        init_counter_resource(&ephemeral_counter, &ephemeral_nf_key);
-}

@@ -43,4 +43,12 @@ defmodule Anoma.Examples.Counter do
   @doc false
   @spec test_counter_logic(CounterLogic.t()) :: CounterLogic.t()
   def test_counter_logic(_), do: :erlang.nif_error(:nif_not_loaded)
+
+  @doc false
+  @spec test_logic_proof :: LogicProof.t()
+  def test_logic_proof, do: :erlang.nif_error(:nif_not_loaded)
+
+  @doc false
+  @spec test_logic_proof(LogicProof.t()) :: LogicProof.t()
+  def test_logic_proof(_), do: :erlang.nif_error(:nif_not_loaded)
 end
