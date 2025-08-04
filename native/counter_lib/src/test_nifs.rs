@@ -1,6 +1,7 @@
 use crate::counter_logic::CounterLogic;
 use crate::proof::generate_counter_logic;
 use crate::test::{ephemeral_counter, init_counter_resource};
+use arm::logic_proof::{LogicProof, LogicProver};
 use counter::CounterWitness;
 
 #[rustler::nif]
@@ -39,3 +40,21 @@ pub fn test_counter_logic(cl: CounterLogic) -> CounterLogic {
     cl
 }
 
+#[rustler::nif]
+/// Returns a CounterLogic struct.
+pub fn test_logic_proof() -> LogicProof {
+    let (ephemeral_counter, ephemeral_nf_key) = ephemeral_counter();
+    let (counter_resource, _counter_nf_key) =
+        init_counter_resource(&ephemeral_counter, &ephemeral_nf_key);
+
+    let (consumed_logic, _created_logic) =
+        generate_counter_logic(ephemeral_counter, ephemeral_nf_key, counter_resource);
+
+    consumed_logic.prove()
+}
+
+#[rustler::nif]
+/// Returns the CounterLogic passed in as an argument.
+pub fn test_logic_proof(lp: LogicProof) -> LogicProof {
+    lp
+}
