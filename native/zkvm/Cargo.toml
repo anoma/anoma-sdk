@@ -10,8 +10,13 @@ crate-type = ["cdylib"]
 
 [dependencies]
 rustler = "0.36.2"
-arm = { path = "../aarm-risc0/arm" , features = ["nif"]}
-risc0-zkvm = { version = "2.0.2", features = ["prove", "std", "unstable"] }
+
+# arm = { path = "../aarm-risc0/arm" , features = ["nif"]}
+# risc0-zkvm = { version = "2.0.2", features = ["prove", "std", "unstable"] }
+
+arm = { git = "https://github.com/anoma/arm-risc0", features = ["nif"], package = "arm", version = "0.2.0" }
+
+# risc0-zkvm = { version = "2.0.2", features = ["prove", "std", "unstable"] }
 serde = { version = "1.0.197", default-features = false }
 serde_json = "1.0"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }

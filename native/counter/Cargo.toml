@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-arm = { path = "../aarm-risc0/arm", features = ["logic_circuit", "nif"], default-features = false }
+
+arm = { git = "https://github.com/anoma/arm-risc0", features = ["nif"], package = "arm", version = "0.2.0" }
 serde = { version = "1.0.197", default-features = false }
 rustler = "0.36.2"
