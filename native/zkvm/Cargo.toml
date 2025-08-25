@@ -14,7 +14,8 @@ rustler = "0.36.2"
 # arm = { path = "../aarm-risc0/arm" , features = ["nif"]}
 # risc0-zkvm = { version = "2.0.2", features = ["prove", "std", "unstable"] }
 
-arm = { git = "https://github.com/anoma/arm-risc0", features = ["nif"], package = "arm", version = "0.2.0" }
+arm = { git = "https://github.com/anoma/arm-risc0", features = ["nif"], package = "arm", tag = "sepolia_0x4e98acdc0F9f597EDB3aaF2e774528C935ebDB58" }
+
 
 # risc0-zkvm = { version = "2.0.2", features = ["prove", "std", "unstable"] }
 serde = { version = "1.0.197", default-features = false }

@@ -8,8 +8,11 @@ name = "counter_lib"
 crate-type = ["cdylib"]
 
 [dependencies]
-arm = { git = "https://github.com/anoma/arm-risc0", features = ["nif"], package = "arm", version = "0.2.0" }
-risc0-zkvm = { version = "2.0.2", features = ["prove", "std", "unstable"] }
+# arm = { git = "https://github.com/anoma/arm-risc0", features = ["nif"], package = "arm", tag = "sepolia_0x4e98acdc0F9f597EDB3aaF2e774528C935ebDB58" }
+arm = { git = "https://github.com/anoma/arm-risc0", package = "arm", tag = "sepolia_0x4e98acdc0F9f597EDB3aaF2e774528C935ebDB58" }
+counter-app = { git = "https://github.com/anoma/arm-risc0", package = "counter-app", tag = "sepolia_0x4e98acdc0F9f597EDB3aaF2e774528C935ebDB58" }
+# arm = { git = "https://github.com/anoma/arm-risc0", features = ["nif"], package = "arm", version = "0.2.0" }
+risc0-zkvm = { version = "2.3.1", features = ["prove", "std", "unstable"] }
 hex = "0.4.3"
 counter = { path = "../counter" }
 rustler = "0.36.2"

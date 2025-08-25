@@ -5,6 +5,6 @@ edition = "2021"
 
 [dependencies]
 
-arm = { git = "https://github.com/anoma/arm-risc0", features = ["nif"], package = "arm", version = "0.2.0" }
+arm = { git = "https://github.com/anoma/arm-risc0", features = ["nif"], package = "arm", tag = "sepolia_0x4e98acdc0F9f597EDB3aaF2e774528C935ebDB58" }
 serde = { version = "1.0.197", default-features = false }
 rustler = "0.36.2"

@@ -30,7 +30,7 @@ fn unit_instance(unit: ComplianceUnit) -> ComplianceInstance {
 //                                Delta Witness                               //
 //----------------------------------------------------------------------------//
 
-use arm::action::{create_multiple_actions, ForwarderCalldata};
+use arm::action::{create_multiple_actions};
 use arm::delta_proof::DeltaWitness;
 use k256::ecdsa::SigningKey;
 use std::env;
@@ -128,7 +128,7 @@ fn test_compliance_unit() -> ComplianceUnit {
     consumed_resource.nonce[0] = nonce;
     let mut created_resource = consumed_resource.clone();
     let consumed_resource_nf = consumed_resource.nullifier(&nf_key).unwrap();
-    created_resource.set_nonce(consumed_resource_nf.clone());
+    created_resource.set_nonce(consumed_resource_nf.clone().as_bytes().to_vec());
 
     let compliance_witness = ComplianceWitness::<COMMITMENT_TREE_DEPTH>::with_fixed_rcv(
         consumed_resource.clone(),
@@ -161,7 +161,7 @@ fn test_compliance_instance() -> ComplianceInstance {
     let mut created_resource = consumed_resource.clone();
     let consumed_resource_nf = consumed_resource.nullifier(&nf_key).unwrap();
 
-    created_resource.set_nonce(consumed_resource_nf.clone());
+    created_resource.set_nonce(consumed_resource_nf.clone().as_bytes().to_vec());
 
     let compliance_witness = ComplianceWitness::<COMMITMENT_TREE_DEPTH>::with_fixed_rcv(
         consumed_resource.clone(),
@@ -253,19 +253,19 @@ fn test_resource(resource: Resource) -> Resource {
 //                                Forwarder Calldata                          //
 //----------------------------------------------------------------------------//
 
-#[rustler::nif]
-fn test_forwarder_calldata() -> ForwarderCalldata {
-    ForwarderCalldata {
-        untrusted_forwarder: [0u8; 20],
-        input: vec![],
-        output: vec![],
-    }
-}
-
-#[rustler::nif]
-fn test_forwarder_calldata(forwarder_calldata: ForwarderCalldata) -> ForwarderCalldata {
-    forwarder_calldata
-}
+// #[rustler::nif]
+// fn test_forwarder_calldata() -> ForwarderCalldata {
+//     ForwarderCalldata {
+//         untrusted_forwarder: [0u8; 20],
+//         input: vec![],
+//         output: vec![],
+//     }
+// }
+//
+// #[rustler::nif]
+// fn test_forwarder_calldata(forwarder_calldata: ForwarderCalldata) -> ForwarderCalldata {
+//     forwarder_calldata
+// }
 
 //----------------------------------------------------------------------------//
 //                                Action                                      //
@@ -275,14 +275,14 @@ use arm::action_tree::MerkleTree;
 use arm::compliance::{ComplianceInstance, ComplianceWitness};
 use arm::compliance_unit::ComplianceUnit;
 use arm::logic_proof::{LogicProof, LogicProver};
-use arm::merkle_path::{Leaf, MerklePath};
+use arm::merkle_path::{MerklePath};
 use arm::nullifier_key::{NullifierKey, NullifierKeyCommitment};
 use arm::resource::Resource;
 use arm::resource_logic::TrivialLogicWitness;
 
 #[rustler::nif]
 fn test_action() -> Action {
-    Action::new(vec![], vec![], vec![])
+    Action::new(vec![], vec![])
 }
 
 #[rustler::nif]
@@ -326,15 +326,15 @@ fn test_nullifier_key_commitment(
 //                                Merkle Tree                                 //
 //----------------------------------------------------------------------------//
 
-#[rustler::nif]
-fn test_leaf() -> Leaf {
-    Leaf::from(vec![0u8; 32])
-}
-
-#[rustler::nif]
-fn test_leaf(leaf: Leaf) -> Leaf {
-    leaf
-}
+// #[rustler::nif]
+// fn test_leaf() -> Leaf {
+//     Leaf::from(vec![0u8; 32])
+// }
+//
+// #[rustler::nif]
+// fn test_leaf(leaf: Leaf) -> Leaf {
+//     leaf
+// }
 
 #[rustler::nif]
 fn test_merkle_path() -> MerklePath<223> {
@@ -348,7 +348,7 @@ fn test_merkle_path(merkle_path: MerklePath<123>) -> MerklePath<123> {
 
 #[rustler::nif]
 fn test_merkle_tree() -> MerkleTree {
-    MerkleTree::new(vec![Leaf::from(vec![0u8; 32])])
+    MerkleTree::new(vec![Digest::from(vec![0u8; 32])])
 }
 
 #[rustler::nif]
