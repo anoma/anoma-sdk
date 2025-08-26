@@ -9,15 +9,12 @@ name = "zkvm"
 crate-type = ["cdylib"]
 
 [dependencies]
+evm_protocol_adapter_bindings = { git = "https://github.com/anoma/evm-protocol-adapter",  rev = "bf772bfada08d18fcf35b1b115f28ae56ec3d94f"}
+arm = { git = "https://github.com/anoma/arm-risc0", package = "arm", tag = "v0.3.0" }
+counter-app = { git = "https://github.com/anoma/arm-risc0", package = "counter-app", tag = "v0.3.0" }
+
+
 rustler = "0.36.2"
-
-# arm = { path = "../aarm-risc0/arm" , features = ["nif"]}
-# risc0-zkvm = { version = "2.0.2", features = ["prove", "std", "unstable"] }
-
-arm = { git = "https://github.com/anoma/arm-risc0", features = ["nif"], package = "arm", tag = "sepolia_0x4e98acdc0F9f597EDB3aaF2e774528C935ebDB58" }
-
-
-# risc0-zkvm = { version = "2.0.2", features = ["prove", "std", "unstable"] }
 serde = { version = "1.0.197", default-features = false }
 serde_json = "1.0"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
