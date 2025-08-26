@@ -4,7 +4,6 @@ defmodule Anoma.Arm.MerklePath do
   """
   use TypedStruct
 
-  alias Anoma.Arm.Leaf
   alias Anoma.Arm.MerklePath
 
   @type path_node :: {[byte()], boolean()}
@@ -20,7 +19,7 @@ defmodule Anoma.Arm.MerklePath do
   @spec default :: t()
   def default do
     # note: 32 here matches the value of COMMITMENT_TREE_DEPTH
-    leaf = Leaf.default()
+    leaf = {List.duplicate(0, 32)}
     auth_path = List.duplicate({leaf, false}, 32)
 
     %MerklePath{auth_path: auth_path}

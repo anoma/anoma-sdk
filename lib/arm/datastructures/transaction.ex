@@ -4,7 +4,7 @@ defmodule Anoma.Arm.Transaction do
   """
   use TypedStruct
 
-  alias Anoma.Arm
+  # alias Anoma.Arm
   alias Anoma.Arm.Action
   alias Anoma.Arm.DeltaProof
   alias Anoma.Arm.DeltaWitness
@@ -28,10 +28,10 @@ defmodule Anoma.Arm.Transaction do
 
   @doc false
   def generate_delta_proof(%{delta_proof: {:witness, _}} = transaction) do
-    {:witness, witness} = transaction.delta_proof
-    message = delta_message(transaction)
-    proof = Arm.prove_delta_witness(witness, message)
-    %{transaction | delta_proof: {:proof, proof}}
+    {:witness, _witness} = transaction.delta_proof
+    _message = delta_message(transaction)
+    # proof = Arm.prove_delta_witness(witness, message)
+    %{transaction | delta_proof: {:proof, nil}}
   end
 
   @doc """

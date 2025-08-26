@@ -5,25 +5,25 @@ defmodule Anoma.Arm.ComplianceUnit do
   use TypedStruct
   use Anoma.Arm.Inspect
 
-  alias Anoma.Arm
-  alias Anoma.Arm.ComplianceInstance
+  # alias Anoma.Arm
+  # alias Anoma.Arm.ComplianceInstance
   alias Anoma.Arm.ComplianceUnit
 
   import Anoma.Util
-  alias Anoma.Arm.ComplianceInstance
+  # alias Anoma.Arm.ComplianceInstance
 
   typedstruct do
     field :instance, [byte()]
     field :proof, [byte()]
   end
 
-  @doc """
-  I return the compliance instance for this compliance unit.
-  """
-  @spec instance(t()) :: ComplianceInstance.t()
-  def instance(compliance_unit) do
-    Arm.unit_instance(compliance_unit)
-  end
+  # @doc """
+  # I return the compliance instance for this compliance unit.
+  # """
+  # @spec instance(t()) :: ComplianceInstance.t()
+  # def instance(compliance_unit) do
+  #   Arm.unit_instance(compliance_unit)
+  # end
 
   # ----------------------------------------------------------------------------
   # JSON encoding

@@ -5,7 +5,6 @@ defmodule Anoma.Arm.MerkleTree do
   use TypedStruct
 
   alias Anoma.Arm.Constants
-  alias Anoma.Arm.Leaf
   alias Anoma.Arm.MerklePath
   alias Anoma.Arm.MerkleTree
 
@@ -15,14 +14,16 @@ defmodule Anoma.Arm.MerkleTree do
   @action_tree_depth 4
   @action_tree_max_leaves 1 <<< @action_tree_depth
 
+  @type leaf :: {[byte()]}
+
   typedstruct do
-    field :leaves, [Leaf.t()]
+    field :leaves, [leaf()]
   end
 
   @doc """
   Create a merkletree with the given leaves.
   """
-  @spec new([Leaf.t()]) :: t()
+  @spec new([leaf()]) :: t()
   def new(leaves) do
     %MerkleTree{leaves: leaves}
   end
@@ -30,7 +31,7 @@ defmodule Anoma.Arm.MerkleTree do
   @doc """
   Generate the path in the merkle tree for the given leaf.
   """
-  @spec path_of(MerkleTree.t(), Leaf.t() | binary()) :: MerklePath.t()
+  @spec path_of(MerkleTree.t(), leaf() | binary()) :: MerklePath.t()
   def path_of(tree, leaf) when is_binary(leaf) do
     path_of(tree, {bin2binlist(leaf)})
   end
@@ -49,7 +50,7 @@ defmodule Anoma.Arm.MerkleTree do
   end
 
   @doc false
-  @spec generate_path([Leaf.t()], non_neg_integer()) :: [MerklePath.path_node()]
+  @spec generate_path([leaf()], non_neg_integer()) :: [MerklePath.path_node()]
   def generate_path([_], _), do: []
 
   @doc false

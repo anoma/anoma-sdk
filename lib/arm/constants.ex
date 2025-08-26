@@ -3,7 +3,6 @@ defmodule Anoma.Arm.Constants do
   I define a list of constants used in the Anoma resource machine.
   """
 
-  alias Anoma.Arm.Leaf
   alias Anoma.Util
 
   @test_guest_id [
@@ -64,7 +63,7 @@ defmodule Anoma.Arm.Constants do
   @doc """
   Returns a padding leaf.
   """
-  @spec padding_leaf :: Leaf.t()
+  @spec padding_leaf :: {[byte()]}
   def padding_leaf, do: {@padding_leaf}
 
   @doc """

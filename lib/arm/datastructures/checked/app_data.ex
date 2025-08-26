@@ -5,7 +5,6 @@ defmodule Anoma.Arm.AppData do
   """
   use TypedStruct
 
-  alias Anoma.Arm.AppData
   alias Anoma.Arm.ExpirableBlob
 
   typedstruct do

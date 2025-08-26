@@ -5,7 +5,7 @@ defmodule Anoma.Arm.Action do
   """
   use TypedStruct
 
-  alias Anoma.Arm.ComplianceInstance
+  # alias Anoma.Arm.ComplianceInstance
   alias Anoma.Arm.ComplianceUnit
   alias Anoma.Arm.DeltaProof
   alias Anoma.Arm.DeltaWitness
@@ -24,9 +24,9 @@ defmodule Anoma.Arm.Action do
   I return the delta message for the given action.
   """
   @spec delta_message(t()) :: [byte()]
-  def delta_message(action) do
-    action.compliance_units
-    |> Enum.map(&ComplianceUnit.instance/1)
-    |> Enum.flat_map(&ComplianceInstance.delta_message/1)
+  def delta_message(_action) do
+    # action.compliance_units
+    # |> Enum.map(&ComplianceUnit.instance/1)
+    # |> Enum.flat_map(&ComplianceInstance.delta_message/1)
   end
 end
