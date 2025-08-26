@@ -206,4 +206,29 @@ defmodule Anoma.Arm.Test do
   @doc false
   @spec test_expirable_blob(ExpirableBlob.t()) :: ExpirableBlob.t()
   def test_expirable_blob(_), do: :erlang.nif_error(:nif_not_loaded)
+
+  # ----------------------------------------------------------------------------#
+  #                                AppData                                      #
+  # ----------------------------------------------------------------------------#
+
+  @doc false
+  @spec test_app_data() :: AppData.t()
+  def test_app_data, do: :erlang.nif_error(:nif_not_loaded)
+
+  @doc false
+  @spec test_app_data(AppData.t()) :: AppData.t()
+  def test_app_data(_), do: :erlang.nif_error(:nif_not_loaded)
+
+
+  # ----------------------------------------------------------------------------#
+  #                                LogicVerifierInputs                                      #
+  # ----------------------------------------------------------------------------#
+
+  @doc false
+  @spec test_logic_verifier_inputs() :: LogicVerifierInputs.t()
+  def test_logic_verifier_inputs, do: :erlang.nif_error(:nif_not_loaded)
+
+  @doc false
+  @spec test_logic_verifier_inputs(LogicVerifierInputs.t()) :: LogicVerifierInputs.t()
+  def test_logic_verifier_inputs(_), do: :erlang.nif_error(:nif_not_loaded)
 end

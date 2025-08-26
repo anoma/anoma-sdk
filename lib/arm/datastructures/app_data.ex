@@ -5,23 +5,13 @@ defmodule Anoma.Arm.AppData do
   """
   use TypedStruct
 
+  alias Anoma.Arm.AppData
+  alias Anoma.Arm.ExpirableBlob
+
   typedstruct do
-    @derive Jason.Encoder
-    field :compliance_units, [ComplianceUnit.t()], default: []
-    field :logic_verifiers, [LogicVerifier.t()], default: []
-
-    field :resource_forwarder_calldata_pairs, [
-      {:proof, DeltaProof.t()} | {:witness, DeltaWitness.t()}
-    ]
-  end
-
-  @doc """
-  I return the delta message for the given action.
-  """
-  @spec delta_message(t()) :: [byte()]
-  def delta_message(action) do
-    action.compliance_units
-    |> Enum.map(&ComplianceUnit.instance/1)
-    |> Enum.flat_map(&ComplianceInstance.delta_message/1)
+    field :resource_payload, [ExpirableBlob.t()], default: []
+    field :discovery_payload, [ExpirableBlob.t()], default: []
+    field :external_payload, [ExpirableBlob.t()], default: []
+    field :application_payload, [ExpirableBlob.t()], default: []
   end
 end

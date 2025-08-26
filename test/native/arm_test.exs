@@ -20,18 +20,18 @@ defmodule Anoma.Test.Native.ArmTest do
   alias Anoma.Arm.Transaction
   alias Anoma.Arm.TrivialLogicWitness
   alias Anoma.Arm.Test
+  alias Anoma.Arm.ExpirableBlob
+  alias Anoma.Arm.LogicVerifierInputs
 
   # ----------------------------------------------------------------------------#
   #                                DeltaWitness                                 #
   # ----------------------------------------------------------------------------#
 
   describe "delta witness" do
-    # return a `DeltaWitness` struct.
     test "delta_witness/0" do
       assert %DeltaWitness{} = Test.test_delta_witness()
     end
 
-    # A struct is not altered after decoding/encoding it in Rust.
     test "delta_witness/1" do
       delta_witness = Test.test_delta_witness()
       assert delta_witness == Test.test_delta_witness(delta_witness)
@@ -233,62 +233,58 @@ defmodule Anoma.Test.Native.ArmTest do
   # ----------------------------------------------------------------------------#
 
   describe "delta proof" do
-    # return a `DeltaWitness` struct.
     test "delta_proof/0" do
       assert %DeltaProof{} = Test.test_delta_proof()
     end
 
-    # A struct is not altered after decoding/encoding it in Rust.
     test "delta_proof/1" do
       delta_proof = Test.test_delta_proof()
       assert delta_proof == Test.test_delta_proof(delta_proof)
     end
   end
 
-  #####
+  # ----------------------------------------------------------------------------#
+  #                                DeltaProof                                   #
+  # ----------------------------------------------------------------------------#
 
-  # describe "main ARM functions" do
-  #   test "prove/1" do
-  #     witness = Test.test_compliance_witness()
-  #     assert %ComplianceUnit{} = Test.prove(witness)
-  #   end
+  describe "expirable blob" do
+    test "expirable_blob/0" do
+      assert %ExpirableBlob{} = Test.test_expirable_blob()
+    end
 
-  #   test "prove_trivial_logic_witness/1" do
-  #     logic_witness = Test.test_trivial_logic_witness()
-  #     assert %LogicVerifier{} = Test.prove_trivial_logic_witness(logic_witness)
-  #   end
+    test "expirable_blob/1" do
+      expirable_blob = Test.test_expirable_blob()
+      assert expirable_blob == Test.test_expirable_blob(expirable_blob)
+    end
+  end
 
-  #   test "unit_instance/1" do
-  #     unit = Test.test_compliance_unit()
-  #     assert %ComplianceInstance{} = Test.unit_instance(unit)
-  #   end
+  # ----------------------------------------------------------------------------#
+  #                                AppData                                      #
+  # ----------------------------------------------------------------------------#
 
-  #   test "prove_delta_witness/2" do
-  #     delta_witness = Test.test_delta_witness()
-  #     arbitrary_bytes = [1, 2, 3, 4, 5]
-  #     assert %DeltaProof{} = Test.prove_delta_witness(delta_witness, arbitrary_bytes)
-  #   end
-  # end
+  describe "app data" do
+    test "app_data/0" do
+      assert %ExpirableBlob{} = Test.test_expirable_blob()
+    end
 
-  # describe "forwarder calldata" do
-  #   test "test_forwarder_calldata/0" do
-  #     assert %ForwarderCalldata{} = Test.test_forwarder_calldata()
-  #   end
+    test "app_data/1" do
+      app_data = Test.test_app_data()
+      assert app_data == Test.test_app_data(app_data)
+    end
+  end
 
-  #   test "test_forwarder_calldata/1" do
-  #     calldata = Test.test_forwarder_calldata()
-  #     assert calldata == Test.test_forwarder_calldata(calldata)
-  #   end
-  # end
+  # ----------------------------------------------------------------------------#
+  #                                LogicVerifierInputs                                      #
+  # ----------------------------------------------------------------------------#
 
-  # describe "trivial logic witness" do
-  #   test "test_trivial_logic_witness/0" do
-  #     assert %TrivialLogicWitness{} = Test.test_trivial_logic_witness()
-  #   end
+  describe "logic verifier inputs" do
+    test "logic_verifier_inputs/0" do
+      assert %LogicVerifierInputs{} = Test.test_logic_verifier_inputs()
+    end
 
-  #   test "test_trivial_logic_witness/1" do
-  #     trivial_logic_witness = Test.test_trivial_logic_witness()
-  #     assert trivial_logic_witness == Test.test_trivial_logic_witness(trivial_logic_witness)
-  #   end
-  # end
+    test "logic_verifier_inputs/1" do
+      logic_verifier_inputs = Test.test_logic_verifier_inputs()
+      assert logic_verifier_inputs == Test.test_logic_verifier_inputs(logic_verifier_inputs)
+    end
+  end
 end

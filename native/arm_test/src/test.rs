@@ -7,15 +7,15 @@ use arm::action_tree::MerkleTree;
 use arm::compliance::{ComplianceInstance, ComplianceWitness};
 use arm::compliance_unit::ComplianceUnit;
 use arm::delta_proof::{DeltaProof, DeltaWitness};
-use arm::logic_instance::ExpirableBlob;
-use arm::logic_proof::{LogicProver, LogicVerifier};
+use arm::logic_instance::{AppData, ExpirableBlob};
+use arm::logic_proof::{LogicProver, LogicVerifier, LogicVerifierInputs};
 use arm::merkle_path::{MerklePath, COMMITMENT_TREE_DEPTH};
 use arm::nullifier_key::{NullifierKey, NullifierKeyCommitment};
 use arm::resource::Resource;
 use arm::resource_logic::TrivialLogicWitness;
 use arm::transaction::{Delta, Transaction};
 use k256::ecdsa::SigningKey;
-use rand::Rng;
+use rand::random;
 use risc0_zkvm::sha::Digest;
 use rustler::nif;
 
@@ -369,15 +369,9 @@ fn test_delta_proof(delta_proof: DeltaProof) -> DeltaProof {
 //----------------------------------------------------------------------------//
 
 #[nif]
-/// Create arbitrary delta proof and return it.
+/// Create arbitrary expirable blob and return it.
 fn test_expirable_blob() -> ExpirableBlob {
-    let random_vec: Vec<u32> = (0..64).map(|_| rand::thread_rng().gen::<u32>()).collect();
-
-    let expirable_blob = ExpirableBlob {
-        blob: random_vec,
-        deletion_criterion: 0,
-    };
-    expirable_blob
+    random_epxirable_blob()
 }
 
 #[nif]
@@ -389,6 +383,62 @@ fn test_expirable_blob(expirable_blob: ExpirableBlob) -> ExpirableBlob {
 //                                AppData                                     //
 //----------------------------------------------------------------------------//
 
+#[nif]
+/// Create arbitrary appdata and return it.
+fn test_app_data() -> AppData {
+    random_app_data()
+}
+
+#[nif]
+fn test_app_data(app_data: AppData) -> AppData {
+    app_data
+}
+
 //----------------------------------------------------------------------------//
 //                                LogicVerifierInputs                         //
 //----------------------------------------------------------------------------//
+
+#[nif]
+/// Create arbitrary app data and return it.
+fn test_logic_verifier_inputs() -> LogicVerifierInputs {
+    LogicVerifierInputs {
+        tag: random_vector_u32(32),
+        verifying_key: random_vector_u32(32),
+        app_data: random_app_data(),
+        proof: random_vector_u8(32),
+    }
+}
+
+#[nif]
+fn test_logic_verifier_inputs(logic_verifier_inputs: LogicVerifierInputs) -> LogicVerifierInputs {
+    logic_verifier_inputs
+}
+
+//----------------------------------------------------------------------------//
+//                                Helpers                                     //
+//----------------------------------------------------------------------------//
+
+fn random_vector_u32(length: u32) -> Vec<u32> {
+    (0..length).map(|_| random::<u32>()).collect()
+}
+
+fn random_vector_u8(length: u32) -> Vec<u8> {
+    (0..length).map(|_| random::<u8>()).collect()
+}
+
+fn random_epxirable_blob() -> ExpirableBlob {
+    let expirable_blob = ExpirableBlob {
+        blob: random_vector_u32(32),
+        deletion_criterion: 0,
+    };
+    expirable_blob
+}
+
+fn random_app_data() -> AppData {
+    AppData {
+        resource_payload: vec![random_epxirable_blob()],
+        discovery_payload: vec![random_epxirable_blob()],
+        external_payload: vec![random_epxirable_blob()],
+        application_payload: vec![random_epxirable_blob()],
+    }
+}
