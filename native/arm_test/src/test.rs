@@ -9,7 +9,7 @@ use arm::compliance_unit::ComplianceUnit;
 use arm::delta_proof::{DeltaProof, DeltaWitness};
 use arm::logic_proof::{LogicProver, LogicVerifier};
 use arm::merkle_path::{MerklePath, COMMITMENT_TREE_DEPTH};
-use arm::nullifier_key::NullifierKey;
+use arm::nullifier_key::{NullifierKey, NullifierKeyCommitment};
 use arm::resource::Resource;
 use arm::resource_logic::TrivialLogicWitness;
 use arm::transaction::{Delta, Transaction};
@@ -282,7 +282,7 @@ fn test_resource(resource: Resource) -> Resource {
 #[nif]
 /// Create an arbitrary action and return it.
 fn test_action() -> Action {
-    let (action, _witness) : (Action, DeltaWitness) = create_an_action(1);
+    let (action, _witness): (Action, DeltaWitness) = create_an_action(1);
     action
 }
 
@@ -321,4 +321,43 @@ fn test_nullifier_key() -> NullifierKey {
 #[nif]
 fn test_nullifier_key(nullifier_key: NullifierKey) -> NullifierKey {
     nullifier_key
+}
+
+//----------------------------------------------------------------------------//
+//                                Mullifier Key Commitment                    //
+//----------------------------------------------------------------------------//
+
+#[nif]
+/// Create arbitrary nullifier key commitment and return it.
+fn test_nullifier_key_commitment() -> NullifierKeyCommitment {
+    let (_, test_nullifier_key_commitment) = NullifierKey::random_pair();
+    test_nullifier_key_commitment
+}
+
+#[nif]
+fn test_nullifier_key_commitment(
+    nullifier_key_commitment: NullifierKeyCommitment,
+) -> NullifierKeyCommitment {
+    nullifier_key_commitment
+}
+
+//----------------------------------------------------------------------------//
+//                                Delta Proof                                 //
+//----------------------------------------------------------------------------//
+
+#[nif]
+/// Create arbitrary delta proof and return it.
+fn test_delta_proof() -> DeltaProof {
+    use k256::elliptic_curve::rand_core::OsRng;
+
+    let mut rng = OsRng;
+    let signing_key = SigningKey::random(&mut rng);
+    let message = b"Hello, world!";
+    let witness = DeltaWitness { signing_key };
+    DeltaProof::prove(message, &witness)
+}
+
+#[nif]
+fn test_delta_proof(delta_proof: DeltaProof) -> DeltaProof {
+    delta_proof
 }

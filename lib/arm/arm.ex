@@ -7,46 +7,17 @@ defmodule Anoma.Arm.Test do
     otp_app: :anoma_sdk,
     crate: :arm_test
 
-  # alias Anoma.Arm.Action
-  # alias Anoma.Arm.ComplianceInstance
-  # alias Anoma.Arm.ComplianceUnit
-  # alias Anoma.Arm.ComplianceWitness
-  # alias Anoma.Arm.DeltaProof
-  # alias Anoma.Arm.DeltaWitness
-  # alias Anoma.Arm.ForwarderCalldata
-  # alias Anoma.Arm.Leaf
-  # alias Anoma.Arm.LogicVerifier
-  # alias Anoma.Arm.MerklePath
-  # alias Anoma.Arm.MerkleTree
-  # alias Anoma.Arm.Resource
-  # alias Anoma.Arm.Transaction
-  # alias Anoma.Arm.TrivialLogicWitness
-
-  #   @doc """
-  #   Proves a compliance witness and returns a compliance unit.
-  #   """
-  #   @spec prove(ComplianceWitness.t()) :: ComplianceUnit.t()
-
-  #   def prove(_), do: :erlang.nif_error(:nif_not_loaded)
-
-  #   @doc """
-  #   Proves a logic witness and returns a logic proof.
-  #   """
-  #   @spec prove_trivial_logic_witness(TrivialLogicWitness.t()) :: LogicVerifier.t()
-
-  #   def prove_trivial_logic_witness(_), do: :erlang.nif_error(:nif_not_loaded)
-
-  #   @doc """
-  #   Returns the compliance instance for a given compliance unit.
-  #   """
-  #   @spec unit_instance(ComplianceUnit.t()) :: ComplianceInstance.t()
-  #   def unit_instance(_), do: :erlang.nif_error(:nif_not_loaded)
-
-  #   @doc """
-  #   Proves the given deltawitness
-  #   """
-  #   @spec prove_delta_witness(DeltaWitness.t(), [byte()]) :: DeltaProof.t()
-  #   def prove_delta_witness(_, _), do: :erlang.nif_error(:nif_not_loaded)
+  alias Anoma.Arm.Action
+  alias Anoma.Arm.ComplianceInstance
+  alias Anoma.Arm.ComplianceUnit
+  alias Anoma.Arm.ComplianceWitness
+  alias Anoma.Arm.DeltaProof
+  alias Anoma.Arm.DeltaWitness
+  alias Anoma.Arm.LogicVerifier
+  alias Anoma.Arm.MerklePath
+  alias Anoma.Arm.MerkleTree
+  alias Anoma.Arm.Resource
+  alias Anoma.Arm.Transaction
 
   # ----------------------------------------------------------------------------#
   #                                DeltaWitness                                 #
@@ -201,57 +172,25 @@ defmodule Anoma.Arm.Test do
   def test_nullifier_key(_), do: :erlang.nif_error(:nif_not_loaded)
 
   # ----------------------------------------------------------------------------#
-  #                                ComplianceWitness                            #
+  #                                NullifierKeyCommitment                       #
   # ----------------------------------------------------------------------------#
 
-  #   @spec test_delta_proof() :: DeltaProof.t()
-  #   @spec test_delta_proof(DeltaProof.t()) :: DeltaProof.t()
+  @doc false
+  @spec test_nullifier_key_commitment :: {[byte()]}
+  def test_nullifier_key_commitment, do: :erlang.nif_error(:nif_not_loaded)
 
-  #   @doc false
-  #   def test_delta_proof, do: :erlang.nif_error(:nif_not_loaded)
+  @doc false
+  @spec test_nullifier_key_commitment({[byte()]}) :: [byte()]
+  def test_nullifier_key_commitment(_), do: :erlang.nif_error(:nif_not_loaded)
 
-  #   @spec test_forwarder_calldata() :: ForwarderCalldata.t()
-  #   @spec test_forwarder_calldata(ForwarderCalldata.t()) :: ForwarderCalldata.t()
+  # ----------------------------------------------------------------------------#
+  #                                DeltaProof                                   #
+  # ----------------------------------------------------------------------------#
 
-  #   @doc false
-  #   def test_forwarder_calldata, do: :erlang.nif_error(:nif_not_loaded)
-
-  #   @doc false
-  #   def test_forwarder_calldata(_), do: :erlang.nif_error(:nif_not_loaded)
-
-  #   @spec test_nullifier_key_commitment :: {[byte()]}
-  #   @spec test_nullifier_key_commitment({[byte()]}) :: [byte()]
-
-  #   @doc false
-  #   def test_nullifier_key_commitment, do: :erlang.nif_error(:nif_not_loaded)
-
-  #   @doc false
-  #   def test_nullifier_key_commitment(_), do: :erlang.nif_error(:nif_not_loaded)
-
-  #   @spec test_leaf :: Leaf.t()
-  #   @spec test_leaf(Leaf.t()) :: Leaf.t()
-
-  #   @doc false
-  #   def test_leaf, do: :erlang.nif_error(:nif_not_loaded)
-
-  #   @doc false
-  #   def test_leaf(_), do: :erlang.nif_error(:nif_not_loaded)
-
-  #   @spec test_trivial_logic_witness :: TrivialLogicWitness.t()
-  #   @spec test_trivial_logic_witness(TrivialLogicWitness.t()) :: TrivialLogicWitness.t()
-
-  #   @doc false
-  #   def test_trivial_logic_witness, do: :erlang.nif_error(:nif_not_loaded)
-
-  #   @doc false
-  #   def test_trivial_logic_witness(_), do: :erlang.nif_error(:nif_not_loaded)
-
-  #   @spec test :: term()
-  #   @spec test(term()) :: term()
-
-  #   @doc false
-  #   def test, do: :erlang.nif_error(:nif_not_loaded)
-
-  #   @doc false
-  #   def test(_), do: :erlang.nif_error(:nif_not_loaded)
+  @doc false
+  @spec test_delta_proof() :: DeltaProof.t()
+  def test_delta_proof, do: :erlang.nif_error(:nif_not_loaded)
+  @doc false
+  @spec test_delta_proof(DeltaProof.t()) :: DeltaProof.t()
+  def test_delta_proof(_), do: :erlang.nif_error(:nif_not_loaded)
 end

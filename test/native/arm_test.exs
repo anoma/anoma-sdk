@@ -13,7 +13,6 @@ defmodule Anoma.Test.Native.ArmTest do
   alias Anoma.Arm.ComplianceWitness
   alias Anoma.Arm.DeltaProof
   alias Anoma.Arm.DeltaWitness
-  alias Anoma.Arm.ForwarderCalldata
   alias Anoma.Arm.LogicVerifier
   alias Anoma.Arm.MerklePath
   alias Anoma.Arm.MerkleTree
@@ -218,15 +217,33 @@ defmodule Anoma.Test.Native.ArmTest do
   #                                NullifierKeyCommitment                       #
   # ----------------------------------------------------------------------------#
 
-  #   test "test_nullifier_key_commitment/0" do
-  #     assert {_commitment_bytes} = Test.test_nullifier_key_commitment()
-  #   end
+  describe "nullifier key commitment" do
+    test "test_nullifier_key_commitment/0" do
+      assert {_commitment_bytes} = Test.test_nullifier_key_commitment()
+    end
 
-  #   test "test_nullifier_key_commitment/1" do
-  #     nullifier_key = Test.test_nullifier_key()
-  #     assert _commitment_bytes = Test.test_nullifier_key_commitment(nullifier_key)
-  #   end
-  # end
+    test "test_nullifier_key_commitment/1" do
+      nullifier_key = Test.test_nullifier_key()
+      assert _commitment_bytes = Test.test_nullifier_key_commitment(nullifier_key)
+    end
+  end
+
+  # ----------------------------------------------------------------------------#
+  #                                DeltaProof                                   #
+  # ----------------------------------------------------------------------------#
+
+  describe "delta proof" do
+    # return a `DeltaWitness` struct.
+    test "delta_proof/0" do
+      assert %DeltaProof{} = Test.test_delta_proof()
+    end
+
+    # A struct is not altered after decoding/encoding it in Rust.
+    test "delta_proof/1" do
+      delta_proof = Test.test_delta_proof()
+      assert delta_proof == Test.test_delta_proof(delta_proof)
+    end
+  end
 
   #####
 
