@@ -10,7 +10,7 @@
 #   alias Anoma.Arm.MerkleTree
 #   alias Anoma.Arm.NullifierKey
 #   alias Anoma.Arm.Resource
-#   alias Anoma.Arm.Transacttion
+#   alias Anoma.Arm.Transaction
 #   alias Anoma.Arm.TrivialLogicWitness
 #   alias Anoma.Util
 
@@ -82,25 +82,25 @@
 #       )
 
 #     # create a proof for the consumed resource logic
-#     consumed_logic_proof = Anoma.Arm.prove_trivial_logic_witness(consumed_logic_witness)
+#     consumed_logic_verifier = Anoma.Arm.prove_trivial_logic_witness(consumed_logic_witness)
 
 #     # create the created resource logic witness
 #     created_logic_witness =
 #       TrivialLogicWitness.new(created, created_resource_path, nullifier_key, false)
 
 #     # prove the created logic witness
-#     created_logic_proof = Anoma.Arm.prove_trivial_logic_witness(created_logic_witness)
+#     created_logic_verifier = Anoma.Arm.prove_trivial_logic_witness(created_logic_witness)
 
 #     # create the compliance units list
 #     compliance_units = [compliance_receipt]
 
-#     logic_proofs = [consumed_logic_proof, created_logic_proof]
+#     logic_verifiers = [consumed_logic_verifier, created_logic_verifier]
 
 #     resource_forwarder_calldata_pairs = []
 
 #     action = %Action{
 #       compliance_units: compliance_units,
-#       logic_proofs: logic_proofs,
+#       logic_verifiers: logic_verifiers,
 #       resource_forwarder_calldata_pairs: resource_forwarder_calldata_pairs
 #     }
 
@@ -135,18 +135,18 @@
 #   end
 
 #   @doc false
-#   @spec create_transaction(non_neg_integer()) :: Transacttion.t()
+#   @spec create_transaction(non_neg_integer()) :: Transaction.t()
 #   def create_transaction(action_count) do
 #     # create the actions
 #     {actions, witness} = create_actions(action_count)
 #     # create an unproved transaction
-#     transaction = %Transacttion{
+#     transaction = %Transaction{
 #       actions: actions,
 #       delta_proof: {:witness, witness}
 #     }
 
 #     # prove the transactions' delta witness
-#     transaction = Transacttion.generate_delta_proof(transaction)
+#     transaction = Transaction.generate_delta_proof(transaction)
 
 #     transaction
 #   end

@@ -1,10 +1,10 @@
-defmodule Anoma.Arm.LogicProof do
+defmodule Anoma.Arm.LogicVerifier do
   @moduledoc """
   I define the datastructure `Resource` that defines the structure of a resource for the resource machine.
   """
   use TypedStruct
 
-  alias Anoma.Arm.LogicProof
+  alias Anoma.Arm.LogicVerifier
 
   import Anoma.Util
 
@@ -17,10 +17,10 @@ defmodule Anoma.Arm.LogicProof do
   # ----------------------------------------------------------------------------
   # JSON encoding
 
-  # Encoding a LogicProof means that the proof, verifying_key and the instance
+  # Encoding a LogicVerifier means that the proof, verifying_key and the instance
   # have to be represented as hexadecimal strings of the binaries.
-  defimpl Jason.Encoder, for: [LogicProof] do
-    @spec encode(LogicProof.t(), Jason.Encode.opts()) :: iodata()
+  defimpl Jason.Encoder, for: [LogicVerifier] do
+    @spec encode(LogicVerifier.t(), Jason.Encode.opts()) :: iodata()
     @doc false
     def encode(struct, opts) do
       struct

@@ -1236,8 +1236,26 @@ dependencies = [
  "lazy_static",
  "rand 0.8.5",
  "risc0-zkvm",
+ "rustler",
  "serde",
  "sha3",
+]
+
+[[package]]
+name = "arm_test"
+version = "0.1.0"
+dependencies = [
+ "arm",
+ "counter-app",
+ "evm_protocol_adapter_bindings",
+ "hex",
+ "k256",
+ "rand 0.8.5",
+ "risc0-zkvm",
+ "rustler",
+ "serde",
+ "serde_json",
+ "tracing-subscriber 0.3.19",
 ]
 
 [[package]]
@@ -6705,22 +6723,6 @@ dependencies = [
  "memchr",
  "thiserror 2.0.16",
  "zopfli",
-]
-
-[[package]]
-name = "zkvm"
-version = "0.1.0"
-dependencies = [
- "arm",
- "counter-app",
- "evm_protocol_adapter_bindings",
- "hex",
- "k256",
- "rand 0.8.5",
- "rustler",
- "serde",
- "serde_json",
- "tracing-subscriber 0.3.19",
 ]
 
 [[package]]

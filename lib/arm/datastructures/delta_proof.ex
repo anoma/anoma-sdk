@@ -14,7 +14,7 @@ defmodule Anoma.Arm.DeltaProof do
   # ----------------------------------------------------------------------------
   # JSON encoding
 
-  # Encoding a LogicProof means that the proof, verifying_key and the instance
+  # Encoding a LogicVerifier means that the proof, verifying_key and the instance
   # have to be represented as hexadecimal strings of the binaries.
   defimpl Jason.Encoder, for: [DeltaProof] do
     @doc false

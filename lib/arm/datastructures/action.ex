@@ -8,12 +8,12 @@ defmodule Anoma.Arm.Action do
   alias Anoma.Arm.ComplianceUnit
   alias Anoma.Arm.DeltaProof
   alias Anoma.Arm.DeltaWitness
-  alias Anoma.Arm.LogicProof
+  alias Anoma.Arm.LogicVerifier
 
   typedstruct do
     @derive Jason.Encoder
     field :compliance_units, [ComplianceUnit.t()], default: []
-    field :logic_proofs, [LogicProof.t()], default: []
+    field :logic_verifiers, [LogicVerifier.t()], default: []
 
     field :resource_forwarder_calldata_pairs, [
       {:proof, DeltaProof.t()} | {:witness, DeltaWitness.t()}

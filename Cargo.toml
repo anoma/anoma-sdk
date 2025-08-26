@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 
-members = [ "native/zkvm"]
+members = ["native/arm_test"]
 
 # Always optimize; building and running the guest takes much longer without optimization.
 [profile.dev]

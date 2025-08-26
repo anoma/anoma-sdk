@@ -1,4 +1,4 @@
-defmodule Anoma.Arm.Transacttion do
+defmodule Anoma.Arm.Transaction do
   @moduledoc """
   I define the datastructure `Transaction` that defines the structure of a transaction for the resource machine.
   """
@@ -8,7 +8,7 @@ defmodule Anoma.Arm.Transacttion do
   alias Anoma.Arm.Action
   alias Anoma.Arm.DeltaProof
   alias Anoma.Arm.DeltaWitness
-  alias Anoma.Arm.Transacttion
+  alias Anoma.Arm.Transaction
 
   typedstruct do
     field :actions, [Action.t()], default: []
@@ -46,11 +46,11 @@ defmodule Anoma.Arm.Transacttion do
   # ----------------------------------------------------------------------------
   # JSON encoding
 
-  # Encoding a LogicProof means that the proof, verifying_key and the instance
+  # Encoding a LogicVerifier means that the proof, verifying_key and the instance
   # have to be represented as hexadecimal strings of the binaries.
   defimpl Jason.Encoder, for: [Transaction] do
     @doc false
-    @spec encode(Transacttion.t(), Jason.Encode.opts()) :: iodata()
+    @spec encode(Transaction.t(), Jason.Encode.opts()) :: iodata()
     def encode(struct, opts) do
       struct
       |> Map.drop([:__struct__])
