@@ -1,15 +1,9 @@
-defmodule Anoma.Arm.Action do
+defmodule Anoma.Arm.AppData do
   @moduledoc """
-  I define the datastructure `Action` that defines the structure of an action
+  I define the datastructure `AppData` that defines the structure of an app data
   for the resource machine.
   """
   use TypedStruct
-
-  alias Anoma.Arm.ComplianceInstance
-  alias Anoma.Arm.ComplianceUnit
-  alias Anoma.Arm.DeltaProof
-  alias Anoma.Arm.DeltaWitness
-  alias Anoma.Arm.LogicVerifier
 
   typedstruct do
     @derive Jason.Encoder

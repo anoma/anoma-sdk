@@ -18,6 +18,7 @@ defmodule Anoma.Arm.Test do
   alias Anoma.Arm.MerkleTree
   alias Anoma.Arm.Resource
   alias Anoma.Arm.Transaction
+  alias Anoma.Arm.ExpirableBlob
 
   # ----------------------------------------------------------------------------#
   #                                DeltaWitness                                 #
@@ -193,4 +194,16 @@ defmodule Anoma.Arm.Test do
   @doc false
   @spec test_delta_proof(DeltaProof.t()) :: DeltaProof.t()
   def test_delta_proof(_), do: :erlang.nif_error(:nif_not_loaded)
+
+  # ----------------------------------------------------------------------------#
+  #                                ExpirableBlob                                #
+  # ----------------------------------------------------------------------------#
+
+  @doc false
+  @spec test_expirable_blob() :: ExpirableBlob.t()
+  def test_expirable_blob, do: :erlang.nif_error(:nif_not_loaded)
+
+  @doc false
+  @spec test_expirable_blob(ExpirableBlob.t()) :: ExpirableBlob.t()
+  def test_expirable_blob(_), do: :erlang.nif_error(:nif_not_loaded)
 end

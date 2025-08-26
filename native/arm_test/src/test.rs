@@ -7,6 +7,7 @@ use arm::action_tree::MerkleTree;
 use arm::compliance::{ComplianceInstance, ComplianceWitness};
 use arm::compliance_unit::ComplianceUnit;
 use arm::delta_proof::{DeltaProof, DeltaWitness};
+use arm::logic_instance::ExpirableBlob;
 use arm::logic_proof::{LogicProver, LogicVerifier};
 use arm::merkle_path::{MerklePath, COMMITMENT_TREE_DEPTH};
 use arm::nullifier_key::{NullifierKey, NullifierKeyCommitment};
@@ -14,6 +15,7 @@ use arm::resource::Resource;
 use arm::resource_logic::TrivialLogicWitness;
 use arm::transaction::{Delta, Transaction};
 use k256::ecdsa::SigningKey;
+use rand::Rng;
 use risc0_zkvm::sha::Digest;
 use rustler::nif;
 
@@ -361,3 +363,32 @@ fn test_delta_proof() -> DeltaProof {
 fn test_delta_proof(delta_proof: DeltaProof) -> DeltaProof {
     delta_proof
 }
+
+//----------------------------------------------------------------------------//
+//                                ExpirableBlob                               //
+//----------------------------------------------------------------------------//
+
+#[nif]
+/// Create arbitrary delta proof and return it.
+fn test_expirable_blob() -> ExpirableBlob {
+    let random_vec: Vec<u32> = (0..64).map(|_| rand::thread_rng().gen::<u32>()).collect();
+
+    let expirable_blob = ExpirableBlob {
+        blob: random_vec,
+        deletion_criterion: 0,
+    };
+    expirable_blob
+}
+
+#[nif]
+fn test_expirable_blob(expirable_blob: ExpirableBlob) -> ExpirableBlob {
+    expirable_blob
+}
+
+//----------------------------------------------------------------------------//
+//                                AppData                                     //
+//----------------------------------------------------------------------------//
+
+//----------------------------------------------------------------------------//
+//                                LogicVerifierInputs                         //
+//----------------------------------------------------------------------------//
