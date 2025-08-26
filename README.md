@@ -38,7 +38,9 @@ Here's a markdown table with the environment variables and their descriptions:
 | `BONSAI_API_URL`                   | Bonsai URL                                                          | URL         |
 | `BONSAI_API_KEY`                   | Authentication key for Bonsai API access                            | String      |
 
+To find the latest protocol adapter address, see here.
 
-If you want to try local development without actually submitting transactions to
+> [!TIP]
+> If you want to try local development without actually submitting transactions to
 the protocol adapter, you can set `RISC0_DEV_MODE` to `true`. This will
 significantly speed up the proof generation. Note that the proofs are not valid.
