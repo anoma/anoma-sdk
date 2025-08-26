@@ -1,25 +1,25 @@
-# defmodule Anoma.Arm do
-#   @moduledoc """
-#   I define functions to deal with Anoma Resource Machine structs.
-#   """
-#   use Rustler,
-#     otp_app: :anoma_sdk,
-#     crate: :zkvm
+defmodule Anoma.Arm do
+  @moduledoc """
+  I define functions to deal with Anoma Resource Machine structs.
+  """
+  use Rustler,
+    otp_app: :anoma_sdk,
+    crate: :zkvm
 
-#   alias Anoma.Arm.Action
-#   alias Anoma.Arm.ComplianceInstance
-#   alias Anoma.Arm.ComplianceUnit
-#   alias Anoma.Arm.ComplianceWitness
-#   alias Anoma.Arm.DeltaProof
-#   alias Anoma.Arm.DeltaWitness
-#   alias Anoma.Arm.ForwarderCalldata
-#   alias Anoma.Arm.Leaf
-#   alias Anoma.Arm.LogicProof
-#   alias Anoma.Arm.MerklePath
-#   alias Anoma.Arm.MerkleTree
-#   alias Anoma.Arm.Resource
-#   alias Anoma.Arm.Transacttion
-#   alias Anoma.Arm.TrivialLogicWitness
+  # alias Anoma.Arm.Action
+  # alias Anoma.Arm.ComplianceInstance
+  # alias Anoma.Arm.ComplianceUnit
+  # alias Anoma.Arm.ComplianceWitness
+  # alias Anoma.Arm.DeltaProof
+  # alias Anoma.Arm.DeltaWitness
+  # alias Anoma.Arm.ForwarderCalldata
+  # alias Anoma.Arm.Leaf
+  # alias Anoma.Arm.LogicProof
+  # alias Anoma.Arm.MerklePath
+  # alias Anoma.Arm.MerkleTree
+  # alias Anoma.Arm.Resource
+  # alias Anoma.Arm.Transacttion
+  # alias Anoma.Arm.TrivialLogicWitness
 
 #   @doc """
 #   Proves a compliance witness and returns a compliance unit.
@@ -213,4 +213,4 @@
 
 #   @doc false
 #   def test(_), do: :erlang.nif_error(:nif_not_loaded)
-# end
+end
