@@ -203,15 +203,16 @@ defmodule Anoma.Test.Native.ArmTest do
   #                                NullifierKey                                 #
   # ----------------------------------------------------------------------------#
 
-  # describe "nullifier key" do
-  #   test "test_nullifier_key/0" do
-  #     assert {_key_bytes} = Test.test_nullifier_key()
-  #   end
+  describe "nullifier key" do
+    test "test_nullifier_key/0" do
+      assert {_key_bytes} = Test.test_nullifier_key()
+    end
 
-  #   test "test_nullifier_key/1" do
-  #     nullifier_key = Test.test_nullifier_key()
-  #     assert nullifier_key == Test.test_nullifier_key(nullifier_key)
-  #   end
+    test "test_nullifier_key/1" do
+      nullifier_key = Test.test_nullifier_key()
+      assert nullifier_key == Test.test_nullifier_key(nullifier_key)
+    end
+  end
 
   # ----------------------------------------------------------------------------#
   #                                NullifierKeyCommitment                       #
