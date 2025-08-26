@@ -14,6 +14,7 @@ defmodule Anoma.Arm.Test do
   alias Anoma.Arm.DeltaProof
   alias Anoma.Arm.DeltaWitness
   alias Anoma.Arm.LogicVerifier
+  alias Anoma.Arm.LogicVerifierInputs
   alias Anoma.Arm.MerklePath
   alias Anoma.Arm.MerkleTree
   alias Anoma.Arm.Resource
@@ -125,18 +126,6 @@ defmodule Anoma.Arm.Test do
   def test_resource(_), do: :erlang.nif_error(:nif_not_loaded)
 
   # ----------------------------------------------------------------------------#
-  #                                LogicVerifier                                #
-  # ----------------------------------------------------------------------------#
-
-  @doc false
-  @spec test_logic_verifier() :: LogicVerifier.t()
-  def test_logic_verifier, do: :erlang.nif_error(:nif_not_loaded)
-
-  @doc false
-  @spec test_logic_verifier(LogicVerifier.t()) :: LogicVerifier.t()
-  def test_logic_verifier(_), do: :erlang.nif_error(:nif_not_loaded)
-
-  # ----------------------------------------------------------------------------#
   #                                Action                                       #
   # ----------------------------------------------------------------------------#
 
@@ -219,9 +208,8 @@ defmodule Anoma.Arm.Test do
   @spec test_app_data(AppData.t()) :: AppData.t()
   def test_app_data(_), do: :erlang.nif_error(:nif_not_loaded)
 
-
   # ----------------------------------------------------------------------------#
-  #                                LogicVerifierInputs                                      #
+  #                                LogicVerifierInputs                          #
   # ----------------------------------------------------------------------------#
 
   @doc false
@@ -231,4 +219,16 @@ defmodule Anoma.Arm.Test do
   @doc false
   @spec test_logic_verifier_inputs(LogicVerifierInputs.t()) :: LogicVerifierInputs.t()
   def test_logic_verifier_inputs(_), do: :erlang.nif_error(:nif_not_loaded)
+
+  # ----------------------------------------------------------------------------#
+  #                                LogicVerifier                                #
+  # ----------------------------------------------------------------------------#
+
+  @doc false
+  @spec test_logic_verifier() :: LogicVerifier.t()
+  def test_logic_verifier, do: :erlang.nif_error(:nif_not_loaded)
+
+  @doc false
+  @spec test_logic_verifier(LogicVerifier.t()) :: LogicVerifier.t()
+  def test_logic_verifier(_), do: :erlang.nif_error(:nif_not_loaded)
 end

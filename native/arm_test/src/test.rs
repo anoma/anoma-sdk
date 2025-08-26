@@ -2,7 +2,7 @@
 //! serialization between Rust and Elixir (or other languages implementing this
 //! nif).
 
-use arm::action::{create_an_action, create_multiple_actions, Action};
+use arm::action::{create_multiple_actions, Action};
 use arm::action_tree::MerkleTree;
 use arm::compliance::{ComplianceInstance, ComplianceWitness};
 use arm::compliance_unit::ComplianceUnit;
@@ -92,27 +92,7 @@ fn test_delta_with_proof(delta: Delta) -> Delta {
 #[nif]
 /// Create an arbitrary ComplianceInstance and return it.
 fn test_compliance_instance() -> ComplianceInstance {
-    let nonce = 1;
-    let nf_key = NullifierKey::default();
-    let nf_key_cm = nf_key.commit();
-    let mut consumed_resource = Resource {
-        logic_ref: TrivialLogicWitness::verifying_key_as_bytes(),
-        nk_commitment: nf_key_cm,
-        ..Default::default()
-    };
-    consumed_resource.nonce[0] = nonce;
-    let mut created_resource = consumed_resource.clone();
-    let consumed_resource_nf = consumed_resource.nullifier(&nf_key).unwrap();
-
-    created_resource.set_nonce(consumed_resource_nf.clone().as_bytes().to_vec());
-
-    let compliance_witness = ComplianceWitness::<COMMITMENT_TREE_DEPTH>::with_fixed_rcv(
-        consumed_resource.clone(),
-        nf_key.clone(),
-        created_resource.clone(),
-    );
-    let compliance_receipt = ComplianceUnit::create(&compliance_witness);
-    compliance_receipt.get_instance()
+    random_compliance_instance()
 }
 
 #[nif]
@@ -128,26 +108,7 @@ fn test_compliance_instance(compliance_instance: ComplianceInstance) -> Complian
 #[nif]
 /// Create an arbitrary CompliaceUnit and return it.
 fn test_compliance_unit() -> ComplianceUnit {
-    let nonce = 1;
-    let nf_key = NullifierKey::default();
-    let nf_key_cm = nf_key.commit();
-    let mut consumed_resource = Resource {
-        logic_ref: TrivialLogicWitness::verifying_key_as_bytes(),
-        nk_commitment: nf_key_cm,
-        ..Default::default()
-    };
-    consumed_resource.nonce[0] = nonce;
-    let mut created_resource = consumed_resource.clone();
-    let consumed_resource_nf = consumed_resource.nullifier(&nf_key).unwrap();
-    created_resource.set_nonce(consumed_resource_nf.clone().as_bytes().to_vec());
-
-    let compliance_witness = ComplianceWitness::<COMMITMENT_TREE_DEPTH>::with_fixed_rcv(
-        consumed_resource.clone(),
-        nf_key.clone(),
-        created_resource.clone(),
-    );
-    let compliance_receipt = ComplianceUnit::create(&compliance_witness);
-    compliance_receipt
+    random_compliance_unit()
 }
 
 #[nif]
@@ -215,47 +176,6 @@ fn test_compliance_witness(compliance_witness: ComplianceWitness<32>) -> Complia
 }
 
 //----------------------------------------------------------------------------//
-//                                Logic Proof                                 //
-//----------------------------------------------------------------------------//
-
-#[nif]
-fn test_logic_verifier() -> LogicVerifier {
-    let nonce = 1;
-
-    let nf_key = NullifierKey::default();
-    let nf_key_cm = nf_key.commit();
-    let mut consumed_resource = Resource {
-        logic_ref: TrivialLogicWitness::verifying_key_as_bytes(),
-        nk_commitment: nf_key_cm,
-        ..Default::default()
-    };
-    consumed_resource.nonce[0] = nonce;
-    let created_resource = consumed_resource.clone();
-
-    let consumed_resource_nf = consumed_resource.nullifier(&nf_key).unwrap();
-    let created_resource_cm = created_resource.commitment();
-    let action_tree = MerkleTree::new(vec![
-        consumed_resource_nf.clone().into(),
-        created_resource_cm.clone().into(),
-    ]);
-    let consumed_resource_path = action_tree.generate_path(&consumed_resource_nf).unwrap();
-
-    let consumed_logic_witness = TrivialLogicWitness::new(
-        consumed_resource,
-        consumed_resource_path,
-        nf_key.clone(),
-        true,
-    );
-    let consumed_logic_proof = consumed_logic_witness.prove();
-    consumed_logic_proof
-}
-
-#[nif]
-fn test_logic_verifier(logic_verifier: LogicVerifier) -> LogicVerifier {
-    logic_verifier
-}
-
-//----------------------------------------------------------------------------//
 //                                Resource                                    //
 //----------------------------------------------------------------------------//
 
@@ -284,8 +204,7 @@ fn test_resource(resource: Resource) -> Resource {
 #[nif]
 /// Create an arbitrary action and return it.
 fn test_action() -> Action {
-    let (action, _witness): (Action, DeltaWitness) = create_an_action(1);
-    action
+    random_action()
 }
 
 #[nif]
@@ -401,12 +320,7 @@ fn test_app_data(app_data: AppData) -> AppData {
 #[nif]
 /// Create arbitrary app data and return it.
 fn test_logic_verifier_inputs() -> LogicVerifierInputs {
-    LogicVerifierInputs {
-        tag: random_vector_u32(32),
-        verifying_key: random_vector_u32(32),
-        app_data: random_app_data(),
-        proof: random_vector_u8(32),
-    }
+    random_logic_verifier_inputs()
 }
 
 #[nif]
@@ -415,9 +329,64 @@ fn test_logic_verifier_inputs(logic_verifier_inputs: LogicVerifierInputs) -> Log
 }
 
 //----------------------------------------------------------------------------//
+//                                LogicVerifier                               //
+//----------------------------------------------------------------------------//
+
+#[nif]
+fn test_logic_verifier() -> LogicVerifier {
+    random_logic_verifier()
+}
+
+#[nif]
+fn test_logic_verifier(logic_verifier: LogicVerifier) -> LogicVerifier {
+    logic_verifier
+}
+
+//----------------------------------------------------------------------------//
 //                                Helpers                                     //
 //----------------------------------------------------------------------------//
 
+fn random_logic_verifier() -> LogicVerifier {
+    LogicVerifier {
+        proof: random_vector_u8(32),
+        instance: random_vector_u8(32),
+        verifying_key: random_vector_u32(32),
+    }
+}
+
+fn random_compliance_instance() -> ComplianceInstance {
+    ComplianceInstance {
+        consumed_nullifier: random_vector_u32(32),
+        consumed_logic_ref: random_vector_u32(32),
+        consumed_commitment_tree_root: random_vector_u32(32),
+        created_commitment: random_vector_u32(32),
+        created_logic_ref: random_vector_u32(32),
+        delta_x: random_vector_u32(32),
+        delta_y: random_vector_u32(32),
+    }
+}
+fn random_action() -> Action {
+    let compliance_units = (0..10).map(|_| random_compliance_unit()).collect();
+    let logic_verifier_inputs = (0..10).map(|_| random_logic_verifier_inputs()).collect();
+    Action {
+        compliance_units,
+        logic_verifier_inputs,
+    }
+}
+fn random_compliance_unit() -> ComplianceUnit {
+    ComplianceUnit {
+        proof: random_vector_u8(32),
+        instance: random_vector_u8(32),
+    }
+}
+fn random_logic_verifier_inputs() -> LogicVerifierInputs {
+    LogicVerifierInputs {
+        tag: random_vector_u32(32),
+        verifying_key: random_vector_u32(32),
+        app_data: random_app_data(),
+        proof: random_vector_u8(32),
+    }
+}
 fn random_vector_u32(length: u32) -> Vec<u32> {
     (0..length).map(|_| random::<u32>()).collect()
 }

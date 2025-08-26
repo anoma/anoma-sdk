@@ -7,7 +7,7 @@ defmodule Anoma.Arm.MerklePath do
   alias Anoma.Arm.Leaf
   alias Anoma.Arm.MerklePath
 
-  @type path_node :: {Leaf.t(), boolean()}
+  @type path_node :: {[byte()], boolean()}
 
   typedstruct do
     # the boolean indicates whether this leaf is left in the tree or not.

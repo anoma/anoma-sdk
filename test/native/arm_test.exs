@@ -287,4 +287,19 @@ defmodule Anoma.Test.Native.ArmTest do
       assert logic_verifier_inputs == Test.test_logic_verifier_inputs(logic_verifier_inputs)
     end
   end
+
+  # ----------------------------------------------------------------------------#
+  #                                LogicVerifier                                #
+  # ----------------------------------------------------------------------------#
+
+  describe "logic verifier" do
+    test "logic_verifier/0" do
+      assert %LogicVerifier{} = Test.test_logic_verifier()
+    end
+
+    test "logic_verifier/1" do
+      test_logic_verifier = Test.test_logic_verifier()
+      assert test_logic_verifier == Test.test_logic_verifier(test_logic_verifier)
+    end
+  end
 end

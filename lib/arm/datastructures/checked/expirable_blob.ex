@@ -5,7 +5,6 @@ defmodule Anoma.Arm.ExpirableBlob do
   """
   use TypedStruct
 
-
   typedstruct do
     field :blob, [byte()], default: []
     field :deletion_criteria, number()
