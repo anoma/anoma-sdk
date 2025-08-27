@@ -19,7 +19,7 @@ defmodule Anoma.Arm.MerklePath do
   @spec default :: t()
   def default do
     # note: 32 here matches the value of COMMITMENT_TREE_DEPTH
-    leaf = {List.duplicate(0, 32)}
+    leaf = List.duplicate(0, 8)
     auth_path = List.duplicate({leaf, false}, 32)
 
     %MerklePath{auth_path: auth_path}

@@ -6,8 +6,11 @@ use arm::{
     nullifier_key::NullifierKey,
     resource::Resource,
 };
+use rustler::NifStruct;
 use serde::{Deserialize, Serialize};
 #[derive(Clone, Default, Serialize, Deserialize)]
+#[derive(NifStruct)]
+#[module = "Anoma.Examples.Counter.CounterWitness"]
 pub struct CounterWitness {
     pub is_consumed: bool,
     pub old_counter: Resource,

@@ -1223,6 +1223,23 @@ dependencies = [
 
 [[package]]
 name = "arm"
+version = "0.1.0"
+dependencies = [
+ "arm 0.2.0",
+ "counter-app",
+ "evm_protocol_adapter_bindings",
+ "hex",
+ "k256",
+ "rand 0.8.5",
+ "risc0-zkvm",
+ "rustler",
+ "serde",
+ "serde_json",
+ "tracing-subscriber 0.3.19",
+]
+
+[[package]]
+name = "arm"
 version = "0.2.0"
 source = "git+https://github.com/anoma/arm-risc0?tag=v0.3.0#867c4f0bb25612eafda41a91f8f6db88f6173772"
 dependencies = [
@@ -1245,7 +1262,7 @@ dependencies = [
 name = "arm_test"
 version = "0.1.0"
 dependencies = [
- "arm",
+ "arm 0.2.0",
  "counter-app",
  "evm_protocol_adapter_bindings",
  "hex",
@@ -1750,7 +1767,7 @@ name = "counter-app"
 version = "0.1.0"
 source = "git+https://github.com/anoma/arm-risc0?tag=v0.3.0#867c4f0bb25612eafda41a91f8f6db88f6173772"
 dependencies = [
- "arm",
+ "arm 0.2.0",
  "counter-witness 0.1.0 (git+https://github.com/anoma/arm-risc0?tag=v0.3.0)",
  "hex",
  "lazy_static",
@@ -1763,7 +1780,8 @@ dependencies = [
 name = "counter-witness"
 version = "0.1.0"
 dependencies = [
- "arm",
+ "arm 0.2.0",
+ "rustler",
  "serde",
 ]
 
@@ -1772,7 +1790,7 @@ name = "counter-witness"
 version = "0.1.0"
 source = "git+https://github.com/anoma/arm-risc0?tag=v0.3.0#867c4f0bb25612eafda41a91f8f6db88f6173772"
 dependencies = [
- "arm",
+ "arm 0.2.0",
  "serde",
 ]
 
@@ -1780,7 +1798,8 @@ dependencies = [
 name = "counter_lib"
 version = "0.1.0"
 dependencies = [
- "arm",
+ "arm 0.2.0",
+ "counter-app",
  "counter-witness 0.1.0",
  "hex",
  "lazy_static",
@@ -2351,7 +2370,7 @@ version = "0.1.0"
 source = "git+https://github.com/anoma/evm-protocol-adapter?rev=bf772bfada08d18fcf35b1b115f28ae56ec3d94f#bf772bfada08d18fcf35b1b115f28ae56ec3d94f"
 dependencies = [
  "alloy",
- "arm",
+ "arm 0.2.0",
  "dotenv",
  "serde",
  "serde_json",

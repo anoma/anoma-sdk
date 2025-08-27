@@ -99,4 +99,24 @@ defmodule Anoma.Util do
     :crypto.strong_rand_bytes(len)
     |> bin2binlist()
   end
+
+  @doc """
+  An iolist consists of elements that each represent a byte (e.g., [1, 255]).
+  This function converts that list into a list of 32-bit integers.
+  """
+  @spec binlist2vec32([byte()]) :: [number()]
+  def binlist2vec32(binlist) do
+    binlist2bin(binlist)
+    for <<value::32 <- binlist2bin(binlist)>>, do: value
+  end
+
+  @doc """
+  Given a list of 32-bit integers, turns this into a list of bytes.
+  """
+  @spec vec322binlist([number()]) :: [byte()]
+  def vec322binlist(vec32) do
+    vec32
+    |> Enum.map(&:binary.encode_unsigned(&1, :big))
+    |> Enum.join()
+  end
 end

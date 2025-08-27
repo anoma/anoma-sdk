@@ -13,13 +13,13 @@ defmodule Anoma.Arm.Test do
   alias Anoma.Arm.ComplianceWitness
   alias Anoma.Arm.DeltaProof
   alias Anoma.Arm.DeltaWitness
+  alias Anoma.Arm.ExpirableBlob
   alias Anoma.Arm.LogicVerifier
   alias Anoma.Arm.LogicVerifierInputs
   alias Anoma.Arm.MerklePath
   alias Anoma.Arm.MerkleTree
   alias Anoma.Arm.Resource
   alias Anoma.Arm.Transaction
-  alias Anoma.Arm.ExpirableBlob
 
   # ----------------------------------------------------------------------------#
   #                                DeltaWitness                                 #

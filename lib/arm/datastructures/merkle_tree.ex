@@ -68,6 +68,7 @@ defmodule Anoma.Arm.MerkleTree do
         {sibling, false}
       end
 
+    # todo: this needs some cleanup˝
     # construct the hashes of the previous layer
     # these are the hashes of each pairwise leaves
     previous_layer =
@@ -76,8 +77,10 @@ defmodule Anoma.Arm.MerkleTree do
       |> Enum.map(fn [{l1}, {l2}] ->
         # concat the two hashes into a 64 byte list.
         hashes = l1 ++ l2
-        new_hash = :crypto.hash(:sha256, hashes)
+        hashes_io_list = vec322binlist(hashes)
+        new_hash = :crypto.hash(:sha256, hashes_io_list)
         new_hash_list = bin2binlist(new_hash)
+        new_hash_list = binlist2vec32(new_hash_list)
         {new_hash_list}
       end)
 
