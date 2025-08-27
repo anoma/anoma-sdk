@@ -1751,7 +1751,7 @@ version = "0.1.0"
 source = "git+https://github.com/anoma/arm-risc0?tag=v0.3.0#867c4f0bb25612eafda41a91f8f6db88f6173772"
 dependencies = [
  "arm",
- "counter-witness",
+ "counter-witness 0.1.0 (git+https://github.com/anoma/arm-risc0?tag=v0.3.0)",
  "hex",
  "lazy_static",
  "rand 0.8.5",
@@ -1762,9 +1762,31 @@ dependencies = [
 [[package]]
 name = "counter-witness"
 version = "0.1.0"
+dependencies = [
+ "arm",
+ "serde",
+]
+
+[[package]]
+name = "counter-witness"
+version = "0.1.0"
 source = "git+https://github.com/anoma/arm-risc0?tag=v0.3.0#867c4f0bb25612eafda41a91f8f6db88f6173772"
 dependencies = [
  "arm",
+ "serde",
+]
+
+[[package]]
+name = "counter_lib"
+version = "0.1.0"
+dependencies = [
+ "arm",
+ "counter-witness 0.1.0",
+ "hex",
+ "lazy_static",
+ "rand 0.8.5",
+ "risc0-zkvm",
+ "rustler",
  "serde",
 ]
 

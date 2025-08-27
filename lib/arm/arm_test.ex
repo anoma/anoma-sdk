@@ -1,6 +1,6 @@
 defmodule Anoma.Arm.Test do
   @moduledoc """
-  I define functions to deal with Anoma Resource Machine structs.
+  I define a few functions to test the ARM repo NIF interface.
   """
 
   use Rustler,
