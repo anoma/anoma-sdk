@@ -8,7 +8,7 @@ name = "counter_nif"
 crate-type = ["cdylib"]
 
 [dependencies]
-arm = { git = "https://github.com/anoma/arm-risc0", branch = "xuyang/simplify_features", default-features = true, features = ["transaction", "groth16_prover", "bonsai"]}
+arm = { git = "https://github.com/anoma/arm-risc0", branch = "xuyang/simplify_features", default-features = true, features = ["transaction", "groth16_prover", "bonsai", "cuda"]}
 counter_logic_circuit = { path = "../counter_logic_circuit" }
 counter_library = { path = "../counter_library", features=["nif"]}
 counter_witness = { path = "../counter_witness", features=["nif"]}

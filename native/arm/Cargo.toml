@@ -9,8 +9,8 @@ name = "arm"
 crate-type = ["cdylib"]
 
 [dependencies]
-evm_protocol_adapter_bindings = { git = "https://github.com/anoma/evm-protocol-adapter", rev = "bf772bfada08d18fcf35b1b115f28ae56ec3d94f" }
-arm = { git = "https://github.com/anoma/arm-risc0", branch = "xuyang/simplify_features", default-features = true, features = ["nif", "transaction", "groth16_prover", "bonsai"]}
+evm_protocol_adapter_bindings = { git = "https://github.com/anoma/evm-protocol-adapter", rev = "b13f03b951a4a50d7c6635b40bfc51b549346eff" }
+arm = { git = "https://github.com/anoma/arm-risc0", branch = "xuyang/simplify_features", default-features = true, features = ["nif", "transaction", "groth16_prover", "bonsai", "cuda"]}
 
 counter-app = { git = "https://github.com/anoma/arm-risc0", package = "counter-app", tag = "v0.3.0" }
 risc0-zkvm = { version = "2.3.1", features = ["std", "unstable"], default-features = false }
