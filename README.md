@@ -2,7 +2,7 @@
 
 The Anoma SDK exposes an API for developers to create applications in Elixir on
 top of Anoma. The SDK exposes the core data structures (e.g., `Transaction`) and
-their operationg (e.g., `prove`).
+their operations (e.g., `prove`).
 
 
 ## Repository Organisation
