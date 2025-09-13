@@ -2,7 +2,7 @@
 
 The Anoma SDK exposes an API for developers to create applications in Elixir on
 top of Anoma. The SDK exposes the core data structures (e.g., `Transaction`) and
-their operationg (e.g., `prove`).
+their operations (e.g., `prove`).
 
 
 ## Repository Organisation
@@ -38,7 +38,7 @@ Here's a markdown table with the environment variables and their descriptions:
 | `BONSAI_API_URL`                   | Bonsai URL                                                          | URL         |
 | `BONSAI_API_KEY`                   | Authentication key for Bonsai API access                            | String      |
 
-To find the latest protocol adapter address, see here.
+To find the latest protocol adapter address, see [here](https://github.com/anoma/evm-protocol-adapter).
 
 > [!TIP]
 > If you want to try local development without actually submitting transactions to
