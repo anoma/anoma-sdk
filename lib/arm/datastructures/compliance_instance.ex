@@ -24,7 +24,6 @@ defmodule Anoma.Arm.ComplianceInstance do
       |> Map.from_struct()
       |> Enum.map(fn {k, v} -> {k, Base.encode64(v)} end)
       |> Enum.into(%{})
-      |> tap(&IO.inspect(&1, label: ""))
       |> Jason.Encode.map(opts)
     end
   end

@@ -5,7 +5,7 @@ defmodule Anoma.Arm.Test do
 
   use Rustler,
     otp_app: :anoma_sdk,
-    crate: :arm_test
+    crate: :arm_bindings_test
 
   alias Anoma.Arm.Action
   alias Anoma.Arm.AppData

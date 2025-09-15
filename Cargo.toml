@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 
-members = ["native/arm_test", "native/arm"]
+members = ["native/arm_bindings_test", "native/arm_bindings"]
 
 # Always optimize; building and running the guest takes much longer without optimization.
 [profile.dev]

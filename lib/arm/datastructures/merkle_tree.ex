@@ -75,7 +75,6 @@ defmodule Anoma.Arm.MerkleTree do
         {sibling, false}
       end
 
-    # todo: this needs some cleanup˝
     # construct the hashes of the previous layer
     # these are the hashes of each pairwise leaves
     previous_layer =

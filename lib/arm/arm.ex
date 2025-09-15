@@ -15,7 +15,7 @@ defmodule Anoma.Arm do
 
   use Rustler,
     otp_app: :anoma_sdk,
-    crate: :arm
+    crate: :arm_bindings
 
   @doc """
   Generates a random private key (Scalar) and its corresponding public key (ProjectivePoint)
@@ -24,7 +24,7 @@ defmodule Anoma.Arm do
   def random_key_pair, do: :erlang.nif_error(:nif_not_loaded)
 
   @doc """
-    Encrypt a cipher.
+  Encrypt a cipher.
   """
   @spec encrypt_cipher([byte()], Keypair.t(), [byte()]) :: [byte()]
   def encrypt_cipher(_, _, _), do: :erlang.nif_error(:nif_not_loaded)

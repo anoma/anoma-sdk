@@ -1,17 +1,21 @@
 [package]
-name = "arm"
+name = "arm_bindings"
 version = "0.1.0"
 authors = []
 edition = "2021"
 
 [lib]
-name = "arm"
+name = "arm_bindings"
 crate-type = ["cdylib"]
 
 [dependencies]
 # evm_protocol_adapter_bindings = { git = "https://github.com/anoma/evm-protocol-adapter", rev = "bf772bfada08d18fcf35b1b115f28ae56ec3d94f" }
-arm = { git = "https://github.com/anoma/arm-risc0", branch = "m1dnight/encoding-decoding-keypair", default-features = true, features = ["nif", "transaction", "groth16_prover", "bonsai"]}
-# arm = { path = "/Users/christophe/RustroverProjects/arm-risc0/arm", default-features = true, features = ["nif", "transaction", "groth16_prover", "bonsai"]}
+arm = { git = "https://github.com/anoma/arm-risc0", branch = "m1dnight/encoding-decoding-keypair", default-features = true, features = [
+    "nif",
+    "transaction",
+    "groth16_prover",
+    "bonsai",
+] }
 
 risc0-zkvm = { version = "3.0.3", features = [
     "std",
