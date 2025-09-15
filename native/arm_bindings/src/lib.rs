@@ -109,7 +109,6 @@ fn prove_delta_witness(witness: DeltaWitness, message: Vec<u8>) -> DeltaProof {
     proof
 }
 
-
 #[nif]
 /// Given a transaction, puts in the delta proof.
 pub fn generate_delta_proof(transaction: Transaction) -> Transaction {
@@ -118,5 +117,9 @@ pub fn generate_delta_proof(transaction: Transaction) -> Transaction {
     tx
 }
 
+#[nif]
+pub fn verify_transaction(transaction: Transaction) -> bool {
+    transaction.verify()
+}
 
 rustler::init!("Elixir.Anoma.Arm");

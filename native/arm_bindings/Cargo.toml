@@ -17,6 +17,7 @@ arm = { git = "https://github.com/anoma/arm-risc0", branch = "m1dnight/encoding-
     "bonsai",
 ] }
 
+
 risc0-zkvm = { version = "3.0.3", features = [
     "std",
     "unstable",

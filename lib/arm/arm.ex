@@ -64,4 +64,10 @@ defmodule Anoma.Arm do
   """
   @spec generate_delta_proof(Transaction.t()) :: Transaction.t()
   def generate_delta_proof(_), do: :erlang.nif_error(:nif_not_loaded)
+
+  @doc """
+  Verifies that a transaction its proofs are valid.
+  """
+  @spec verify_transaction(Transaction.t()) :: boolean()
+  def verify_transaction(_), do: :erlang.nif_error(:nif_not_loaded)
 end

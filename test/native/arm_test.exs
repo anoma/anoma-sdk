@@ -18,6 +18,7 @@ defmodule Anoma.Test.Native.ArmTest do
   alias Anoma.Arm.LogicVerifierInputs
   alias Anoma.Arm.MerkleTree
   alias Anoma.Arm.Resource
+  alias Anoma.Arm.Transaction
   alias Anoma.Arm.Test
 
   test "verify ciphertext encrypt and decrypt" do
@@ -534,35 +535,45 @@ defmodule Anoma.Test.Native.ArmTest do
     end
   end
 
-  #
-  #  # ----------------------------------------------------------------------------#
-  #  #                                Transaction                                  #
-  #  # ----------------------------------------------------------------------------#
-  #
-  #  describe "transaction" do
-  #    test "test_transaction/0" do
-  #      assert %Transaction{} = Test.test_transaction()
-  #    end
-  #
-  #    test "test_transaction/1" do
-  #      transaction = Test.test_transaction()
-  #      assert transaction == Test.test_transaction(transaction)
-  #    end
-  #  end
-  #
 
-  #  # ----------------------------------------------------------------------------#
-  #  #                                LogicVerifier                                #
-  #  # ----------------------------------------------------------------------------#
-  #
-  #  describe "logic verifier" do
-  #    test "logic_verifier/0" do
-  #      assert %LogicVerifier{} = Test.test_logic_verifier()
-  #    end
-  #
-  #    test "logic_verifier/1" do
-  #      test_logic_verifier = Test.test_logic_verifier()
-  #      assert test_logic_verifier == Test.test_logic_verifier(test_logic_verifier)
-  #    end
-  #  end
+   # ----------------------------------------------------------------------------#
+   #                                Transaction                                  #
+   # ----------------------------------------------------------------------------#
+
+   describe "transaction" do
+     test "test_transaction/0" do
+       assert %Transaction{} = Test.test_transaction()
+     end
+
+     test "test_transaction/1" do
+       transaction = Test.test_transaction()
+       assert transaction == Test.test_transaction(transaction)
+     end
+
+     test "test_transaction/1 with no expected_balance" do
+       transaction = Test.test_transaction() |> Map.put(:expected_balance, nil)
+       assert transaction == Test.test_transaction(transaction)
+     end
+
+     test "test_transaction/1 with expected_balance" do
+       transaction = Test.test_transaction() |> Map.put(:expected_balance, <<1, 2, 3>>)
+       assert transaction == Test.test_transaction(transaction)
+     end
+   end
+
+
+   # ----------------------------------------------------------------------------#
+   #                                LogicVerifier                                #
+   # ----------------------------------------------------------------------------#
+
+   describe "logic verifier" do
+     test "logic_verifier/0" do
+       assert %LogicVerifier{} = Test.test_logic_verifier()
+     end
+
+     test "logic_verifier/1" do
+       test_logic_verifier = Test.test_logic_verifier()
+       assert test_logic_verifier == Test.test_logic_verifier(test_logic_verifier)
+     end
+   end
 end
