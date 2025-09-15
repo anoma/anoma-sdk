@@ -13,7 +13,7 @@ defmodule Anoma.Arm.MerklePath do
   """
   @spec default :: t()
   def default do
-    List.duplicate({<<0::8*32>>, false}, 32)
+    List.duplicate({<<0::8*32>>, false}, 10)
   end
 
   @spec to_map(map) :: [map()]
