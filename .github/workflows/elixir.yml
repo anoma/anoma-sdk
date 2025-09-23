@@ -64,7 +64,7 @@ jobs:
       - name: check formatting
         run: mix format --check-formatted
 
-      - name: check formatting
+      - name: check dialyzer
         run: mix dialyzer
 
       - name: check dependencies
