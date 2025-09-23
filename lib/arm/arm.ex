@@ -12,12 +12,12 @@ defmodule AnomaSDK.Arm do
     crate: :arm_bindings,
     base_url: "#{github_url}/releases/download/v#{version}",
     version: "0.0.0",
-    force_build: System.get_env("BUILD_NATIVE") in ["1", "true"],
-    targets: [
-      "aarch64-apple-darwin",
-      "x86_64-apple-darwin",
-      "x86_64-unknown-linux-gnu"
-    ]
+    force_build: System.get_env("BUILD_NATIVE") in ["1", "true"]
+    # targets: [
+    #   "aarch64-apple-darwin",
+    #   "x86_64-apple-darwin",
+    #   "x86_64-unknown-linux-gnu"
+    # ]
 
   alias AnomaSDK.Arm.ComplianceInstance
   alias AnomaSDK.Arm.ComplianceUnit
