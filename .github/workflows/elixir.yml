@@ -47,8 +47,9 @@ jobs:
         with:
           path: |
             _build
-          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: ${{ runner.os }}-
+            target
+          key: elixir-${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: elixir-
 
       #----------------------------------------------------------------------------
       # Fetch and compile dependencies

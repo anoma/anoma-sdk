@@ -37,8 +37,9 @@ jobs:
         with:
           path: |
             target
-          key: ${{ matrix.job.target }}-${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: ${{ matrix.job.target }}-${{ runner.os }}-
+            _build
+          key: rustler-${{ matrix.job.target }}-${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: rustler-${{ matrix.job.target }}-
 
       - name: Extract package version number
         shell: bash

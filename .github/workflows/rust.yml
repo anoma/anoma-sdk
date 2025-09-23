@@ -15,8 +15,8 @@ jobs:
         with:
           path: |
             target
-          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: ${{ runner.os }}-
+          key: rust-${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: rust-
 
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
