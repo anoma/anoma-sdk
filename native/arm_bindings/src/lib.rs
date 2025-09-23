@@ -60,8 +60,8 @@ pub fn random_key_pair() -> Keypair {
     Keypair { secret, public }
 }
 
+/// Returns the ComplianceInstance from within a ComplianceUnit
 #[nif]
-//// Returns the ComplianceInstance from within a ComplianceUnit
 fn compliance_unit_instance(unit: ComplianceUnit) -> ComplianceInstance {
     unit.get_instance()
 }
@@ -80,13 +80,8 @@ fn encrypt_cipher(cipher: Vec<u8>, keypair: Keypair, nonce: Vec<u8>) -> Cipherte
 pub fn decrypt_cipher(cipher_bytes: Vec<u8>, keypair: Keypair) -> Option<Vec<u8>> {
     let cipher_text = Ciphertext::from_bytes(cipher_bytes);
     let decipher_result = cipher_text.decrypt(&keypair.secret);
-    match decipher_result {
-        Ok(result) => Some(result),
-        Err(_) => None,
-    }
+    decipher_result.ok()
 }
-
-
 
 #[nif]
 /// Generate a compliance unit from a compliance witness.
@@ -98,15 +93,14 @@ fn prove_compliance_witness(compliance_witness: ComplianceWitness) -> Compliance
 /// Converts a logic verifier to a logic verifier inputs.
 /// this nif is here because this conversion relies on the Journal
 /// implementation of Risc0 ZKVM.
-fn convert(logic_verifier : LogicVerifier) -> LogicVerifierInputs {
+fn convert(logic_verifier: LogicVerifier) -> LogicVerifierInputs {
     logic_verifier.into()
 }
 
 #[nif]
 /// Generate a proof for a delta witness.
 fn prove_delta_witness(witness: DeltaWitness, message: Vec<u8>) -> DeltaProof {
-    let proof = DeltaProof::prove(&message, &witness);
-    proof
+    DeltaProof::prove(&message, &witness)
 }
 
 #[nif]

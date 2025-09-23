@@ -334,7 +334,7 @@ fn random_transaction() -> Transaction {
 
     let balance = Some(random_vector_u8(5));
     Transaction {
-        actions: actions,
+        actions,
         delta_proof: random_delta(),
         expected_balance: balance,
     }
@@ -347,8 +347,7 @@ fn random_delta_witness() -> DeltaWitness {
 }
 fn random_signing_key() -> SigningKey {
     let mut rng = OsRng;
-    let signing_key = SigningKey::random(&mut rng);
-    signing_key
+    SigningKey::random(&mut rng)
 }
 
 fn random_signature() -> Signature {
@@ -468,12 +467,11 @@ fn random_vector_u8(length: u32) -> Vec<u8> {
 }
 
 fn random_epxirable_blob() -> ExpirableBlob {
-    let expirable_blob = ExpirableBlob {
+    ExpirableBlob {
         // blob: random_vector_u32(32),
         blob: vec![1, 2, 3, 512, 512, 514, 128],
         deletion_criterion: random_u32(),
-    };
-    expirable_blob
+    }
 }
 
 fn random_app_data() -> AppData {

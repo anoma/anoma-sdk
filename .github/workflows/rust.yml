@@ -1,42 +1,36 @@
 
-# name: Rust CI
-# on:
-#   push:
-#     branches:
-#       - "*"
-# jobs:
-#   lint-rust:
-#     name: Lint Rust
-#     runs-on: ubuntu-latest
-#     strategy:
-#       matrix:
-#         manifest:
-#           - native/arm_bindings/Cargo.toml
-#           - native/arm_bindings_test/Cargo.toml
-#     steps:
-#       - uses: actions/checkout@v4
+name: Rust CI
+on:
+  push:
+    branches:
+      - "*"
+jobs:
+  lint-rust:
+    name: Lint Rust
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        manifest:
+          - native/arm_bindings/Cargo.toml
+          - native/arm_bindings_test/Cargo.toml
+    steps:
+      - uses: actions/checkout@v4
 
-#       - uses: actions/cache@v4
-#         with:
-#           path: |
-#             ~/.cargo/bin/
-#             ~/.cargo/registry/index/
-#             ~/.cargo/registry/cache/
-#             ~/.cargo/git/db/
-#             native/arm_bindings/target/
-#             native/arm_bindings_test/target/
-#             priv/native/
-#           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-#           restore-keys: |
-#             ${{ runner.os }}-cargo-
+      - name: restore dependencies cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            target
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-
 
-#       - name: Install Rust toolchain
-#         uses: dtolnay/rust-toolchain@stable
-#         with:
-#           components: rustfmt, clippy
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
 
-#       - name: run rustfmt
-#         run: cargo fmt --manifest-path=${{ matrix.manifest }} --all -- --check
+      - name: run rustfmt
+        run: cargo fmt --manifest-path=${{ matrix.manifest }} --all -- --check
 
-#       - name: run clippy
-#         run: cargo clippy --manifest-path=${{ matrix.manifest }} -- -Dwarnings
+      - name: run clippy
+        run: cargo clippy --manifest-path=${{ matrix.manifest }} -- -Dwarnings
