@@ -46,7 +46,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            target
+            _build
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-
 
