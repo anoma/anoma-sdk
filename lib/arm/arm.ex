@@ -13,7 +13,11 @@ defmodule AnomaSDK.Arm do
     base_url: "#{github_url}/releases/download/v#{version}",
     version: "0.0.0",
     force_build: System.get_env("BUILD_NATIVE") in ["1", "true"],
-    targets: Application.compile_env(:anoma_sdk, :targets)
+    targets: [
+      "aarch64-apple-darwin",
+      "x86_64-apple-darwin",
+      "x86_64-unknown-linux-gnu"
+    ]
 
   alias AnomaSDK.Arm.ComplianceInstance
   alias AnomaSDK.Arm.ComplianceUnit
