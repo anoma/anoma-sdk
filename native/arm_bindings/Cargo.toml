@@ -9,7 +9,7 @@ name = "arm_bindings"
 crate-type = ["cdylib"]
 
 [dependencies]
-# evm_protocol_adapter_bindings = { git = "https://github.com/anoma/evm-protocol-adapter", rev = "bf772bfada08d18fcf35b1b115f28ae56ec3d94f" }
+evm_protocol_adapter_bindings = { git = "https://github.com/anoma/evm-protocol-adapter", branch = "feature/sepolia-demo" }
 arm = { git = "https://github.com/anoma/arm-risc0", branch = "m1dnight/sdk-integration", default-features = true, features = [
     "nif",
     "transaction",

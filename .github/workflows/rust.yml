@@ -8,11 +8,6 @@ jobs:
   lint-rust:
     name: Lint Rust
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        manifest:
-          - native/arm_bindings/Cargo.toml
-          - native/arm_bindings_test/Cargo.toml
     steps:
       - uses: actions/checkout@v4
 
@@ -30,7 +25,7 @@ jobs:
           components: rustfmt, clippy
 
       - name: run rustfmt
-        run: cargo fmt --manifest-path=${{ matrix.manifest }} --all -- --check
+        run: cargo fmt -- --check
 
       - name: run clippy
-        run: cargo clippy --manifest-path=${{ matrix.manifest }} -- -Dwarnings
+        run: cargo clippy -- -Dwarnings
