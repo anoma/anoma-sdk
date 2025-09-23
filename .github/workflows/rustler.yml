@@ -56,6 +56,10 @@ jobs:
         with:
           target: ${{ matrix.job.target }}
 
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: stable
       #----------------------------------------------------------------------------
       # Build the arm_bindings crate
 
