@@ -1,7 +1,7 @@
 defmodule AnomaSDK.MixProject do
   use Mix.Project
 
-  @version "0.0.0"
+  @version "0.0.1"
 
   def project do
     [

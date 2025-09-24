@@ -11,7 +11,7 @@ defmodule AnomaSDK.Arm do
     otp_app: :anoma_sdk,
     crate: :arm_bindings,
     base_url: "#{github_url}/releases/download/v#{version}",
-    version: "0.0.0",
+    version: version,
     force_build: System.get_env("BUILD_NATIVE") in ["1", "true"]
 
   alias AnomaSDK.Arm.ComplianceInstance
