@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  precompile:
     name: NIF ${{ matrix.nif }} - ${{ matrix.job.target }} (${{ matrix.job.os }})
     runs-on: ${{ matrix.job.os }}
     strategy:
@@ -123,6 +123,7 @@ jobs:
   # Lint Elixir Code
 
   elixir_lint:
+    needs: precompile
     name: build and test
     runs-on: ubuntu-latest
     env:
@@ -244,6 +245,13 @@ jobs:
 
       #----------------------------------------------------------------------------
       # Generate checksums
+      - name: Extract package version number
+        shell: bash
+        run: |
+          # Get the project version from mix.exs
+          echo "PROJECT_VERSION=$(sed -n 's/^  @version "\(.*\)"/\1/p' mix.exs | head -n1)" >> $GITHUB_ENV
+
+
       - name: generate checksums
         run: |
           mix rustler_precompiled.download AnomaSDK.Arm.Test --ignore-unavailable --all
@@ -252,3 +260,26 @@ jobs:
       - name: debug
         run: |
           ls -la
+
+      - name: configure git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+
+      - name: commit checksums
+        run: |
+          git checkout -b checksums/${{ env.PROJECT_VERSION }}
+          git add checksum-*.exs
+          git commit -m "Add new feature or fix"
+          git push origin checksums/${{ env.PROJECT_VERSION }}
+
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --title "Checksums" \
+            --body "Checksum files for release" \
+            --base main \
+            --head checksums/${{ env.PROJECT_VERSION }}
