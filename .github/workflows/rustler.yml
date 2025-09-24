@@ -201,6 +201,7 @@ jobs:
     needs: elixir_lint
     name: generate checksums
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
     env:
       RISC0_DEV_MODE: true # use risc0 debug proving
       BUILD_NATIVE: true # compile the sdk, do not use precompiled
@@ -252,15 +253,12 @@ jobs:
           # Get the project version from mix.exs
           echo "PROJECT_VERSION=$(sed -n 's/^  @version "\(.*\)"/\1/p' mix.exs | head -n1)" >> $GITHUB_ENV
 
-
       - name: generate checksums
         run: |
+          rm -f checksum-Elixir.AnomaSDK.Arm.Test.exs
+          rm -f checksum-Elixir.AnomaSDK.Arm.exs
           mix rustler_precompiled.download AnomaSDK.Arm.Test --ignore-unavailable --all
           mix rustler_precompiled.download AnomaSDK.Arm --ignore-unavailable --all
-
-      - name: debug
-        run: |
-          ls -la
 
       - name: configure git
         run: |
