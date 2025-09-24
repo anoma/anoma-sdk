@@ -8,5 +8,5 @@ defmodule AnomaSDK.Arm.NullifierKeyCommitment do
   The type of a nullifier key commitment.
   The length of the nullifier key commitment is 32 bytes.
   """
-  @type t :: binary()
+  @type t :: <<_::256>>
 end
