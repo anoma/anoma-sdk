@@ -11,7 +11,7 @@ defmodule AnomaSDK.Arm.NullifierKey do
   The type of a nullifierkey.
   The length of a nullifier key is 32 bytes.
   """
-  @type t :: binary()
+  @type t :: <<_::256>>
 
   @doc """
   Generate a nullifier key with all zeros.
