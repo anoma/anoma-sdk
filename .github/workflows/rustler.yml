@@ -270,8 +270,9 @@ jobs:
       - name: commit checksums
         run: |
           git checkout -b checksums/${{ env.PROJECT_VERSION }}
-          git add checksum-*.exs
-          git commit -m "Add new feature or fix"
+          git add checksum-Elixir.AnomaSDK.Arm.Test.exs
+          git add checksum-Elixir.AnomaSDK.Arm.exs
+          git commit -m "Generate checksum files for v${{ env.PROJECT_VERSION }}"
           git push origin checksums/${{ env.PROJECT_VERSION }}
 
       - name: Create Pull Request
@@ -279,7 +280,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr create \
-            --title "Checksums" \
-            --body "Checksum files for release" \
+            --title "Checksums v${{ env.PROJECT_VERSION }}" \
+            --body "Checksum files for v${{ env.PROJECT_VERSION }}" \
             --base main \
             --head checksums/${{ env.PROJECT_VERSION }}
