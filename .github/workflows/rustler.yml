@@ -196,6 +196,7 @@ jobs:
   # Generate checksum file for precompiled binaries
 
   checksums:
+    needs: elixir_lint
     name: generate checksums
     runs-on: ubuntu-latest
     env:
