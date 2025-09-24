@@ -1,5 +1,5 @@
 %{
-  "libarm_bindings-v0.0.1-nif-2.15-aarch64-apple-darwin.so.tar.gz" => "sha256:0058b6aadc6f9a0b1528e4a05d0abb311b7b36d0123459b68eb8dc5f9f323ba4",
-  "libarm_bindings-v0.0.1-nif-2.15-x86_64-apple-darwin.so.tar.gz" => "sha256:3c6ace5cc168e42dda5a672fc5a47f3170c580af1b5295dbb18ff02cb454202f",
-  "libarm_bindings-v0.0.1-nif-2.15-x86_64-unknown-linux-gnu.so.tar.gz" => "sha256:d485fe18de3205143c0d99d00e92ca7e4be20e90a638a71891f472b357d1435e",
+  "libarm_bindings-v0.0.2-nif-2.15-aarch64-apple-darwin.so.tar.gz" => "sha256:9261241d2e2dc8b4acd9c858edbb27ce47bc0fb1421229ddc102774b51e45b67",
+  "libarm_bindings-v0.0.2-nif-2.15-x86_64-apple-darwin.so.tar.gz" => "sha256:73cb332366156b63200c772e31d756bc6997e6c82120d06b01b21e51e52623c1",
+  "libarm_bindings-v0.0.2-nif-2.15-x86_64-unknown-linux-gnu.so.tar.gz" => "sha256:0956e7bd4004e37bdc7177c0147b3d22f7fc4923eecdd2ee21f74408f1f1d9b6",
 }
