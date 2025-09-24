@@ -24,6 +24,16 @@ defmodule AnomaSDK.Arm.LogicVerifierInputs do
     end
   end
 
+  defimpl AnomaSDK.Validate, for: __MODULE__ do
+    @impl true
+    def valid?(term) do
+      is_binary(term.tag) &&
+        is_binary(term.verifying_key) &&
+        AnomaSDK.Validate.valid?(term.app_data) &&
+        is_binary(term.proof)
+    end
+  end
+
   @spec from_map(map) :: t()
   def from_map(map) do
     map =

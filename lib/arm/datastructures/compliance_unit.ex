@@ -23,6 +23,14 @@ defmodule AnomaSDK.Arm.ComplianceUnit do
     end
   end
 
+  defimpl AnomaSDK.Validate, for: __MODULE__ do
+    @impl true
+    def valid?(term) do
+      is_binary(term.instance) &&
+        is_binary(term.proof)
+    end
+  end
+
   @spec from_map(map) :: t()
   def from_map(map) do
     struct(ComplianceUnit, AnomaSDK.Json.decode_keys(map))

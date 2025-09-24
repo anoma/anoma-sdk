@@ -4,6 +4,8 @@ defmodule AnomaSDK.Arm.MerklePath do
   """
   use TypedStruct
 
+  alias AnomaSDK.Arm.MerkleTree
+
   @type path_node :: {binary(), boolean()}
 
   @type t :: [path_node()]
@@ -14,6 +16,15 @@ defmodule AnomaSDK.Arm.MerklePath do
   @spec default :: t()
   def default do
     List.duplicate({<<0::8*32>>, false}, 10)
+  end
+
+  @spec valid?(t()) :: boolean()
+  def valid?(path) do
+    is_list(path) &&
+      Enum.all?(
+        path,
+        fn {hash, left?} -> MerkleTree.leaf_valid?(hash) && is_boolean(left?) end
+      )
   end
 
   @spec to_map(map) :: [map()]
