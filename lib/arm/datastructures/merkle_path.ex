@@ -4,7 +4,7 @@ defmodule AnomaSDK.Arm.MerklePath do
   """
   use TypedStruct
 
-  @type path_node :: {binary(), boolean()}
+  @type path_node :: {AnomaSDK.Arm.MerkleTree.leaf(), boolean()}
 
   @type t :: [path_node()]
 
