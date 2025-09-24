@@ -13,10 +13,10 @@ defmodule AnomaSDK.Arm.MerkleTree do
   @action_tree_depth 4
   @action_tree_max_leaves 1 <<< @action_tree_depth
 
-  @type leaf :: binary()
+  @type leaf :: <<_::256>>
 
   typedstruct do
-    field :leaves, [binary()]
+    field :leaves, [leaf()]
   end
 
   defimpl Jason.Encoder, for: AnomaSDK.Arm.MerkleTree do
