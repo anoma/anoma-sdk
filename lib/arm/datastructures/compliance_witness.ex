@@ -31,6 +31,18 @@ defmodule AnomaSDK.Arm.ComplianceWitness do
     end
   end
 
+  defimpl AnomaSDK.Validate, for: __MODULE__ do
+    @impl true
+    def valid?(term) do
+      is_binary(term.ephemeral_root) &&
+        is_binary(term.rcv) &&
+        AnomaSDK.Validate.valid?(term.consumed_resource) &&
+        AnomaSDK.Validate.valid?(term.created_resource) &&
+        MerklePath.valid?(term.merkle_path) &&
+        NullifierKey.valid?(term.nf_key)
+    end
+  end
+
   @spec from_map(map) :: t()
   def from_map(map) do
     consumed_resource = Resource.from_map(map.consumed_resource)

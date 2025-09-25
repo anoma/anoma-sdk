@@ -27,6 +27,18 @@ defmodule AnomaSDK.Arm.MerkleTree do
     end
   end
 
+  defimpl AnomaSDK.Validate, for: __MODULE__ do
+    @impl true
+    def valid?(tree) do
+      Enum.all?(tree.leaves, &MerkleTree.leaf_valid?/1)
+    end
+  end
+
+  @spec leaf_valid?(leaf()) :: boolean()
+  def leaf_valid?(leaf) do
+    is_binary(leaf) && byte_size(leaf) == 32
+  end
+
   @spec from_map(map) :: t()
   def from_map(map) do
     leaves = Enum.map(map.leaves, &Base.decode64!/1)

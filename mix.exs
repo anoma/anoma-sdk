@@ -14,7 +14,7 @@ defmodule AnomaSDK.MixProject do
       # dialyzer
       dialyze: [
         plt_file: {:no_warn, "priv/plts/project.plt"},
-        plt_add_apps: [:mix, :jason]
+        plt_add_apps: [:mix, :jason, :ex_unit]
       ],
       # docs
       name: "Anoma",
@@ -28,7 +28,7 @@ defmodule AnomaSDK.MixProject do
   # runtime_tools is required for dbg.
   def application do
     [
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ex_unit]
     ]
   end
 

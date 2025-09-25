@@ -16,6 +16,20 @@ defmodule AnomaSDK.Arm.AppData do
     field :application_payload, [ExpirableBlob.t()], default: []
   end
 
+  defimpl AnomaSDK.Validate, for: __MODULE__ do
+    @impl true
+    def valid?(app) do
+      is_list(app.resource_payload) &&
+        is_list(app.discovery_payload) &&
+        is_list(app.external_payload) &&
+        is_list(app.application_payload) &&
+        Enum.all?(app.resource_payload, &AnomaSDK.Validate.valid?/1) &&
+        Enum.all?(app.discovery_payload, &AnomaSDK.Validate.valid?/1) &&
+        Enum.all?(app.external_payload, &AnomaSDK.Validate.valid?/1) &&
+        Enum.all?(app.application_payload, &AnomaSDK.Validate.valid?/1)
+    end
+  end
+
   @spec from_map(map) :: t()
   def from_map(map) do
     map =

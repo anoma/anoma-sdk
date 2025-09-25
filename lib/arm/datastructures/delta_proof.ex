@@ -20,6 +20,14 @@ defmodule AnomaSDK.Arm.DeltaProof do
     end
   end
 
+  defimpl AnomaSDK.Validate, for: __MODULE__ do
+    @impl true
+    def valid?(term) do
+      is_binary(term.signature) &&
+        is_number(term.recid)
+    end
+  end
+
   @spec from_map(map) :: t()
   def from_map(map) do
     struct(DeltaProof, AnomaSDK.Json.decode_keys(map, [:signature]))

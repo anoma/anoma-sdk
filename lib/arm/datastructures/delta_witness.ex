@@ -19,6 +19,13 @@ defmodule AnomaSDK.Arm.DeltaWitness do
     end
   end
 
+  defimpl AnomaSDK.Validate, for: __MODULE__ do
+    @impl true
+    def valid?(term) do
+      is_binary(term.signing_key)
+    end
+  end
+
   @spec from_map(map) :: t()
   def from_map(map) do
     struct(DeltaWitness, AnomaSDK.Json.decode_keys(map))
