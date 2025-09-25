@@ -21,6 +21,25 @@ defmodule AnomaSDK.Arm.Keypair do
     end
   end
 
+  defimpl AnomaSDK.Validate, for: __MODULE__ do
+    @impl true
+    def valid?(term) do
+      Keypair.valid_secret?(term.secret_key) && Keypair.valid_public?(term.public_key)
+    end
+  end
+
+  # I add these two functions due to the secret being used
+
+  @spec valid_secret?(t()) :: boolean()
+  def valid_secret?(secret_key) do
+    is_binary(secret_key)
+  end
+
+  @spec valid_public?(t()) :: boolean()
+  def valid_public?(public_key) do
+    is_binary(public_key)
+  end
+
   @spec from_map(map) :: t()
   def from_map(map) do
     struct(Keypair, AnomaSDK.Json.decode_keys(map))
