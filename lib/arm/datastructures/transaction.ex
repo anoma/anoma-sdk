@@ -35,6 +35,23 @@ defmodule AnomaSDK.Arm.Transaction do
     end
   end
 
+  defimpl AnomaSDK.Validate, for: __MODULE__ do
+    @impl true
+    def valid?(term) do
+      Enum.all?(term.actions, &AnomaSDK.Validate.valid?/1) &&
+        is_binary(term.expected_balance) && Transaction.valid_delta_proof?(term.delta_proof)
+    end
+  end
+
+  @spec valid_delta_proof?({:proof, DeltaProof.t()} | {:witness, DeltaWitness.t()}) :: boolean()
+  def valid_delta_proof?({:witness, delta_witness}) do
+    AnomaSDK.Validate.valid?(delta_witness)
+  end
+
+  def valid_delta_proof?({:proof, delta_proof}) do
+    AnomaSDK.Validate.valid?(delta_proof)
+  end
+
   @spec from_map(map) :: t()
   def from_map(map) do
     actions = Enum.map(map.actions, &Action.from_map/1)

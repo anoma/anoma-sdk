@@ -28,6 +28,19 @@ defmodule AnomaSDK.Arm.ComplianceInstance do
     end
   end
 
+  defimpl AnomaSDK.Validate, for: __MODULE__ do
+    @impl true
+    def valid?(term) do
+      is_binary(term.consumed_nullifier) &&
+        is_binary(term.consumed_logic_ref) &&
+        is_binary(term.consumed_commitment_tree_root) &&
+        is_binary(term.created_commitment) &&
+        is_binary(term.created_logic_ref) &&
+        is_binary(term.delta_x) &&
+        is_binary(term.delta_y)
+    end
+  end
+
   @spec from_map(map) :: t()
   def from_map(map) do
     struct(ComplianceInstance, AnomaSDK.Json.decode_keys(map))

@@ -21,6 +21,13 @@ defmodule AnomaSDK.Arm.ExpirableBlob do
     end
   end
 
+  defimpl AnomaSDK.Validate, for: __MODULE__ do
+    @impl true
+    def valid?(blob) do
+      is_binary(blob.blob) && is_number(blob.deletion_criteria)
+    end
+  end
+
   @spec from_map(map) :: t()
   def from_map(map) do
     struct(ExpirableBlob, AnomaSDK.Json.decode_keys(map, [:blob]))

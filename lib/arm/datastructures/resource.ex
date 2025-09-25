@@ -37,6 +37,20 @@ defmodule AnomaSDK.Arm.Resource do
     end
   end
 
+  defimpl AnomaSDK.Validate, for: __MODULE__ do
+    @impl true
+    def valid?(term) do
+      is_binary(term.logic_ref) &&
+        is_binary(term.label_ref) &&
+        is_number(term.quantity) &&
+        is_binary(term.value_ref) &&
+        is_boolean(term.is_ephemeral) &&
+        is_binary(term.nonce) &&
+        is_binary(term.nk_commitment) &&
+        is_binary(term.rand_seed)
+    end
+  end
+
   @spec from_map(map) :: t()
   def from_map(map) do
     map =

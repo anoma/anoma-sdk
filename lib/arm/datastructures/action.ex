@@ -15,6 +15,16 @@ defmodule AnomaSDK.Arm.Action do
     field :logic_verifier_inputs, [LogicVerifierInputs.t()], default: []
   end
 
+  defimpl AnomaSDK.Validate, for: __MODULE__ do
+    @impl true
+    def valid?(term) do
+      is_list(term.compliance_units) &&
+        is_list(term.logic_verifier_inputs) &&
+        Enum.all?(term.compliance_units, &AnomaSDK.Validate.valid?/1) &&
+        Enum.all?(term.logic_verifier_inputs, &AnomaSDK.Validate.valid?/1)
+    end
+  end
+
   @spec from_map(map) :: t()
   def from_map(map) do
     map =

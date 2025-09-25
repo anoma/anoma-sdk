@@ -21,6 +21,11 @@ defmodule AnomaSDK.Arm.NullifierKey do
     <<0::8*32>>
   end
 
+  @spec valid?(t()) :: boolean()
+  def valid?(nk) do
+    is_binary(nk) && byte_size(nk) == 32
+  end
+
   @doc """
   Create a commitment for the given nullifier key.
   """
