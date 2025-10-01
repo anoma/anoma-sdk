@@ -12,7 +12,7 @@ defmodule AnomaSDK.MixProject do
       deps: deps(),
       package: package(),
       # dialyzer
-      dialyze: [
+      dialyzer: [
         plt_file: {:no_warn, "priv/plts/project.plt"},
         plt_add_apps: [:mix, :jason]
       ],
