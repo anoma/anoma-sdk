@@ -39,7 +39,7 @@ defmodule AnomaSDK.Arm do
   @doc """
   Decrypt a ciphertext using a private key and public key.
   """
-  @spec decrypt_cipher([byte()], Keypair.t()) :: [byte()]
+  @spec decrypt_cipher([byte()], Keypair.t()) :: [byte()] | nil
   def decrypt_cipher(_, _), do: :erlang.nif_error(:nif_not_loaded)
 
   @doc """
