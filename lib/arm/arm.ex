@@ -3,16 +3,9 @@ defmodule AnomaSDK.Arm do
   I define a few functions to test the ARM repo NIF interface.
   """
 
-  mix_config = Mix.Project.config()
-  version = mix_config[:version]
-  github_url = mix_config[:package][:links]["GitHub"]
-
-  use RustlerPrecompiled,
+  use Rustler,
     otp_app: :anoma_sdk,
-    crate: :arm_bindings,
-    base_url: "#{github_url}/releases/download/v#{version}",
-    version: version,
-    force_build: System.get_env("BUILD_NATIVE") in ["1", "true"]
+    crate: :arm_bindings
 
   alias AnomaSDK.Arm.ComplianceInstance
   alias AnomaSDK.Arm.ComplianceUnit

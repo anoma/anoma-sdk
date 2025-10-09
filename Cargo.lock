@@ -1312,7 +1312,7 @@ dependencies = [
 [[package]]
 name = "arm"
 version = "0.5.0"
-source = "git+https://github.com/anoma/arm-risc0?branch=m1dnight%2Fsdk-integration#5ad87d2cb4583dd1e63b648717297cb00c8fb487"
+source = "git+https://github.com/anoma/arm-risc0?branch=murisi%2Fsdk-integration#08592fee80831e6da0880276d5321eb69e9d0f09"
 dependencies = [
  "aes-gcm",
  "alloy-primitives",
@@ -1332,7 +1332,7 @@ dependencies = [
 [[package]]
 name = "arm"
 version = "0.6.1"
-source = "git+https://github.com/anoma/arm-risc0.git?branch=jurevans%2Fpatch-keys-0.6.1#af43e5d659d3b5e0651c481b4aad137e8451ec44"
+source = "git+https://github.com/anoma/arm-risc0.git?branch=murisi%2Fpatch-keys-0.6.1#8857de2563979ec30e1bd48292984aaa4db0845a"
 dependencies = [
  "aes-gcm",
  "alloy-primitives",
@@ -2828,7 +2828,7 @@ dependencies = [
 [[package]]
 name = "evm_protocol_adapter_bindings"
 version = "1.0.0-beta"
-source = "git+https://github.com/anoma/evm-protocol-adapter?branch=feature%2Fsepolia-demo#ecd86b770b3997634471c09fd7e830ae2f8021c2"
+source = "git+https://github.com/anoma/evm-protocol-adapter?branch=murisi%2Fsepolia-demo#682b6ae5aa344a4c957d594603a0faa86378403f"
 dependencies = [
  "alloy",
  "arm 0.6.1",
@@ -5657,6 +5657,7 @@ dependencies = [
  "libloading",
  "regex-lite",
  "rustler_codegen",
+ "serde",
 ]
 
 [[package]]
@@ -6108,7 +6109,7 @@ checksum = "d66dc143e6b11c1eddc06d5c423cfc97062865baf299914ab64caa38182078fe"
 [[package]]
 name = "simple-transfer-app"
 version = "0.1.0"
-source = "git+https://github.com/anoma/arm-risc0.git?branch=jurevans%2Fpatch-keys-0.6.1#af43e5d659d3b5e0651c481b4aad137e8451ec44"
+source = "git+https://github.com/anoma/arm-risc0.git?branch=murisi%2Fpatch-keys-0.6.1#8857de2563979ec30e1bd48292984aaa4db0845a"
 dependencies = [
  "arm 0.6.1",
  "hex",
@@ -6122,7 +6123,7 @@ dependencies = [
 [[package]]
 name = "simple-transfer-witness"
 version = "0.1.0"
-source = "git+https://github.com/anoma/arm-risc0.git?branch=jurevans%2Fpatch-keys-0.6.1#af43e5d659d3b5e0651c481b4aad137e8451ec44"
+source = "git+https://github.com/anoma/arm-risc0.git?branch=murisi%2Fpatch-keys-0.6.1#8857de2563979ec30e1bd48292984aaa4db0845a"
 dependencies = [
  "arm 0.6.1",
  "rand 0.8.5",

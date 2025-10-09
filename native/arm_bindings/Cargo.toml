@@ -9,8 +9,8 @@ name = "arm_bindings"
 crate-type = ["cdylib"]
 
 [dependencies]
-evm_protocol_adapter_bindings = { git = "https://github.com/anoma/evm-protocol-adapter", branch = "feature/sepolia-demo" }
-arm = { git = "https://github.com/anoma/arm-risc0", branch = "m1dnight/sdk-integration", default-features = true, features = [
+evm_protocol_adapter_bindings = { git = "https://github.com/anoma/evm-protocol-adapter", branch = "murisi/sepolia-demo" }
+arm = { git = "https://github.com/anoma/arm-risc0", branch = "murisi/sdk-integration", default-features = true, features = [
     "nif",
     "transaction",
     "groth16_prover",
@@ -23,7 +23,7 @@ risc0-zkvm = { version = "3.0.3", features = [
     "unstable",
 ], default-features = false }
 
-rustler = "0.36.2"
+rustler = { version = "0.36.2", features = ["serde"] }
 serde = { version = "1.0.197", default-features = false }
 serde_json = "1.0"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
