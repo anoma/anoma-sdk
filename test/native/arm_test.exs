@@ -32,12 +32,12 @@ defmodule AnomaSDK.Test.Native.ArmTest do
 
     encrypted =
       AnomaSDK.Arm.encrypt_cipher(
-        :binary.bin_to_list(cipher),
+        cipher,
         %Keypair{secret_key: sender_keypair.secret_key, public_key: receiver_keypair.public_key},
-        :binary.bin_to_list(nonce)
+        nonce
       )
 
-    AnomaSDK.Arm.decrypt_cipher(:binary.bin_to_list(encrypted), receiver_keypair)
+    AnomaSDK.Arm.decrypt_cipher(encrypted, receiver_keypair)
   end
 
   # ----------------------------------------------------------------------------#

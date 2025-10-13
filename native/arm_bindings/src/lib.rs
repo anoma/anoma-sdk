@@ -15,8 +15,11 @@ use serde::{Deserialize, Serialize};
 /// It is used here to implement the Encoder and RusterEncoder trait.
 /// The encoded value is a tuple.
 #[derive(Deserialize, Serialize)]
+#[serde(rename = "Elixir.AnomaSDK.Arm.Keypair")]
 pub struct Keypair {
+    #[serde(rename = "secret_key")]
     pub secret: SecretKey,
+    #[serde(rename = "public_key")]
     pub public: AffinePoint,
 }
 
@@ -34,7 +37,7 @@ fn compliance_unit_instance(SerdeTerm(unit): SerdeTerm<ComplianceUnit>) -> Serde
 }
 
 #[nif]
-fn encrypt_cipher(cipher: Vec<u8>, SerdeTerm(keypair): SerdeTerm<Keypair>, nonce: Vec<u8>) -> SerdeTerm<Ciphertext> {
+fn encrypt_cipher(SerdeTerm(cipher): SerdeTerm<Vec<u8>>, SerdeTerm(keypair): SerdeTerm<Keypair>, SerdeTerm(nonce): SerdeTerm<Vec<u8>>) -> SerdeTerm<Ciphertext> {
     SerdeTerm(Ciphertext::encrypt(
         cipher.as_ref(),
         &keypair.public,
@@ -44,10 +47,10 @@ fn encrypt_cipher(cipher: Vec<u8>, SerdeTerm(keypair): SerdeTerm<Keypair>, nonce
 }
 
 #[nif]
-pub fn decrypt_cipher(cipher_bytes: Vec<u8>, SerdeTerm(keypair): SerdeTerm<Keypair>) -> Option<Vec<u8>> {
+pub fn decrypt_cipher(SerdeTerm(cipher_bytes): SerdeTerm<Vec<u8>>, SerdeTerm(keypair): SerdeTerm<Keypair>) -> SerdeTerm<Option<Vec<u8>>> {
     let cipher_text = Ciphertext::from_bytes(cipher_bytes);
     let decipher_result = cipher_text.decrypt(&keypair.secret);
-    decipher_result.ok()
+    SerdeTerm(decipher_result.ok())
 }
 
 #[nif]
@@ -66,7 +69,7 @@ fn convert(SerdeTerm(logic_verifier): SerdeTerm<LogicVerifier>) -> SerdeTerm<Log
 
 #[nif]
 /// Generate a proof for a delta witness.
-fn prove_delta_witness(SerdeTerm(witness): SerdeTerm<DeltaWitness>, message: Vec<u8>) -> SerdeTerm<DeltaProof> {
+fn prove_delta_witness(SerdeTerm(witness): SerdeTerm<DeltaWitness>, SerdeTerm(message): SerdeTerm<Vec<u8>>) -> SerdeTerm<DeltaProof> {
     SerdeTerm(DeltaProof::prove(&message, &witness))
 }
 
@@ -79,8 +82,8 @@ pub fn generate_delta_proof(SerdeTerm(transaction): SerdeTerm<Transaction>) -> S
 }
 
 #[nif]
-pub fn verify_transaction(SerdeTerm(transaction): SerdeTerm<Transaction>) -> bool {
-    transaction.verify()
+pub fn verify_transaction(SerdeTerm(transaction): SerdeTerm<Transaction>) -> SerdeTerm<bool> {
+    SerdeTerm(transaction.verify())
 }
 
 rustler::init!("Elixir.AnomaSDK.Arm");
