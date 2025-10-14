@@ -1312,7 +1312,7 @@ dependencies = [
 [[package]]
 name = "arm"
 version = "0.5.0"
-source = "git+https://github.com/anoma/arm-risc0?branch=murisi%2Fsdk-integration#08592fee80831e6da0880276d5321eb69e9d0f09"
+source = "git+https://github.com/anoma/arm-risc0?branch=murisi%2Fsdk-integration#48b9fe970a5733401cb064095288d0eeb1af80dd"
 dependencies = [
  "aes-gcm",
  "alloy-primitives",
@@ -1326,13 +1326,14 @@ dependencies = [
  "risc0-zkvm",
  "rustler",
  "serde",
+ "serde_bytes",
  "sha3",
 ]
 
 [[package]]
 name = "arm"
 version = "0.6.1"
-source = "git+https://github.com/anoma/arm-risc0.git?branch=murisi%2Fpatch-keys-0.6.1#8857de2563979ec30e1bd48292984aaa4db0845a"
+source = "git+https://github.com/anoma/arm-risc0.git?branch=murisi%2Fpatch-keys-0.6.1#05c30fb1522b27824c33652906150e794e38008b"
 dependencies = [
  "aes-gcm",
  "alloy-primitives",
@@ -1345,6 +1346,7 @@ dependencies = [
  "rand 0.8.5",
  "risc0-zkvm",
  "serde",
+ "serde_bytes",
  "sha3",
 ]
 
@@ -1360,6 +1362,7 @@ dependencies = [
  "risc0-zkvm",
  "rustler",
  "serde",
+ "serde_bytes",
  "serde_json",
  "tracing-subscriber 0.3.20",
 ]
@@ -2828,7 +2831,7 @@ dependencies = [
 [[package]]
 name = "evm_protocol_adapter_bindings"
 version = "1.0.0-beta"
-source = "git+https://github.com/anoma/evm-protocol-adapter?branch=murisi%2Fsepolia-demo#682b6ae5aa344a4c957d594603a0faa86378403f"
+source = "git+https://github.com/anoma/evm-protocol-adapter?branch=murisi%2Fsepolia-demo#e515579fbd2e9d0d71fe11179a24b90e797302bf"
 dependencies = [
  "alloy",
  "arm 0.6.1",
@@ -5938,6 +5941,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "serde_bytes"
+version = "0.11.19"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a5d440709e79d88e51ac01c4b72fc6cb7314017bb7da9eeff678aa94c10e3ea8"
+dependencies = [
+ "serde",
+ "serde_core",
+]
+
+[[package]]
 name = "serde_core"
 version = "1.0.226"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6109,7 +6122,7 @@ checksum = "d66dc143e6b11c1eddc06d5c423cfc97062865baf299914ab64caa38182078fe"
 [[package]]
 name = "simple-transfer-app"
 version = "0.1.0"
-source = "git+https://github.com/anoma/arm-risc0.git?branch=murisi%2Fpatch-keys-0.6.1#8857de2563979ec30e1bd48292984aaa4db0845a"
+source = "git+https://github.com/anoma/arm-risc0.git?branch=murisi%2Fpatch-keys-0.6.1#05c30fb1522b27824c33652906150e794e38008b"
 dependencies = [
  "arm 0.6.1",
  "hex",
@@ -6123,11 +6136,12 @@ dependencies = [
 [[package]]
 name = "simple-transfer-witness"
 version = "0.1.0"
-source = "git+https://github.com/anoma/arm-risc0.git?branch=murisi%2Fpatch-keys-0.6.1#8857de2563979ec30e1bd48292984aaa4db0845a"
+source = "git+https://github.com/anoma/arm-risc0.git?branch=murisi%2Fpatch-keys-0.6.1#05c30fb1522b27824c33652906150e794e38008b"
 dependencies = [
  "arm 0.6.1",
  "rand 0.8.5",
  "serde",
+ "serde_bytes",
 ]
 
 [[package]]

@@ -1,4 +1,4 @@
-defmodule AnomaSDK.Arm.NullifierKeyCommitment do
+defmodule Anoma.Arm.NullifierKeyCommitment do
   @moduledoc """
   I define the datastructure `NullifierKeyCommitment` that defines the structure
   of a nullifierkey commitment for the resource machine.

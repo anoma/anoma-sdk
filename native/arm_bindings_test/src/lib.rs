@@ -1,3 +1,3 @@
 mod test;
 
-rustler::init!("Elixir.AnomaSDK.Arm.Test");
+rustler::init!("Elixir.Anoma.Arm.Test");

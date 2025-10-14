@@ -1,13 +1,13 @@
-defmodule AnomaSDK.Arm.Action do
+defmodule Anoma.Arm.Action do
   @moduledoc """
   I define the datastructure `Action` that defines the structure of an action
   for the resource machine.
   """
   use TypedStruct
 
-  alias AnomaSDK.Arm.Action
-  alias AnomaSDK.Arm.ComplianceUnit
-  alias AnomaSDK.Arm.LogicVerifierInputs
+  alias Anoma.Arm.Action
+  alias Anoma.Arm.ComplianceUnit
+  alias Anoma.Arm.LogicVerifierInputs
 
   typedstruct do
     @derive Jason.Encoder

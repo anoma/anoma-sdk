@@ -10,12 +10,13 @@ use arm::transaction::Transaction;
 use k256::AffinePoint;
 use rustler::{nif, SerdeTerm};
 use serde::{Deserialize, Serialize};
+use serde_bytes::ByteBuf;
 
 /// A Keypair is a struct that holds a SecretKey and Affinepoint.
 /// It is used here to implement the Encoder and RusterEncoder trait.
 /// The encoded value is a tuple.
 #[derive(Deserialize, Serialize)]
-#[serde(rename = "Elixir.AnomaSDK.Arm.Keypair")]
+#[serde(rename = "Elixir.Anoma.Arm.Keypair")]
 pub struct Keypair {
     #[serde(rename = "secret_key")]
     pub secret: SecretKey,
@@ -37,19 +38,18 @@ fn compliance_unit_instance(SerdeTerm(unit): SerdeTerm<ComplianceUnit>) -> Serde
 }
 
 #[nif]
-fn encrypt_cipher(SerdeTerm(cipher): SerdeTerm<Vec<u8>>, SerdeTerm(keypair): SerdeTerm<Keypair>, SerdeTerm(nonce): SerdeTerm<Vec<u8>>) -> SerdeTerm<Ciphertext> {
+fn encrypt_cipher(SerdeTerm(cipher): SerdeTerm<ByteBuf>, SerdeTerm(keypair): SerdeTerm<Keypair>, SerdeTerm(nonce): SerdeTerm<ByteBuf>) -> SerdeTerm<Ciphertext> {
     SerdeTerm(Ciphertext::encrypt(
-        cipher.as_ref(),
+        cipher.into_vec().as_ref(),
         &keypair.public,
         &keypair.secret,
-        nonce.try_into().expect("REASON"),
+        nonce.into_vec().try_into().expect("REASON"),
     ))
 }
 
 #[nif]
-pub fn decrypt_cipher(SerdeTerm(cipher_bytes): SerdeTerm<Vec<u8>>, SerdeTerm(keypair): SerdeTerm<Keypair>) -> SerdeTerm<Option<Vec<u8>>> {
-    let cipher_text = Ciphertext::from_bytes(cipher_bytes);
-    let decipher_result = cipher_text.decrypt(&keypair.secret);
+pub fn decrypt_cipher(SerdeTerm(cipher_text): SerdeTerm<Ciphertext>, SerdeTerm(keypair): SerdeTerm<Keypair>) -> SerdeTerm<Option<ByteBuf>> {
+    let decipher_result = cipher_text.decrypt(&keypair.secret).map(ByteBuf::from);
     SerdeTerm(decipher_result.ok())
 }
 
@@ -69,7 +69,7 @@ fn convert(SerdeTerm(logic_verifier): SerdeTerm<LogicVerifier>) -> SerdeTerm<Log
 
 #[nif]
 /// Generate a proof for a delta witness.
-fn prove_delta_witness(SerdeTerm(witness): SerdeTerm<DeltaWitness>, SerdeTerm(message): SerdeTerm<Vec<u8>>) -> SerdeTerm<DeltaProof> {
+fn prove_delta_witness(SerdeTerm(witness): SerdeTerm<DeltaWitness>, SerdeTerm(message): SerdeTerm<ByteBuf>) -> SerdeTerm<DeltaProof> {
     SerdeTerm(DeltaProof::prove(&message, &witness))
 }
 
@@ -86,4 +86,4 @@ pub fn verify_transaction(SerdeTerm(transaction): SerdeTerm<Transaction>) -> Ser
     SerdeTerm(transaction.verify())
 }
 
-rustler::init!("Elixir.AnomaSDK.Arm");
+rustler::init!("Elixir.Anoma.Arm");

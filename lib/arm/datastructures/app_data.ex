@@ -1,12 +1,12 @@
-defmodule AnomaSDK.Arm.AppData do
+defmodule Anoma.Arm.AppData do
   @moduledoc """
   I define the datastructure `AppData` that defines the structure of an app data
   for the resource machine.
   """
   use TypedStruct
 
-  alias AnomaSDK.Arm.AppData
-  alias AnomaSDK.Arm.ExpirableBlob
+  alias Anoma.Arm.AppData
+  alias Anoma.Arm.ExpirableBlob
 
   typedstruct do
     @derive Jason.Encoder

@@ -1,4 +1,4 @@
-defmodule AnomaSDK.Arm.Constants do
+defmodule Anoma.Arm.Constants do
   @moduledoc """
   I define a list of constants used in the Anoma resource machine.
   """

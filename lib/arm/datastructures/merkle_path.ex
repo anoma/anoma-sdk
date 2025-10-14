@@ -1,4 +1,4 @@
-defmodule AnomaSDK.Arm.MerklePath do
+defmodule Anoma.Arm.MerklePath do
   @moduledoc """
   I define the datastructure `MerklePath` that defines the structure of a merkle path.
   """

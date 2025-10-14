@@ -1,14 +1,14 @@
-defmodule AnomaSDK.Arm.TrivialLogicWitness do
+defmodule Anoma.Arm.TrivialLogicWitness do
   @moduledoc """
   I define the datastructure `TrivialLogicWitness` that defines the structure of a
   trivial logic witness for the resource machine.
   """
   use TypedStruct
 
-  alias AnomaSDK.Arm.MerklePath
-  alias AnomaSDK.Arm.NullifierKey
-  alias AnomaSDK.Arm.Resource
-  alias AnomaSDK.Arm.TrivialLogicWitness
+  alias Anoma.Arm.MerklePath
+  alias Anoma.Arm.NullifierKey
+  alias Anoma.Arm.Resource
+  alias Anoma.Arm.TrivialLogicWitness
 
   typedstruct do
     field :resource, Resource.t()

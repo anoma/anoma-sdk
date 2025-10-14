@@ -1,11 +1,11 @@
-defmodule AnomaSDK.Arm.NullifierKey do
+defmodule Anoma.Arm.NullifierKey do
   @moduledoc """
   I define the datastructure `NullifierKey` that defines the structure of a nullifierkey for the resource machine.
   """
   use TypedStruct
 
-  alias AnomaSDK.Arm.NullifierKey
-  alias AnomaSDK.Arm.NullifierKeyCommitment
+  alias Anoma.Arm.NullifierKey
+  alias Anoma.Arm.NullifierKeyCommitment
 
   @typedoc """
   The type of a nullifierkey.

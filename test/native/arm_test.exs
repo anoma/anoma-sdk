@@ -1,4 +1,4 @@
-defmodule AnomaSDK.Test.Native.ArmTest do
+defmodule Anoma.Test.Native.ArmTest do
   @moduledoc """
   This module tests the test NIF bindings from the `native/arm_test` repo.
 
@@ -7,44 +7,44 @@ defmodule AnomaSDK.Test.Native.ArmTest do
   """
   use ExUnit.Case
 
-  alias AnomaSDK.Arm.Action
-  alias AnomaSDK.Arm.AppData
-  alias AnomaSDK.Arm.ComplianceInstance
-  alias AnomaSDK.Arm.ComplianceUnit
-  alias AnomaSDK.Arm.ComplianceWitness
-  alias AnomaSDK.Arm.ExpirableBlob
-  alias AnomaSDK.Arm.Keypair
-  alias AnomaSDK.Arm.LogicVerifier
-  alias AnomaSDK.Arm.LogicVerifierInputs
-  alias AnomaSDK.Arm.MerkleTree
-  alias AnomaSDK.Arm.Resource
-  alias AnomaSDK.Arm.Test
-  alias AnomaSDK.Arm.Transaction
+  alias Anoma.Arm.Action
+  alias Anoma.Arm.AppData
+  alias Anoma.Arm.ComplianceInstance
+  alias Anoma.Arm.ComplianceUnit
+  alias Anoma.Arm.ComplianceWitness
+  alias Anoma.Arm.ExpirableBlob
+  alias Anoma.Arm.Keypair
+  alias Anoma.Arm.LogicVerifier
+  alias Anoma.Arm.LogicVerifierInputs
+  alias Anoma.Arm.MerkleTree
+  alias Anoma.Arm.Resource
+  alias Anoma.Arm.Test
+  alias Anoma.Arm.Transaction
 
   test "verify ciphertext encrypt and decrypt" do
     # generate a keypair to encrypt a cipher
-    sender_keypair = AnomaSDK.Arm.random_key_pair()
-    receiver_keypair = AnomaSDK.Arm.random_key_pair()
+    sender_keypair = Anoma.Arm.random_key_pair()
+    receiver_keypair = Anoma.Arm.random_key_pair()
     # data to encrypt
     cipher = :crypto.strong_rand_bytes(32)
     # nonce
     nonce = :crypto.strong_rand_bytes(12)
 
     encrypted =
-      AnomaSDK.Arm.encrypt_cipher(
+      Anoma.Arm.encrypt_cipher(
         cipher,
         %Keypair{secret_key: sender_keypair.secret_key, public_key: receiver_keypair.public_key},
         nonce
       )
 
-    AnomaSDK.Arm.decrypt_cipher(encrypted, receiver_keypair)
+    Anoma.Arm.decrypt_cipher(encrypted, receiver_keypair)
   end
 
   # ----------------------------------------------------------------------------#
   #                                SecretKey                                   #
   # ----------------------------------------------------------------------------#
 
-  defp verify_secret_key_types(secret_key) do
+  defp verify_secret_key_types({:SecretKey, secret_key}) do
     assert is_binary(secret_key)
   end
 
@@ -65,7 +65,7 @@ defmodule AnomaSDK.Test.Native.ArmTest do
   #                                Ciphertext                                   #
   # ----------------------------------------------------------------------------#
 
-  defp verify_cipher_text_types(cipher_text) do
+  defp verify_cipher_text_types({:Ciphertext, cipher_text}) do
     assert is_binary(cipher_text)
   end
 
@@ -115,7 +115,7 @@ defmodule AnomaSDK.Test.Native.ArmTest do
   defp verify_expirable_blob_types(expirable_blob) do
     assert %ExpirableBlob{} = expirable_blob
     assert is_binary(expirable_blob.blob)
-    assert is_number(expirable_blob.deletion_criteria)
+    assert is_number(expirable_blob.deletion_criterion)
   end
 
   describe "expirable blob" do
@@ -266,7 +266,7 @@ defmodule AnomaSDK.Test.Native.ArmTest do
   #                                MerklePath                                   #
   # ----------------------------------------------------------------------------#
 
-  defp verify_merkle_path_types(merkle_path) do
+  defp verify_merkle_path_types({:MerklePath, merkle_path}) do
     # assert type
     assert is_list(merkle_path)
 
@@ -330,7 +330,7 @@ defmodule AnomaSDK.Test.Native.ArmTest do
   #                                NullifierKeyCommitment                       #
   # ----------------------------------------------------------------------------#
 
-  defp verify_nullifier_key_commitment_types(nf_key_commitment) do
+  defp verify_nullifier_key_commitment_types({:NullifierKeyCommitment, nf_key_commitment}) do
     assert is_binary(nf_key_commitment)
   end
 
@@ -351,20 +351,20 @@ defmodule AnomaSDK.Test.Native.ArmTest do
   #                                NullifierKey                                 #
   # ----------------------------------------------------------------------------#
 
-  defp verify_nullifier_key_types(nf_key) do
+  defp verify_nullifier_key_types({:NullifierKey, nf_key}) do
     assert is_binary(nf_key)
   end
 
   describe "nullifier key" do
     test "test_nullifier_key/0" do
-      nf_key = Test.test_nullifier_key()
+      {:NullifierKey, nf_key} = Test.test_nullifier_key()
       assert is_binary(nf_key)
     end
 
     test "test_nullifier_key/1" do
-      nf_key = Test.test_nullifier_key()
-      nf_key_return = Test.test_nullifier_key(nf_key)
-      assert nf_key == nf_key_return
+      nf_key = {:NullifierKey, nf_key_inner} = Test.test_nullifier_key()
+      {:NullifierKey, nf_key_return} = Test.test_nullifier_key(nf_key)
+      assert nf_key_inner == nf_key_return
       assert is_binary(nf_key_return)
     end
   end
@@ -375,7 +375,7 @@ defmodule AnomaSDK.Test.Native.ArmTest do
 
   defp verify_resource_types(resource) do
     # assert struct
-    assert %Resource{} = resource
+    assert %Resource{nk_commitment: {:NullifierKeyCommitment, nk_commitment_inner}} = resource
 
     # assert types
     assert is_binary(resource.logic_ref)
@@ -384,7 +384,7 @@ defmodule AnomaSDK.Test.Native.ArmTest do
     assert is_binary(resource.value_ref)
     assert is_boolean(resource.is_ephemeral)
     assert is_binary(resource.nonce)
-    assert is_binary(resource.nk_commitment)
+    assert is_binary(nk_commitment_inner)
     assert is_binary(resource.rand_seed)
   end
 

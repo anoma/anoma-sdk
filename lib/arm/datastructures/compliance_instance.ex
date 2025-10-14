@@ -1,11 +1,11 @@
-defmodule AnomaSDK.Arm.ComplianceInstance do
+defmodule Anoma.Arm.ComplianceInstance do
   @moduledoc """
   I define the datastructure `ComplianceInstance` that defines the structure of
   a compliance instance for the resource machine.
   """
   use TypedStruct
-  use AnomaSDK.Arm.Inspect
-  alias AnomaSDK.Arm.ComplianceInstance
+  use Anoma.Arm.Inspect
+  alias Anoma.Arm.ComplianceInstance
 
   typedstruct do
     field :consumed_nullifier, binary()
@@ -30,6 +30,6 @@ defmodule AnomaSDK.Arm.ComplianceInstance do
 
   @spec from_map(map) :: t()
   def from_map(map) do
-    struct(ComplianceInstance, AnomaSDK.Json.decode_keys(map))
+    struct(ComplianceInstance, Anoma.Json.decode_keys(map))
   end
 end
