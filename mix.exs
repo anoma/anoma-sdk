@@ -1,4 +1,4 @@
-defmodule AnomaSDK.MixProject do
+defmodule Anoma.MixProject do
   use Mix.Project
 
   @version "0.0.2"

@@ -19,19 +19,19 @@ use k256::ecdsa::{RecoveryId, Signature, SigningKey};
 use k256::elliptic_curve::rand_core::OsRng;
 use rand::random;
 use risc0_zkvm::Digest;
-use rustler::nif;
+use rustler::{self, nif, SerdeTerm};
 
 //----------------------------------------------------------------------------//
 //                                SecretKey                                   //
 //----------------------------------------------------------------------------//
 
 #[nif]
-fn test_secret_key() -> SecretKey {
-    SecretKey::random()
+fn test_secret_key() -> SerdeTerm<SecretKey> {
+    SerdeTerm(SecretKey::random())
 }
 
 #[nif]
-fn test_secret_key(secret_key: SecretKey) -> SecretKey {
+fn test_secret_key(secret_key: SerdeTerm<SecretKey>) -> SerdeTerm<SecretKey> {
     secret_key
 }
 
@@ -40,12 +40,12 @@ fn test_secret_key(secret_key: SecretKey) -> SecretKey {
 //----------------------------------------------------------------------------//
 
 #[nif]
-fn test_cipher_text() -> Ciphertext {
-    Ciphertext::from_words(random_vector_u32(64).as_slice())
+fn test_cipher_text() -> SerdeTerm<Ciphertext> {
+    SerdeTerm(Ciphertext::from_words(random_vector_u32(64).as_slice()))
 }
 
 #[nif]
-fn test_cipher_text(cipher_text: Ciphertext) -> Ciphertext {
+fn test_cipher_text(cipher_text: SerdeTerm<Ciphertext>) -> SerdeTerm<Ciphertext> {
     cipher_text
 }
 
@@ -55,12 +55,12 @@ fn test_cipher_text(cipher_text: Ciphertext) -> Ciphertext {
 
 #[nif]
 /// Create an arbitrary ComplianceUnit and return it.
-fn test_compliance_unit() -> ComplianceUnit {
-    random_compliance_unit()
+fn test_compliance_unit() -> SerdeTerm<ComplianceUnit> {
+    SerdeTerm(random_compliance_unit())
 }
 
 #[nif]
-fn test_compliance_unit(compliance_unit: ComplianceUnit) -> ComplianceUnit {
+fn test_compliance_unit(compliance_unit: SerdeTerm<ComplianceUnit>) -> SerdeTerm<ComplianceUnit> {
     compliance_unit
 }
 
@@ -70,12 +70,12 @@ fn test_compliance_unit(compliance_unit: ComplianceUnit) -> ComplianceUnit {
 
 #[nif]
 /// Create arbitrary expirable blob and return it.
-fn test_expirable_blob() -> ExpirableBlob {
-    random_epxirable_blob()
+fn test_expirable_blob() -> SerdeTerm<ExpirableBlob> {
+    SerdeTerm(random_epxirable_blob())
 }
 
 #[nif]
-fn test_expirable_blob(expirable_blob: ExpirableBlob) -> ExpirableBlob {
+fn test_expirable_blob(expirable_blob: SerdeTerm<ExpirableBlob>) -> SerdeTerm<ExpirableBlob> {
     expirable_blob
 }
 
@@ -85,12 +85,12 @@ fn test_expirable_blob(expirable_blob: ExpirableBlob) -> ExpirableBlob {
 
 #[nif]
 /// Create arbitrary appdata and return it.
-fn test_app_data() -> AppData {
-    random_app_data()
+fn test_app_data() -> SerdeTerm<AppData> {
+    SerdeTerm(random_app_data())
 }
 
 #[nif]
-fn test_app_data(app_data: AppData) -> AppData {
+fn test_app_data(app_data: SerdeTerm<AppData>) -> SerdeTerm<AppData> {
     app_data
 }
 
@@ -100,12 +100,12 @@ fn test_app_data(app_data: AppData) -> AppData {
 
 #[nif]
 /// Create arbitrary app data and return it.
-fn test_logic_verifier_inputs() -> LogicVerifierInputs {
-    random_logic_verifier_inputs()
+fn test_logic_verifier_inputs() -> SerdeTerm<LogicVerifierInputs> {
+    SerdeTerm(random_logic_verifier_inputs())
 }
 
 #[nif]
-fn test_logic_verifier_inputs(logic_verifier_inputs: LogicVerifierInputs) -> LogicVerifierInputs {
+fn test_logic_verifier_inputs(logic_verifier_inputs: SerdeTerm<LogicVerifierInputs>) -> SerdeTerm<LogicVerifierInputs> {
     logic_verifier_inputs
 }
 
@@ -115,12 +115,12 @@ fn test_logic_verifier_inputs(logic_verifier_inputs: LogicVerifierInputs) -> Log
 
 #[nif]
 /// Create an arbitrary action and return it.
-fn test_action() -> Action {
-    random_action()
+fn test_action() -> SerdeTerm<Action> {
+    SerdeTerm(random_action())
 }
 
 #[nif]
-fn test_action(action: Action) -> Action {
+fn test_action(action: SerdeTerm<Action>) -> SerdeTerm<Action> {
     action
 }
 
@@ -130,12 +130,12 @@ fn test_action(action: Action) -> Action {
 
 #[nif]
 /// Create a default merkle tree.
-fn test_merkle_tree() -> MerkleTree {
-    MerkleTree::new(vec![random_digest(), random_digest()])
+fn test_merkle_tree() -> SerdeTerm<MerkleTree> {
+    SerdeTerm(MerkleTree::new(vec![random_digest(), random_digest()]))
 }
 
 #[nif]
-fn test_merkle_tree(merkle_tree: MerkleTree) -> MerkleTree {
+fn test_merkle_tree(merkle_tree: SerdeTerm<MerkleTree>) -> SerdeTerm<MerkleTree> {
     merkle_tree
 }
 //----------------------------------------------------------------------------//
@@ -144,12 +144,12 @@ fn test_merkle_tree(merkle_tree: MerkleTree) -> MerkleTree {
 
 #[nif]
 /// Create a default merkle path.
-fn test_merkle_path() -> MerklePath {
-    random_merkle_path()
+fn test_merkle_path() -> SerdeTerm<MerklePath> {
+    SerdeTerm(random_merkle_path())
 }
 
 #[nif]
-fn test_merkle_path(merkle_path: MerklePath) -> MerklePath {
+fn test_merkle_path(merkle_path: SerdeTerm<MerklePath>) -> SerdeTerm<MerklePath> {
     merkle_path
 }
 
@@ -159,13 +159,13 @@ fn test_merkle_path(merkle_path: MerklePath) -> MerklePath {
 
 #[nif]
 /// Create an arbitrary ComplianceInstance and return it.
-fn test_compliance_instance() -> ComplianceInstance {
-    random_compliance_instance()
+fn test_compliance_instance() -> SerdeTerm<ComplianceInstance> {
+    SerdeTerm(random_compliance_instance())
 }
 
 #[nif]
 /// Return the ComplianceInstance.
-fn test_compliance_instance(compliance_instance: ComplianceInstance) -> ComplianceInstance {
+fn test_compliance_instance(compliance_instance: SerdeTerm<ComplianceInstance>) -> SerdeTerm<ComplianceInstance> {
     compliance_instance
 }
 
@@ -175,12 +175,12 @@ fn test_compliance_instance(compliance_instance: ComplianceInstance) -> Complian
 
 #[nif]
 /// Create an arbitrary compliance witness and return it.
-fn test_compliance_witness() -> ComplianceWitness {
-    random_compliance_witness()
+fn test_compliance_witness() -> SerdeTerm<ComplianceWitness> {
+    SerdeTerm(random_compliance_witness())
 }
 
 #[nif]
-fn test_compliance_witness(compliance_witness: ComplianceWitness) -> ComplianceWitness {
+fn test_compliance_witness(compliance_witness: SerdeTerm<ComplianceWitness>) -> SerdeTerm<ComplianceWitness> {
     compliance_witness
 }
 
@@ -190,14 +190,14 @@ fn test_compliance_witness(compliance_witness: ComplianceWitness) -> ComplianceW
 
 #[nif]
 /// Create arbitrary nullifier key commitment and return it.
-fn test_nullifier_key_commitment() -> NullifierKeyCommitment {
-    random_nullifier_key_commitment()
+fn test_nullifier_key_commitment() -> SerdeTerm<NullifierKeyCommitment> {
+    SerdeTerm(random_nullifier_key_commitment())
 }
 
 #[nif]
 fn test_nullifier_key_commitment(
-    nullifier_key_commitment: NullifierKeyCommitment,
-) -> NullifierKeyCommitment {
+    nullifier_key_commitment: SerdeTerm<NullifierKeyCommitment>,
+) -> SerdeTerm<NullifierKeyCommitment> {
     nullifier_key_commitment
 }
 
@@ -207,12 +207,12 @@ fn test_nullifier_key_commitment(
 
 #[nif]
 /// Create an arbitrary nullifier key and return it.
-fn test_nullifier_key() -> NullifierKey {
-    random_nullifier_key()
+fn test_nullifier_key() -> SerdeTerm<NullifierKey> {
+    SerdeTerm(random_nullifier_key())
 }
 
 #[nif]
-fn test_nullifier_key(nullifier_key: NullifierKey) -> NullifierKey {
+fn test_nullifier_key(nullifier_key: SerdeTerm<NullifierKey>) -> SerdeTerm<NullifierKey> {
     nullifier_key
 }
 
@@ -222,12 +222,12 @@ fn test_nullifier_key(nullifier_key: NullifierKey) -> NullifierKey {
 
 #[nif]
 /// Create an arbitrary resource and return it.
-fn test_resource() -> Resource {
-    random_resource()
+fn test_resource() -> SerdeTerm<Resource> {
+    SerdeTerm(random_resource())
 }
 
 #[nif]
-fn test_resource(resource: Resource) -> Resource {
+fn test_resource(resource: SerdeTerm<Resource>) -> SerdeTerm<Resource> {
     resource
 }
 
@@ -237,12 +237,12 @@ fn test_resource(resource: Resource) -> Resource {
 
 #[nif]
 /// Create arbitrary delta proof and return it.
-fn test_delta_proof() -> DeltaProof {
-    random_delta_proof()
+fn test_delta_proof() -> SerdeTerm<DeltaProof> {
+    SerdeTerm(random_delta_proof())
 }
 
 #[nif]
-fn test_delta_proof(delta_proof: DeltaProof) -> DeltaProof {
+fn test_delta_proof(delta_proof: SerdeTerm<DeltaProof>) -> SerdeTerm<DeltaProof> {
     delta_proof
 }
 
@@ -252,12 +252,12 @@ fn test_delta_proof(delta_proof: DeltaProof) -> DeltaProof {
 
 #[nif]
 /// Create a random delta witness to return from the NIF.
-fn test_delta_witness() -> DeltaWitness {
-    random_delta_witness()
+fn test_delta_witness() -> SerdeTerm<DeltaWitness> {
+    SerdeTerm(random_delta_witness())
 }
 
 #[nif]
-fn test_delta_witness(delta_witness: DeltaWitness) -> DeltaWitness {
+fn test_delta_witness(delta_witness: SerdeTerm<DeltaWitness>) -> SerdeTerm<DeltaWitness> {
     delta_witness
 }
 
@@ -266,12 +266,12 @@ fn test_delta_witness(delta_witness: DeltaWitness) -> DeltaWitness {
 //----------------------------------------------------------------------------//
 
 #[nif]
-fn test_logic_verifier() -> LogicVerifier {
-    random_logic_verifier()
+fn test_logic_verifier() -> SerdeTerm<LogicVerifier> {
+    SerdeTerm(random_logic_verifier())
 }
 
 #[nif]
-fn test_logic_verifier(logic_verifier: LogicVerifier) -> LogicVerifier {
+fn test_logic_verifier(logic_verifier: SerdeTerm<LogicVerifier>) -> SerdeTerm<LogicVerifier> {
     logic_verifier
 }
 
@@ -281,12 +281,12 @@ fn test_logic_verifier(logic_verifier: LogicVerifier) -> LogicVerifier {
 
 #[nif]
 /// Create an arbitrary transaction and return it.
-fn test_transaction() -> Transaction {
-    random_transaction()
+fn test_transaction() -> SerdeTerm<Transaction> {
+    SerdeTerm(random_transaction())
 }
 
 #[nif]
-fn test_transaction(transaction: Transaction) -> Transaction {
+fn test_transaction(transaction: SerdeTerm<Transaction>) -> SerdeTerm<Transaction> {
     transaction
 }
 
@@ -296,23 +296,23 @@ fn test_transaction(transaction: Transaction) -> Transaction {
 
 #[nif]
 /// Create a Delta with a witness.
-fn test_delta_with_witness() -> Delta {
-    Delta::Witness(random_delta_witness())
+fn test_delta_with_witness() -> SerdeTerm<Delta> {
+    SerdeTerm(Delta::Witness(random_delta_witness()))
 }
 
 #[nif]
-fn test_delta_with_witness(delta: Delta) -> Delta {
+fn test_delta_with_witness(delta: SerdeTerm<Delta>) -> SerdeTerm<Delta> {
     delta
 }
 
 #[nif]
 /// Create a Delta with a proof.
-fn test_delta_with_proof() -> Delta {
-    Delta::Proof(random_delta_proof())
+fn test_delta_with_proof() -> SerdeTerm<Delta> {
+    SerdeTerm(Delta::Proof(random_delta_proof()))
 }
 
 #[nif]
-fn test_delta_with_proof(delta: Delta) -> Delta {
+fn test_delta_with_proof(delta: SerdeTerm<Delta>) -> SerdeTerm<Delta> {
     delta
 }
 

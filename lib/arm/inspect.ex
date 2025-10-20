@@ -1,10 +1,10 @@
-defmodule AnomaSDK.Arm.Inspect do
+defmodule Anoma.Arm.Inspect do
   @moduledoc """
   I define helpers for the inspect protocol for Anoma Arm structs.
   """
 
   import Inspect.Algebra
-  alias AnomaSDK.Arm.Inspect, as: I
+  alias Anoma.Arm.Inspect, as: I
 
   defmacro __using__(_opts) do
     quote do

@@ -1,15 +1,15 @@
-defmodule AnomaSDK.Arm.ComplianceWitness do
+defmodule Anoma.Arm.ComplianceWitness do
   @moduledoc """
   I define the datastructure `DeltaWitness` that defines the structure of a delta witness for the resource machine.
   """
   use TypedStruct
 
-  alias AnomaSDK.Arm.ComplianceWitness
-  alias AnomaSDK.Arm.MerklePath
-  alias AnomaSDK.Arm.NullifierKey
-  alias AnomaSDK.Arm.Resource
+  alias Anoma.Arm.ComplianceWitness
+  alias Anoma.Arm.MerklePath
+  alias Anoma.Arm.NullifierKey
+  alias Anoma.Arm.Resource
 
-  import AnomaSDK.Arm.Constants
+  import Anoma.Arm.Constants
 
   typedstruct do
     field(:consumed_resource, Resource.t())
@@ -20,12 +20,14 @@ defmodule AnomaSDK.Arm.ComplianceWitness do
     field(:rcv, binary())
   end
 
-  defimpl Jason.Encoder, for: AnomaSDK.Arm.ComplianceWitness do
+  defimpl Jason.Encoder, for: Anoma.Arm.ComplianceWitness do
     @spec encode(struct(), term()) :: term()
     @spec encode(struct(), term()) :: term()
     def encode(struct, opts) do
       struct
-      |> AnomaSDK.Json.encode_keys([:ephemeral_root, :nf_key, :rcv])
+      |> Map.update(:nf_key, [], fn {:NullifierKey, x} -> x end)
+      |> Map.update(:merkle_path, [], fn {:MerklePath, x} -> x end)
+      |> Anoma.Json.encode_keys([:ephemeral_root, :nf_key, :rcv])
       |> Map.update!(:merkle_path, &MerklePath.to_map/1)
       |> Jason.Encode.map(opts)
     end
@@ -34,9 +36,10 @@ defmodule AnomaSDK.Arm.ComplianceWitness do
   @spec from_map(map) :: t()
   def from_map(map) do
     consumed_resource = Resource.from_map(map.consumed_resource)
-    merkle_path = MerklePath.from_map(map.merkle_path)
+    merkle_path = {:MerklePath, MerklePath.from_map(map.merkle_path)}
     created_resource = Resource.from_map(map.created_resource)
-    map = AnomaSDK.Json.decode_keys(map, [:ephemeral_root, :nf_key, :rcv])
+    map = Anoma.Json.decode_keys(map, [:ephemeral_root, :nf_key, :rcv])
+      |> Map.update(:nf_key, [], fn x -> {:NullifierKey, x} end)
 
     struct(ComplianceWitness, %{
       map

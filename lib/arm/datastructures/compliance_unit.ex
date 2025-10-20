@@ -1,18 +1,18 @@
-defmodule AnomaSDK.Arm.ComplianceUnit do
+defmodule Anoma.Arm.ComplianceUnit do
   @moduledoc """
   I define the datastructure `ComplianceUnit` that defines the structure of a compliance unit for the resource machine.
   """
   use TypedStruct
-  alias AnomaSDK.Arm
-  alias AnomaSDK.Arm.ComplianceInstance
-  alias AnomaSDK.Arm.ComplianceUnit
+  alias Anoma.Arm
+  alias Anoma.Arm.ComplianceInstance
+  alias Anoma.Arm.ComplianceUnit
 
   typedstruct do
     field :instance, binary()
     field :proof, binary()
   end
 
-  defimpl Jason.Encoder, for: AnomaSDK.Arm.ComplianceUnit do
+  defimpl Jason.Encoder, for: Anoma.Arm.ComplianceUnit do
     @spec encode(struct(), term()) :: term()
     def encode(struct, opts) do
       struct
@@ -25,7 +25,7 @@ defmodule AnomaSDK.Arm.ComplianceUnit do
 
   @spec from_map(map) :: t()
   def from_map(map) do
-    struct(ComplianceUnit, AnomaSDK.Json.decode_keys(map))
+    struct(ComplianceUnit, Anoma.Json.decode_keys(map))
   end
 
   @doc """

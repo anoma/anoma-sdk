@@ -1,4 +1,4 @@
-defmodule AnomaSDK.Util do
+defmodule Anoma.Util do
   @moduledoc """
   Various utility functions used in different modules in the SDK.
   """

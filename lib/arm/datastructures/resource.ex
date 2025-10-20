@@ -1,14 +1,14 @@
-defmodule AnomaSDK.Arm.Resource do
+defmodule Anoma.Arm.Resource do
   @moduledoc """
   I define the datastructure `Resource` that defines the structure of a resource for the resource machine.
   """
   use TypedStruct
 
-  alias AnomaSDK.Arm.NullifierKey
-  alias AnomaSDK.Arm.NullifierKeyCommitment
-  alias AnomaSDK.Arm.Resource
+  alias Anoma.Arm.NullifierKey
+  alias Anoma.Arm.NullifierKeyCommitment
+  alias Anoma.Arm.Resource
 
-  import AnomaSDK.Util
+  import Anoma.Util
 
   typedstruct do
     field :logic_ref, binary()
@@ -21,11 +21,12 @@ defmodule AnomaSDK.Arm.Resource do
     field :rand_seed, binary(), default: :crypto.strong_rand_bytes(32)
   end
 
-  defimpl Jason.Encoder, for: AnomaSDK.Arm.Resource do
+  defimpl Jason.Encoder, for: Anoma.Arm.Resource do
     @spec encode(struct(), term()) :: term()
     def encode(struct, opts) do
       struct
-      |> AnomaSDK.Json.encode_keys([
+      |> Map.update(:nk_commitment, [], fn {:NullifierKeyCommitment, x} -> x end)
+      |> Anoma.Json.encode_keys([
         :logic_ref,
         :label_ref,
         :value_ref,
@@ -41,7 +42,7 @@ defmodule AnomaSDK.Arm.Resource do
   def from_map(map) do
     map =
       map
-      |> AnomaSDK.Json.decode_keys([
+      |> Anoma.Json.decode_keys([
         :logic_ref,
         :label_ref,
         :value_ref,
@@ -49,6 +50,7 @@ defmodule AnomaSDK.Arm.Resource do
         :rand_seed,
         :nk_commitment
       ])
+      |> Map.update(:nk_commitment, [], fn x -> {:NullifierKeyCommitment, x} end)
 
     struct(Resource, map)
   end

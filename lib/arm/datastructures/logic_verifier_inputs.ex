@@ -1,12 +1,12 @@
-defmodule AnomaSDK.Arm.LogicVerifierInputs do
+defmodule Anoma.Arm.LogicVerifierInputs do
   @moduledoc """
   I define the datastructure `LogicVerifierInput` that defines the structure of
   a logic verifier input for the resource machine.
   """
   use TypedStruct
 
-  alias AnomaSDK.Arm.AppData
-  alias AnomaSDK.Arm.LogicVerifierInputs
+  alias Anoma.Arm.AppData
+  alias Anoma.Arm.LogicVerifierInputs
 
   typedstruct do
     field :tag, binary()
@@ -15,11 +15,11 @@ defmodule AnomaSDK.Arm.LogicVerifierInputs do
     field :proof, binary()
   end
 
-  defimpl Jason.Encoder, for: AnomaSDK.Arm.LogicVerifierInputs do
+  defimpl Jason.Encoder, for: Anoma.Arm.LogicVerifierInputs do
     @spec encode(struct(), term()) :: term()
     def encode(struct, opts) do
       struct
-      |> AnomaSDK.Json.encode_keys([:tag, :verifying_key, :proof])
+      |> Anoma.Json.encode_keys([:tag, :verifying_key, :proof])
       |> Jason.Encode.map(opts)
     end
   end
@@ -29,7 +29,7 @@ defmodule AnomaSDK.Arm.LogicVerifierInputs do
     map =
       map
       |> Map.update!(:app_data, &AppData.from_map(&1))
-      |> AnomaSDK.Json.decode_keys([:tag, :verifying_key, :proof])
+      |> Anoma.Json.decode_keys([:tag, :verifying_key, :proof])
 
     struct(LogicVerifierInputs, map)
   end

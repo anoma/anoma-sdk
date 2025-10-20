@@ -1,12 +1,12 @@
-defmodule AnomaSDK.Arm.MerkleTree do
+defmodule Anoma.Arm.MerkleTree do
   @moduledoc """
   I define the datastructure `MerkleTree` that defines the structure of a merkle tree for the resource machine.
   """
   use TypedStruct
 
-  alias AnomaSDK.Arm.Constants
-  alias AnomaSDK.Arm.MerklePath
-  alias AnomaSDK.Arm.MerkleTree
+  alias Anoma.Arm.Constants
+  alias Anoma.Arm.MerklePath
+  alias Anoma.Arm.MerkleTree
 
   import Bitwise
 
@@ -19,7 +19,7 @@ defmodule AnomaSDK.Arm.MerkleTree do
     field :leaves, [binary()]
   end
 
-  defimpl Jason.Encoder, for: AnomaSDK.Arm.MerkleTree do
+  defimpl Jason.Encoder, for: Anoma.Arm.MerkleTree do
     @spec encode(struct(), term()) :: term()
     def encode(struct, opts) do
       leaves = Enum.map(struct.leaves, &Base.encode64/1)

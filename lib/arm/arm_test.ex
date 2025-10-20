@@ -1,34 +1,27 @@
-defmodule AnomaSDK.Arm.Test do
+defmodule Anoma.Arm.Test do
   @moduledoc """
   I define a few functions to test the ARM repo NIF interface.
   """
 
-  mix_config = Mix.Project.config()
-  version = mix_config[:version]
-  github_url = mix_config[:package][:links]["GitHub"]
-
-  use RustlerPrecompiled,
+  use Rustler,
     otp_app: :anoma_sdk,
-    crate: :arm_bindings_test,
-    base_url: "#{github_url}/releases/download/v#{version}",
-    version: version,
-    force_build: System.get_env("BUILD_NATIVE") in ["1", "true"]
+    crate: :arm_bindings_test
 
-  alias AnomaSDK.Arm.Action
-  alias AnomaSDK.Arm.AppData
-  alias AnomaSDK.Arm.Ciphertext
-  alias AnomaSDK.Arm.ComplianceInstance
-  alias AnomaSDK.Arm.ComplianceUnit
-  alias AnomaSDK.Arm.ComplianceWitness
-  alias AnomaSDK.Arm.DeltaProof
-  alias AnomaSDK.Arm.DeltaWitness
-  alias AnomaSDK.Arm.ExpirableBlob
-  alias AnomaSDK.Arm.LogicVerifier
-  alias AnomaSDK.Arm.LogicVerifierInputs
-  alias AnomaSDK.Arm.MerklePath
-  alias AnomaSDK.Arm.MerkleTree
-  alias AnomaSDK.Arm.Resource
-  alias AnomaSDK.Arm.Transaction
+  alias Anoma.Arm.Action
+  alias Anoma.Arm.AppData
+  alias Anoma.Arm.Ciphertext
+  alias Anoma.Arm.ComplianceInstance
+  alias Anoma.Arm.ComplianceUnit
+  alias Anoma.Arm.ComplianceWitness
+  alias Anoma.Arm.DeltaProof
+  alias Anoma.Arm.DeltaWitness
+  alias Anoma.Arm.ExpirableBlob
+  alias Anoma.Arm.LogicVerifier
+  alias Anoma.Arm.LogicVerifierInputs
+  alias Anoma.Arm.MerklePath
+  alias Anoma.Arm.MerkleTree
+  alias Anoma.Arm.Resource
+  alias Anoma.Arm.Transaction
 
   # ----------------------------------------------------------------------------#
   #                                SecretKey                                    #

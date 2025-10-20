@@ -1,4 +1,4 @@
-defmodule AnomaSDK.Json do
+defmodule Anoma.Json do
   @moduledoc """
   Contains various functions to deal with json data decoding and encoding.
   """

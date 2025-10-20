@@ -1,14 +1,14 @@
-defmodule AnomaSDK.Arm.Transaction do
+defmodule Anoma.Arm.Transaction do
   @moduledoc """
   I define the datastructure `Transaction` that defines the structure of a transaction for the resource machine.
   """
   use TypedStruct
 
-  alias AnomaSDK.Arm
-  alias AnomaSDK.Arm.Action
-  alias AnomaSDK.Arm.DeltaProof
-  alias AnomaSDK.Arm.DeltaWitness
-  alias AnomaSDK.Arm.Transaction
+  alias Anoma.Arm
+  alias Anoma.Arm.Action
+  alias Anoma.Arm.DeltaProof
+  alias Anoma.Arm.DeltaWitness
+  alias Anoma.Arm.Transaction
 
   typedstruct do
     field :actions, [Action.t()], default: []
@@ -16,7 +16,7 @@ defmodule AnomaSDK.Arm.Transaction do
     field :expected_balance, binary(), default: <<>>
   end
 
-  defimpl Jason.Encoder, for: AnomaSDK.Arm.Transaction do
+  defimpl Jason.Encoder, for: Anoma.Arm.Transaction do
     @spec encode(struct(), term()) :: term()
     def encode(struct, opts) do
       delta_proof =
@@ -30,7 +30,7 @@ defmodule AnomaSDK.Arm.Transaction do
 
       struct
       |> Map.put(:delta_proof, delta_proof)
-      |> AnomaSDK.Json.encode_keys([:expected_balance])
+      |> Anoma.Json.encode_keys([:expected_balance])
       |> Jason.Encode.map(opts)
     end
   end
@@ -38,7 +38,7 @@ defmodule AnomaSDK.Arm.Transaction do
   @spec from_map(map) :: t()
   def from_map(map) do
     actions = Enum.map(map.actions, &Action.from_map/1)
-    map = AnomaSDK.Json.decode_keys(map, [:expected_balance])
+    map = Anoma.Json.decode_keys(map, [:expected_balance])
 
     delta_proof =
       case map.delta_proof do

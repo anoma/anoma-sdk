@@ -1,20 +1,20 @@
-defmodule AnomaSDK.Test.JSONRoundtripTest do
+defmodule Anoma.Test.JSONRoundtripTest do
   use ExUnit.Case
 
-  alias AnomaSDK.Arm.Action
-  alias AnomaSDK.Arm.AppData
-  alias AnomaSDK.Arm.ComplianceInstance
-  alias AnomaSDK.Arm.ComplianceUnit
-  alias AnomaSDK.Arm.ComplianceWitness
-  alias AnomaSDK.Arm.DeltaProof
-  alias AnomaSDK.Arm.DeltaWitness
-  alias AnomaSDK.Arm.ExpirableBlob
-  alias AnomaSDK.Arm.LogicVerifier
-  alias AnomaSDK.Arm.LogicVerifierInputs
-  alias AnomaSDK.Arm.MerkleTree
-  alias AnomaSDK.Arm.Resource
-  alias AnomaSDK.Arm.Test
-  alias AnomaSDK.Arm.Transaction
+  alias Anoma.Arm.Action
+  alias Anoma.Arm.AppData
+  alias Anoma.Arm.ComplianceInstance
+  alias Anoma.Arm.ComplianceUnit
+  alias Anoma.Arm.ComplianceWitness
+  alias Anoma.Arm.DeltaProof
+  alias Anoma.Arm.DeltaWitness
+  alias Anoma.Arm.ExpirableBlob
+  alias Anoma.Arm.LogicVerifier
+  alias Anoma.Arm.LogicVerifierInputs
+  alias Anoma.Arm.MerkleTree
+  alias Anoma.Arm.Resource
+  alias Anoma.Arm.Test
+  alias Anoma.Arm.Transaction
 
   describe "JSON roundtrip tests" do
     test "Action - encode to JSON, decode back, and convert with from_map" do
@@ -27,7 +27,7 @@ defmodule AnomaSDK.Test.JSONRoundtripTest do
       decoded_map =
         json_string
         |> Jason.decode!()
-        |> AnomaSDK.Json.keys_to_atoms()
+        |> Anoma.Json.keys_to_atoms()
 
       # Convert map back to struct using from_map
       recovered = Action.from_map(decoded_map)
@@ -46,7 +46,7 @@ defmodule AnomaSDK.Test.JSONRoundtripTest do
       decoded_map =
         json_string
         |> Jason.decode!()
-        |> AnomaSDK.Json.keys_to_atoms()
+        |> Anoma.Json.keys_to_atoms()
 
       # Convert map back to struct using from_map
       recovered = AppData.from_map(decoded_map)
@@ -65,7 +65,7 @@ defmodule AnomaSDK.Test.JSONRoundtripTest do
       decoded_map =
         json_string
         |> Jason.decode!()
-        |> AnomaSDK.Json.keys_to_atoms()
+        |> Anoma.Json.keys_to_atoms()
 
       # Convert map back to struct using from_map
       recovered = ComplianceInstance.from_map(decoded_map)
@@ -84,7 +84,7 @@ defmodule AnomaSDK.Test.JSONRoundtripTest do
       decoded_map =
         json_string
         |> Jason.decode!()
-        |> AnomaSDK.Json.keys_to_atoms()
+        |> Anoma.Json.keys_to_atoms()
 
       # Convert map back to struct using from_map
       recovered = ComplianceUnit.from_map(decoded_map)
@@ -103,7 +103,7 @@ defmodule AnomaSDK.Test.JSONRoundtripTest do
       decoded_map =
         json_string
         |> Jason.decode!()
-        |> AnomaSDK.Json.keys_to_atoms()
+        |> Anoma.Json.keys_to_atoms()
 
       # Convert map back to struct using from_map
       recovered = ComplianceWitness.from_map(decoded_map)
@@ -122,7 +122,7 @@ defmodule AnomaSDK.Test.JSONRoundtripTest do
       decoded_map =
         json_string
         |> Jason.decode!()
-        |> AnomaSDK.Json.keys_to_atoms()
+        |> Anoma.Json.keys_to_atoms()
 
       # Convert map back to struct using from_map
       recovered = DeltaProof.from_map(decoded_map)
@@ -141,7 +141,7 @@ defmodule AnomaSDK.Test.JSONRoundtripTest do
       decoded_map =
         json_string
         |> Jason.decode!()
-        |> AnomaSDK.Json.keys_to_atoms()
+        |> Anoma.Json.keys_to_atoms()
 
       # Convert map back to struct using from_map
       recovered = DeltaWitness.from_map(decoded_map)
@@ -160,7 +160,7 @@ defmodule AnomaSDK.Test.JSONRoundtripTest do
       decoded_map =
         json_string
         |> Jason.decode!()
-        |> AnomaSDK.Json.keys_to_atoms()
+        |> Anoma.Json.keys_to_atoms()
 
       # Convert map back to struct using from_map
       recovered = ExpirableBlob.from_map(decoded_map)
@@ -179,7 +179,7 @@ defmodule AnomaSDK.Test.JSONRoundtripTest do
       decoded_map =
         json_string
         |> Jason.decode!()
-        |> AnomaSDK.Json.keys_to_atoms()
+        |> Anoma.Json.keys_to_atoms()
 
       # Convert map back to struct using from_map
       recovered = LogicVerifier.from_map(decoded_map)
@@ -198,7 +198,7 @@ defmodule AnomaSDK.Test.JSONRoundtripTest do
       decoded_map =
         json_string
         |> Jason.decode!()
-        |> AnomaSDK.Json.keys_to_atoms()
+        |> Anoma.Json.keys_to_atoms()
 
       # Convert map back to struct using from_map
       recovered = LogicVerifierInputs.from_map(decoded_map)
@@ -217,7 +217,7 @@ defmodule AnomaSDK.Test.JSONRoundtripTest do
       decoded_map =
         json_string
         |> Jason.decode!()
-        |> AnomaSDK.Json.keys_to_atoms()
+        |> Anoma.Json.keys_to_atoms()
 
       # Convert map back to struct using from_map
       recovered = MerkleTree.from_map(decoded_map)
@@ -236,7 +236,7 @@ defmodule AnomaSDK.Test.JSONRoundtripTest do
       decoded_map =
         json_string
         |> Jason.decode!()
-        |> AnomaSDK.Json.keys_to_atoms()
+        |> Anoma.Json.keys_to_atoms()
 
       # Convert map back to struct using from_map
       recovered = Resource.from_map(decoded_map)
@@ -256,7 +256,7 @@ defmodule AnomaSDK.Test.JSONRoundtripTest do
     decoded_map =
       json_string
       |> Jason.decode!()
-      |> AnomaSDK.Json.keys_to_atoms()
+      |> Anoma.Json.keys_to_atoms()
 
     # Convert map back to struct using from_map
     recovered = Transaction.from_map(decoded_map)

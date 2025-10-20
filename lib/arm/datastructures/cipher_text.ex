@@ -1,4 +1,4 @@
-defmodule AnomaSDK.Arm.Ciphertext do
+defmodule Anoma.Arm.Ciphertext do
   @moduledoc """
   Defines the type for a Ciphertext, which is just a binary.
   """

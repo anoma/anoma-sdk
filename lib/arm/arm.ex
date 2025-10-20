@@ -1,28 +1,21 @@
-defmodule AnomaSDK.Arm do
+defmodule Anoma.Arm do
   @moduledoc """
   I define a few functions to test the ARM repo NIF interface.
   """
 
-  mix_config = Mix.Project.config()
-  version = mix_config[:version]
-  github_url = mix_config[:package][:links]["GitHub"]
-
-  use RustlerPrecompiled,
+  use Rustler,
     otp_app: :anoma_sdk,
-    crate: :arm_bindings,
-    base_url: "#{github_url}/releases/download/v#{version}",
-    version: version,
-    force_build: System.get_env("BUILD_NATIVE") in ["1", "true"]
+    crate: :arm_bindings
 
-  alias AnomaSDK.Arm.ComplianceInstance
-  alias AnomaSDK.Arm.ComplianceUnit
-  alias AnomaSDK.Arm.ComplianceWitness
-  alias AnomaSDK.Arm.DeltaProof
-  alias AnomaSDK.Arm.DeltaWitness
-  alias AnomaSDK.Arm.Keypair
-  alias AnomaSDK.Arm.LogicVerifier
-  alias AnomaSDK.Arm.LogicVerifierInputs
-  alias AnomaSDK.Arm.Transaction
+  alias Anoma.Arm.ComplianceInstance
+  alias Anoma.Arm.ComplianceUnit
+  alias Anoma.Arm.ComplianceWitness
+  alias Anoma.Arm.DeltaProof
+  alias Anoma.Arm.DeltaWitness
+  alias Anoma.Arm.Keypair
+  alias Anoma.Arm.LogicVerifier
+  alias Anoma.Arm.LogicVerifierInputs
+  alias Anoma.Arm.Transaction
 
   @doc """
   Generates a random private key (Scalar) and its corresponding public key (ProjectivePoint)
